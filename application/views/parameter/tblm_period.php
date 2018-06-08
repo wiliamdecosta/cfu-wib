@@ -124,7 +124,7 @@ function clearInputStatusList() {
                                 setTimeout(function(){
                                     var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
                                     if(selectedRowId != null) {
-                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'periodstatus_display');
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'periodstatuscode');
                                         $("#form_periodstatuscode").val( code_display );
                                     }
                                 },100);

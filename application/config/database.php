@@ -79,17 +79,17 @@ $db['default']['hostname'] ='
  (DESCRIPTION=
     (ADDRESS=
       (PROTOCOL=TCP)
-      (HOST=10.62.185.76)
+      (HOST=localhost)
       (PORT=1521)
     )
     (CONNECT_DATA=
       (SERVER=dedicated)
-      (SERVICE_NAME=fidb)
+      (SERVICE_NAME=orcl.local)
     )
   )';
 
-$db['default']['username'] = 'COLLTGROUP';
-$db['default']['password'] = 'telkom#2018';
+$db['default']['username'] = 'WILIAM3';
+$db['default']['password'] = 'WILIAM3';
 $db['default']['database'] = 'orcl';
 $db['default']['dbdriver'] = 'oci8';
 $db['default']['dbprefix'] = '';
