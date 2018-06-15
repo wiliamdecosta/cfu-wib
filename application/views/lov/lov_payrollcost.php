@@ -125,7 +125,7 @@
                         confirmButtonText: "Ya, Yakin",
                         confirmButtonColor: "#e80c1c",
                         cancelButtonText: "Tidak",
-                        closeOnConfirm: true,
+                        closeOnConfirm: false,
                         closeOnCancel: true,
                         html: true
                     },
@@ -173,7 +173,7 @@
                         confirmButtonText: "Ya, Yakin",
                         confirmButtonColor: "#e80c1c",
                         cancelButtonText: "Tidak",
-                        closeOnConfirm: true,
+                        closeOnConfirm: false,
                         closeOnCancel: true,
                         html: true
                     },
