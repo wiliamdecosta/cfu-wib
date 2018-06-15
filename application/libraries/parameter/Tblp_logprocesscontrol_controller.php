@@ -15,7 +15,7 @@ class Tblp_logprocesscontrol_controller {
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
-        $processcontrolid_fk = getVarClean('processcontrolid_fk','int',0);
+        $processcontrolid_fk = getVarClean('processcontrolid_pk','int',0);
         $i_search = getVarClean('i_search','str','');
 
         try {
@@ -41,7 +41,7 @@ class Tblp_logprocesscontrol_controller {
             $req_param['where'] = array();
             // Filter Table
             if(!empty($processcontrolid_fk)) {
-                $req_param['where'][] = 'processcontrolid_fk = '.$processcontrolid_fk;
+                $req_param['where'][] = 'pprocesscontrolid_fk = '.$processcontrolid_fk;
             }
 
             if(!empty($i_search)) {

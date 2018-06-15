@@ -125,7 +125,7 @@
                         confirmButtonText: "Ya, Yakin",
                         confirmButtonColor: "#e80c1c",
                         cancelButtonText: "Tidak",
-                        closeOnConfirm: false,
+                        closeOnConfirm: true,
                         closeOnCancel: true,
                         html: true
                     },
@@ -173,7 +173,7 @@
                         confirmButtonText: "Ya, Yakin",
                         confirmButtonColor: "#e80c1c",
                         cancelButtonText: "Tidak",
-                        closeOnConfirm: false,
+                        closeOnConfirm: true,
                         closeOnCancel: true,
                         html: true
                     },
@@ -204,7 +204,29 @@
             url += "&ubiscode="+ubiscode;
             url += "&idactivity="+idactivity;
 
-            window.location = url;
+            swal({
+                title: "Konfirmasi",
+                text: 'Anda yakin ingin melakukan download data?',
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Ya, Yakin",
+                confirmButtonColor: "#538cf6",
+                cancelButtonText: "Tidak",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                html: true
+            },
+            function(isConfirm){
+                if(isConfirm) {
+                    window.location = url;
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+
+
     }
 </script>
 

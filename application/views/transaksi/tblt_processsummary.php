@@ -20,13 +20,13 @@
     <div class="col-xs-12">
         <div class="tabbable">
             <ul class="nav nav-tabs">
-                <li class="active">
+                <li class="">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-1">
                         <i class="blue"></i>
                         <strong> <?php echo $this->input->post('processcode'); ?> </strong>
                     </a>
                 </li>
-                <li class="">
+                <li class="active">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-2">
                         <i class="blue"></i>
                         <strong> Process Summary </strong>
@@ -50,36 +50,21 @@
                 </div>
             </div>
 
-            <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
+            <div class="space-4"></div>
 
-            <div class="row">
-            <label class="control-label col-md-2">Pencarian :</label>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <div class="input-group">
-                    <input id="i_search" type="text" class="FormElement form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
-                    </span>
-                    </div>
-                </div>
-            </div>
-            </div>
             <div class="row">
                 <div class="col-xs-12">
                    <table class="table table-bordered table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th>CFU</th>
-                                <th>BU/Subsidiary</th>
-                                <th>Indirect Cost Activities</th>
-                                <th>No of Staff</th>
-                                <th>% of Total Staff</th>
-                                <th>Total Compensation</th>
-                                <th>% of Total Compensation</th>
+                                <th>No</th>
+                                <th>Summary Code</th>
+                                <th>IN Amount</th>
+                                <th>Object Code</th>
+                                <th>Out Amount</th>
                             </tr>
                         </thead>
-                        <tbody id="tbl-staffcompmap">
+                        <tbody id="tbl-processsummary">
 
                         </tbody>
                     </table>
@@ -90,10 +75,10 @@
 </div>
 
 <script>
-$("#tab-2").on("click", function(event) {
+$("#tab-1").on("click", function(event) {
     event.stopPropagation();
 
-    loadContentWithParams("transaksi.tblt_processsummary", {
+    loadContentWithParams("transaksi.tblt_staffcompmap", {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
@@ -118,7 +103,6 @@ $("#tab-3").on("click", function(event) {
 
 </script>
 
-<?php $this->load->view('lov/lov_payrollcost'); ?>
 
 <script>
     function backToProcessControl() {
@@ -130,34 +114,18 @@ $("#tab-3").on("click", function(event) {
 </script>
 
 <script>
-    function showData(){
-        var i_search = $('#i_search').val();
-        loadDataTable(i_search);
-    }
-</script>
-
-<script>
-        function showIndirectCostActivitiesDetail(periodid_fk, cfucode, ubiscode, idactivity) {
-            var isupdatable = '<?php echo $this->input->post('isupdatable'); ?>';
-            var i_process_control_id = '<?php echo $this->input->post('processcontrolid_pk'); ?>';
-            var processcode =  '<?php echo $this->input->post('processcode'); ?>';
-            modal_lov_payrollcost_show(isupdatable, periodid_fk, cfucode, ubiscode, idactivity, i_process_control_id, processcode);
-        }
-</script>
-
-<script>
 
     function loadDataTable(i_search) {
-        $( "#tbl-staffcompmap" ).html( 'Loading...');
+        $("#tbl-processsummary").html( 'Loading...');
         $.ajax({
-            url: '<?php echo WS_JQGRID."transaksi.tblt_staffcompmap_controller/readTable"; ?>',
+            url: '<?php echo WS_JQGRID."transaksi.tblt_processsummary_controller/readTable"; ?>',
             type: "POST",
             data: {
                 i_search : i_search,
                 i_process_control_id : <?php echo $this->input->post('processcontrolid_pk'); ?>
             },
             success: function (data) {
-                $( "#tbl-staffcompmap" ).html( data );
+                $( "#tbl-processsummary" ).html( data );
             },
             error: function (xhr, status, error) {
                 swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});

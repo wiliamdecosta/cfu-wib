@@ -115,6 +115,11 @@ class Tblt_staffcompmap_controller {
             $ci->load->model('transaksi/tblt_staffcompmap');
             $table = new Tblt_staffcompmap($i_process_control_id);
 
+            if(!empty($i_search)) {
+                $table->setCriteria("upper(s04) like '%".strtoupper($i_search)."%'");
+            }
+
+
             $count = $table->countAll();
             $items = $table->getAll(0, -1);
 

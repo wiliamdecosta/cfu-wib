@@ -14,11 +14,11 @@ class Tblt_processsummary extends Abstract_model {
 
                             );
 
-    public $selectClause    = "n01 NUM,
-                                        s01 SUMMARYCODE,
-                                        n02 INAMOUNT,
-                                        s02 OBJECTCODE,
-                                        n03 OUTAMOUNT
+    public $selectClause    = "n01 num,
+                                        s01 summarycode,
+                                        n02 inamount,
+                                        s02 objectcode,
+                                        n03 outamount
                                         ";
 
     public $fromClause      = "table (f_showProcessSummary(%d))";
