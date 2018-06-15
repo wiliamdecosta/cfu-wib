@@ -1,5 +1,5 @@
 <div id="modal_lov_payrollcost" class="modal fade" tabindex="-1" style="overflow-y: scroll;">
-    <div class="modal-dialog" style="width:1200px;height:500px;">
+    <div class="modal-dialog" style="width:1200px;">
         <div class="modal-content">
             <!-- modal title -->
             <div class="modal-header no-padding">
@@ -9,7 +9,7 @@
             </div>
 
             <!-- modal body -->
-            <div class="modal-body" style="height:400px; overflow-y:scroll;">
+            <div class="modal-body" style="height:425px; overflow-y:scroll;">
                 <div class="table-responsive">
                     <table id="modal_lov_payrollcost_grid_selection" class="table table-striped table-bordered table-hover">
                         <thead>
@@ -22,30 +22,30 @@
                             <th data-column-id="bandposisi">BANDPOSISI</th>
                             <th data-column-id="hostgroup">HOSTGROUP</th>
                             <th data-column-id="hostcode">HOSTCODE</th>
-                            <th data-column-id="baseslr">BASESLR</th>
-                            <th data-column-id="mahal">MAHAL</th>
-                            <th data-column-id="tunjanganpajak">TUNJANGANPAJAK</th>
-                            <th data-column-id="premium">PREMIUM</th>
-                            <th data-column-id="askedir">ASKEDIR</th>
-                            <th data-column-id="bbp">BBP</th>
-                            <th data-column-id="adjbbp">ADJBBP</th>
-                            <th data-column-id="lembur">LEMBUR</th>
-                            <th data-column-id="insjabatan">INSJABATAN</th>
-                            <th data-column-id="adjinsjabatan">ADJINSJABATAN</th>
-                            <th data-column-id="bpjs">BPJS</th>
-                            <th data-column-id="dplk">DPLK</th>
-                            <th data-column-id="jkk">JKK</th>
-                            <th data-column-id="jht">JHT</th>
-                            <th data-column-id="jkm">JKM</th>
-                            <th data-column-id="bpjsjp">BPJSJP</th>
-                            <th data-column-id="rapelbpjsjp">RAPELBPJSJP</th>
-                            <th data-column-id="posaskedir">POSASKEDIR</th>
-                            <th data-column-id="kopeg">KOPEG</th>
-                            <th data-column-id="sumb">SUMB</th>
-                            <th data-column-id="taspen">TASPEN</th>
-                            <th data-column-id="rapeltaspen">RAPELTASPEN</th>
-                            <th data-column-id="others">OTHERS</th>
-                            <th data-column-id="totalsalary">TOTALSALARY</th>
+                            <th data-column-id="baseslr" data-align="right">BASESLR</th>
+                            <th data-column-id="mahal" data-align="right">MAHAL</th>
+                            <th data-column-id="tunjanganpajak" data-align="right">TUNJANGANPAJAK</th>
+                            <th data-column-id="premium" data-align="right">PREMIUM</th>
+                            <th data-column-id="askedir" data-align="right">ASKEDIR</th>
+                            <th data-column-id="bbp" data-align="right">BBP</th>
+                            <th data-column-id="adjbbp" data-align="right">ADJBBP</th>
+                            <th data-column-id="lembur" data-align="right">LEMBUR</th>
+                            <th data-column-id="insjabatan" data-align="right">INSJABATAN</th>
+                            <th data-column-id="adjinsjabatan" data-align="right">ADJINSJABATAN</th>
+                            <th data-column-id="bpjs" data-align="right">BPJS</th>
+                            <th data-column-id="dplk" data-align="right">DPLK</th>
+                            <th data-column-id="jkk" data-align="right">JKK</th>
+                            <th data-column-id="jht" data-align="right">JHT</th>
+                            <th data-column-id="jkm" data-align="right">JKM</th>
+                            <th data-column-id="bpjsjp" data-align="right">BPJSJP</th>
+                            <th data-column-id="rapelbpjsjp" data-align="right">RAPELBPJSJP</th>
+                            <th data-column-id="posaskedir" data-align="right">POSASKEDIR</th>
+                            <th data-column-id="kopeg" data-align="right">KOPEG</th>
+                            <th data-column-id="sumb" data-align="right">SUMB</th>
+                            <th data-column-id="taspen" data-align="right">TASPEN</th>
+                            <th data-column-id="rapeltaspen" data-align="right">RAPELTASPEN</th>
+                            <th data-column-id="others" data-align="right">OTHERS</th>
+                            <th data-column-id="totalsalary" data-align="right">TOTALSALARY</th>
                             <th data-column-id="idloker">IDLOKER</th>
                             <th data-column-id="idposisi">IDPOSISI</th>
                             <th data-column-id="ketarea">KETAREA</th>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="row" id="btn-group-payroll-action" style="display:none;">
-                    <div class="col-xs-6"></div>
+                    <div class="col-xs-4"></div>
                     <div class="col-xs-6">
                         <input type="hidden" id="temp_i_process_control_id">
                         <input type="hidden" id="temp_processcode">
@@ -285,6 +285,6 @@
 
         $('.bootgrid-header span.glyphicon-search').removeClass('glyphicon-search')
         .html('<i class="fa fa-search"></i>');
-         $('.bootgrid-header .actionBar').hide();
+        $('.bootgrid-header .actionBar').hide();
     }
 </script>

@@ -45,6 +45,15 @@
         <div class="tab-content no-border">
             <div class="space-4"></div>
             <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-primary" type="button" id="btn-back" onclick="backToProcessControl()"><i class="fa fa-arrow-left"></i> Kembali Process Control</button>
+                </div>
+            </div>
+            <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
+            <div class="space-4"></div>
+
+
+            <div class="row">
             <label class="control-label col-md-2">Pencarian :</label>
             <div class="col-md-3">
                 <div class="input-group">
@@ -95,6 +104,15 @@
 </script>
 
 <script>
+    function backToProcessControl() {
+        loadContentWithParams("parameter.tblp_processcontrol", {
+            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>
+        });
+    }
+</script>
+
+<script>
 
     function showData(){
         var i_search = $('#i_search').val();
@@ -130,7 +148,7 @@
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'processcontrolid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Counter No',name: 'counterno',width: 150, align: "left"},
+                {label: 'Counter No',name: 'counterno',width: 50, align: "left", hidden:true},
                 {label: 'Log Date',name: 'logdate',width: 100, align: "left"},
                 {label: 'Log Message',name: 'logmessage',width: 150, align: "left"},
                 {label: 'Log Type',name: 'logtype',width: 150, align: "left"}
