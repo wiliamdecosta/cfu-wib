@@ -107,4 +107,8 @@ function compareDate($from_date, $to_date) {
     }
     return 1;
 }
+
+function numberFormat($number, $decimals =  2, $dec_point = ',' , $thousands_sep = '.'){
+    return number_format($number, $decimals, $dec_point, $thousands_sep);
+}
 ?>

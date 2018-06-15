@@ -45,7 +45,7 @@ class Tblp_logprocesscontrol_controller {
             }
 
             if(!empty($i_search)) {
-                $table->setCriteria("upper(logmessage) like '%".$i_search."%'");
+                $req_param['where'][] = "upper(logmessage) like '%".strtoupper($i_search)."%'";
             }
 
             $table->setJQGridParam($req_param);

@@ -122,6 +122,18 @@
         var rowData = jQuery("#grid-table").getRowData(id);
         modal_lov_show_detil_processcontrol_show(rowData);
     }
+
+    function doProcess(id) {
+        var rowData = jQuery("#grid-table").getRowData(id);
+
+        loadContentWithParams("transaksi.tblt_staffcompmap", {
+            processcontrolid_pk: rowData['processcontrolid_pk'],
+            processcode : rowData['processcode'],
+            isupdatable : rowData['isupdatable'],
+            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>
+        });
+    }
 </script>
 
 <script>
@@ -149,9 +161,10 @@
                     formatter:function(cellvalue, options, rowObject) {
                         var processcode = rowObject['processcode'];
                         var isaccessible = rowObject['isaccessible'];
+                        var key = rowObject['processcontrolid_pk'];
 
                         if(isaccessible == 'Y')
-                            return '<button class="btn btn-link btn-xs" onclick="doProcess(\''+processcode+'\')">'+processcode+'</button>';
+                            return '<button class="btn btn-link btn-xs" onclick="doProcess(\''+key+'\')">'+processcode+'</button>';
                         else
                             return processcode;
                     }
