@@ -89,7 +89,7 @@ function clearInputStatusList() {
                 }},
                 {label: 'Month', name: 'month_name', width: 120, align: "left", editable: false},
                 {label: 'Status Period',
-                    name: 'periodstatus',
+                    name: 'statuslistid_fk',
                     width: 200,
                     sortable: true,
                     editable: true,
