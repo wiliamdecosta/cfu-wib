@@ -131,7 +131,7 @@
             colModel: [
                 {label: 'ID', name: 'processcontrolid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Counter No',name: 'counterno',width: 150, align: "left"},
-                {label: 'Log Date',name: 'logdate',width: 150, align: "left"},
+                {label: 'Log Date',name: 'logdate',width: 100, align: "left"},
                 {label: 'Log Message',name: 'logmessage',width: 150, align: "left"},
                 {label: 'Log Type',name: 'logtype',width: 150, align: "left"}
             ],

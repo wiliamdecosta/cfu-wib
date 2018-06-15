@@ -210,7 +210,8 @@ $("#tab-2").on("click", function(event) {
                     },
                     editrules: {required: true}
                 },
-                {label: 'Last Updated',name: 'updateddate',width: 150, align: "left"},
+                {label: 'Last Updated',name: 'updateddateminute',width: 150, align: "left"},
+                {label: 'Last Updated',name: 'updateddate',width: 150, align: "left", hidden:true},
                 {label: 'Last Updated By ',name: 'updatedby',width: 150, align: "left"},
 
                 {label: 'periodcode',name: 'periodcode',width: 150, align: "left", hidden: true},

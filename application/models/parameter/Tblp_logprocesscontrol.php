@@ -14,7 +14,11 @@ class Tblp_logprocesscontrol extends Abstract_model {
 
                             );
 
-    public $selectClause    = "*";
+    public $selectClause    = "pprocesscontrolid_fk,
+                                    counterno,
+                                    to_char(logdate,'DD-MON-YYYY HH24:MI:SS') logdate,
+                                    logmessage,
+                                    logtype";
 
     public $fromClause      = "tblp_logprocesscontrol";
 

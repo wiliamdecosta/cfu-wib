@@ -22,6 +22,7 @@ class Tblp_batchcontrol extends Abstract_model {
                                         n03 statuslistid_fk,
                                         s04 statuscode,
                                         s05 updateddate,
+                                        to_char(to_date( s05, 'DD-MON-YYYY HH24:MI:SS'), 'DD-MON-YYYY HH24:MI') updateddateminute,
                                         s06 updatedby,
                                         b.orgcode,
                                         b.description,
