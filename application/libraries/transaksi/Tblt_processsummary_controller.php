@@ -157,11 +157,17 @@ class Tblt_processsummary_controller {
 
                 }
 
+                $inamount = '';
+                if($item['summarycode'] == '') {
+                    $inamount = '';
+                }else {
+                    $inamount = numberFormat($item['inamount']);
+                }
 
                 $output .= '<tr>';
                     $output .= '<td>'.$item['num'].'</td>';
                     $output .= '<td>'.$item['summarycode'].'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['inamount']).'</td>';
+                    $output .= '<td align="right">'.$inamount.'</td>';
                     $output .= '<td>'.$item['objectcode'].'</td>';
                     $output .= '<td align="right">'.numberFormat($item['outamount']).'</td>';
                 $output .= '</tr>';

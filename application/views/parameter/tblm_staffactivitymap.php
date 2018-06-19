@@ -490,6 +490,8 @@ function onChangeLoker() {
                     setTimeout(function() {
                         clearInputActivity();
                         clearInputDivisi();
+                        clearInputLoker();
+                        clearInputPosisi();
                     },100);
 
                 },
@@ -508,7 +510,8 @@ function onChangeLoker() {
 
                     clearInputActivity();
                     clearInputDivisi();
-
+                    clearInputLoker();
+                    clearInputPosisi();
                     return [true,"",response.responseText];
                 }
             },
