@@ -20,7 +20,7 @@
     <div class="col-xs-12">
         <div class="tabbable">
             <ul class="nav nav-tabs">
-                <li class="">
+                <li class="active">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-1">
                         <i class="blue"></i>
                         <strong> <?php echo $this->input->post('processcode'); ?> </strong>
@@ -32,81 +32,89 @@
                         <strong> Process Summary </strong>
                     </a>
                 </li>
-                <li class="active">
+                <li class="">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-3">
                         <i class="blue"></i>
                         <strong> Process Log </strong>
                     </a>
                 </li>
-
             </ul>
         </div>
 
         <div class="tab-content no-border">
             <div class="space-4"></div>
+
             <div class="row">
                 <div class="col-md-3">
                     <button class="btn btn-primary" type="button" id="btn-back" onclick="backToProcessControl()"><i class="fa fa-arrow-left"></i> Kembali Process Control</button>
                 </div>
             </div>
-            <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
-            <div class="space-4"></div>
 
+            <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
 
             <div class="row">
-            <label class="control-label col-md-2">Pencarian :</label>
-            <div class="col-md-3">
-                <div class="input-group">
+                <label class="control-label col-md-2">Pencarian :</label>
+                <div class="col-md-3">
                     <div class="input-group">
-                    <input id="i_search" type="text" class="FormElement form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
-                    </span>
+                        <div class="input-group">
+                        <input id="i_search" type="text" class="FormElement form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
+                        </span>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
             <div class="row">
                 <div class="col-xs-12">
-                   <table id="grid-table"></table>
-                   <div id="grid-pager"></div>
+                    <table id="grid-table"></table>
+                    <div id="grid-pager"></div>
                 </div>
             </div>
+            <div class="space-4"></div>
+            <div class="row" id="btn-group-costmap-action" style="display:none;">
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-success" onclick="doProcess();">Process</button>
+                        <button class="btn btn-warning" onclick="cancelProcess();">Cancel Process</button>
+                        <button class="btn btn-primary" onclick="downloadCostMap();">Download</button>
+                    </div>
+                </div>
         </div>
     </div>
 </div>
 
 
+
 <script>
-    $("#tab-1").on("click", function(event) {
-        event.stopPropagation();
+$("#tab-2").on("click", function(event) {
+    event.stopPropagation();
 
-        var tab_1 = "<?php echo $this->input->post('tab_1'); ?>";
-
-        loadContentWithParams(tab_1, {
-            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
-            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
-            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
-            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-            processcode : '<?php echo $this->input->post('processcode'); ?>',
-            tab_1 : tab_1
-        });
+    loadContentWithParams("transaksi.tblt_processsummary", {
+        i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+        periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+        isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+        processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+        processcode : '<?php echo $this->input->post('processcode'); ?>',
+        tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
     });
 
+});
 
-    $("#tab-2").on("click", function(event) {
-        event.stopPropagation();
 
-        loadContentWithParams("transaksi.tblt_processsummary", {
-            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
-            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
-            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
-            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-            processcode : '<?php echo $this->input->post('processcode'); ?>',
-            tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
-        });
+$("#tab-3").on("click", function(event) {
+    event.stopPropagation();
 
+    loadContentWithParams("transaksi.tblp_logprocesscontrol2", {
+        i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+        periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+        isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+        processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+        processcode : '<?php echo $this->input->post('processcode'); ?>',
+        tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
     });
+});
+
 </script>
 
 <script>
@@ -117,57 +125,201 @@
         });
     }
 </script>
-
 <script>
-
     function showData(){
         var i_search = $('#i_search').val();
-
         jQuery(function($) {
-
             jQuery("#grid-table").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."parameter.tblp_logprocesscontrol_controller/read"; ?>',
+                url: '<?php echo WS_JQGRID."transaksi.tblt_costmap_controller/read"; ?>',
                 postData: {
-                    i_search : $('#i_search').val(),
+                    i_search : i_search,
                     processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>
                 }
             });
             $("#grid-table").trigger("reloadGrid");
         });
+
+
+    }
+</script>
+
+<script>
+    $(function() {
+        var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
+
+        if(isupdatable == 'Y') {
+            $('#btn-group-costmap-action').show();
+        }
+    });
+</script>
+
+<script>
+
+
+    function doProcess() {
+            var processcode = "<?php echo $this->input->post('processcode'); ?>";
+            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+
+            var ajaxOptions = {
+                url: '<?php echo WS_JQGRID."transaksi.tblt_costmap_controller/do_process"; ?>',
+                type: "POST",
+                dataType: "json",
+                data: { i_process_control_id:i_process_control_id,
+                        processcode : processcode },
+                success: function (data) {
+                    if(data.success == true) {
+                        swal('Success',data.message,'success');
+                    }else {
+                        swal('Attention',data.message,'warning');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            };
+
+            $.ajax({
+                beforeSend: function( xhr ) {
+                    swal({
+                        title: "Konfirmasi",
+                        text: 'Anda yakin ingin men-submit proses '+ processcode +'?',
+                        type: "info",
+                        showCancelButton: true,
+                        showLoaderOnConfirm: true,
+                        confirmButtonText: "Ya, Yakin",
+                        confirmButtonColor: "#e80c1c",
+                        cancelButtonText: "Tidak",
+                        closeOnConfirm: false,
+                        closeOnCancel: true,
+                        html: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm) {
+                            $.ajax(ajaxOptions);
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    });
+                }
+            });
+    }
+
+    function cancelProcess() {
+            var processcode = "<?php echo $this->input->post('processcode'); ?>";
+            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+
+            var ajaxOptions = {
+                url: '<?php echo WS_JQGRID."transaksi.tblt_costmap_controller/cancel_process"; ?>',
+                type: "POST",
+                dataType: "json",
+                data: { i_process_control_id:i_process_control_id },
+                success: function (data) {
+                    if(data.success == true) {
+                        swal('Success',data.message,'success');
+                    }else {
+                        swal('Attention',data.message,'warning');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            };
+
+            $.ajax({
+                beforeSend: function( xhr ) {
+                    swal({
+                        title: "Konfirmasi",
+                        text: 'Anda yakin ingin membatalkan proses?',
+                        type: "info",
+                        showCancelButton: true,
+                        showLoaderOnConfirm: true,
+                        confirmButtonText: "Ya, Yakin",
+                        confirmButtonColor: "#e80c1c",
+                        cancelButtonText: "Tidak",
+                        closeOnConfirm: false,
+                        closeOnCancel: true,
+                        html: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm) {
+                            $.ajax(ajaxOptions);
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    });
+                }
+            });
+    }
+
+    function downloadCostMap() {
+
+            var processcontrolid_pk = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
+
+            var url = "<?php echo WS_JQGRID . "transaksi.tblt_costmap_controller/download_excel/?"; ?>";
+            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+            url += "&processcontrolid_pk="+processcontrolid_pk;
+            url += "&periodid_fk="+periodid_fk;
+
+            swal({
+                title: "Konfirmasi",
+                text: 'Anda yakin ingin melakukan download data?',
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Ya, Yakin",
+                confirmButtonColor: "#538cf6",
+                cancelButtonText: "Tidak",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                html: true
+            },
+            function(isConfirm){
+                if(isConfirm) {
+                    window.location = url;
+                    return true;
+                }else {
+                    return false;
+                }
+            });
     }
 
 </script>
 
-<?php //$this->load->view('lov/lov_show_detil_batchcontrol'); ?>
+
 
 
 <script>
-
     jQuery(function($) {
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."parameter.tblp_logprocesscontrol_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."transaksi.tblt_costmap_controller/crud"; ?>',
             postData: { processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>},
             datatype: "json",
             mtype: "POST",
             colModel: [
-                {label: 'ID', name: 'processcontrolid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Counter No',name: 'counterno',width: 50, align: "left", hidden:true},
-                {label: 'Log Date',name: 'logdate',width: 100, align: "left"},
-                {label: 'Log Message',name: 'logmessage',width: 150, align: "left"},
-                {label: 'Log Type',name: 'logtype',width: 150, align: "left"}
+                {label: 'Cost Center',name: 'costcenter',width: 350, align: "left"},
+                {label: 'GL Account',name: 'glaccount',width: 250, align: "left"},
+                {label: 'PL Item',name: 'plitemname',width: 300, align: "left"},
+                {label: 'Amount',name: 'amount',width: 150, align: "right"},
+                {label: 'Indirect Cost?',name: 'isindirectcost',width: 150, align: "center"},
+                {label: 'Activity',name: 'activityname',width: 250, align: "left"},
+                {label: 'Need PCA?',name: 'isneedpca',width: 150, align: "center"}
+
             ],
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 12,
-            rowList: [12,20,50],
+            rowNum: 7,
+            rowList: [7,20,50],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
@@ -187,8 +339,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."parameter.tblp_logprocesscontrol_controller/crud"; ?>',
-            caption: "Log Process Control :: <?php echo $this->input->post('processcode'); ?>"
+            editurl: '<?php echo WS_JQGRID."transaksi.tblt_costmap_controller/crud"; ?>',
+            caption: "<?php echo $this->input->post('processcode'); ?>"
 
         });
 

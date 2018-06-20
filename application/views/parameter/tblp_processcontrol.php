@@ -125,11 +125,20 @@
 
     function doProcess(id) {
         var rowData = jQuery("#grid-table").getRowData(id);
+        str_processcode = rowData['processcode'].toUpperCase();
 
-        loadContentWithParams("transaksi.tblt_staffcompmap", {
+        var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
+                            'COST_MAP' : 'transaksi.tblt_costmap'};
+
+        if(link_obj[str_processcode] == 'undefined') {
+            return;
+        }
+
+        loadContentWithParams(link_obj[str_processcode], {
             processcontrolid_pk: rowData['processcontrolid_pk'],
             processcode : rowData['processcode'],
             isupdatable : rowData['isupdatable'],
+            tab_1 : link_obj[str_processcode],
             i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
             periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>
         });

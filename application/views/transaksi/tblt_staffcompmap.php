@@ -98,7 +98,8 @@ $("#tab-2").on("click", function(event) {
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-        processcode : '<?php echo $this->input->post('processcode'); ?>'
+        processcode : '<?php echo $this->input->post('processcode'); ?>',
+        tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
     });
 
 });
@@ -112,7 +113,8 @@ $("#tab-3").on("click", function(event) {
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-        processcode : '<?php echo $this->input->post('processcode'); ?>'
+        processcode : '<?php echo $this->input->post('processcode'); ?>',
+        tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
     });
 });
 

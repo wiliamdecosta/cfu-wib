@@ -40,13 +40,14 @@ class Tblp_logprocesscontrol_controller {
 
             $req_param['where'] = array();
             // Filter Table
+
             if(!empty($processcontrolid_fk)) {
                 $req_param['where'][] = 'pprocesscontrolid_fk = '.$processcontrolid_fk;
             }
 
             if(!empty($i_search)) {
-                $req_param['where'][] = "upper(logmessage) like upper('%".$i_search."%') OR
-                                                    upper(logtype) like upper('%".$i_search."%')";
+                $req_param['where'][] = "(upper(logmessage) like upper('%".$i_search."%') OR
+                                                    upper(logtype) like upper('%".$i_search."%'))";
             }
 
             $table->setJQGridParam($req_param);
