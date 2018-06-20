@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Tblm_activity_controller
+* @class Tblm_centralcost_controller
 * @version 2018-06-16 09:12:54
 */
-class Tblm_activity_controller {
+class Tblm_centralcost_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','activity.activityid_pk');
+        $sidx = getVarClean('sidx','str','a.cccode, a.accountcode');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
@@ -26,8 +26,8 @@ class Tblm_activity_controller {
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_activity');
-            $table = $ci->tblm_activity;
+            $ci->load->model('parameter/tblm_centralcost');
+            $table = $ci->tblm_centralcost;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -45,15 +45,21 @@ class Tblm_activity_controller {
 
             // Filter Table
             $req_param['where'] = array();
-            if(!empty($i_search)) {
-                $table->setCriteria("( upper(activity.code) like upper('%".$i_search."%') OR
-                                            upper(activity.activityname) like upper('%".$i_search."%') OR
-                                            upper(activity.description) like upper('%".$i_search."%'))");
-            }
+
+            $table->setCriteria("c.kode_lokasi ='9000'");
+            $table->setCriteria("nr.kode_fs = 'CCA'");
 
             if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(activity.ubiscode) like upper('".$ubiscode."'))");
+                $table->setCriteria("(upper(ub.code) like upper('".$ubiscode."'))");
             }
+
+            if(!empty($i_search)) {
+                $table->setCriteria("( upper(a.cccode) like upper('%".$i_search."%') OR
+                                            upper(a.accountcode) like upper('%".$i_search."%') OR
+                                            upper(a.description) like upper('%".$i_search."%'))");
+            }
+
+
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();
@@ -79,55 +85,7 @@ class Tblm_activity_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data master activity');
-        }catch (Exception $e) {
-            $data['message'] = $e->getMessage();
-        }
-
-        return $data;
-    }
-
-
-
-    function readLov() {
-
-        $start = getVarClean('current','int',0);
-        $limit = getVarClean('rowCount','int',5);
-
-        $sort = getVarClean('sort','str','listingno');
-        $dir  = getVarClean('dir','str','asc');
-
-        $searchPhrase = getVarClean('searchPhrase', 'str', '');
-
-        $ubiscode = getVarClean('ubiscode','str','');
-
-        $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
-
-        try {
-
-            $ci = & get_instance();
-            $ci->load->model('parameter/tblm_activity');
-            $table = $ci->tblm_activity;
-
-            if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(activity.code) like upper('%".$searchPhrase."%') OR
-                                         upper(activity.activityname) like upper('%".$searchPhrase."%')");
-
-            }
-
-
-            if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(activity.ubiscode) like upper('".$ubiscode."'))");
-            }
-
-            $start = ($start-1) * $limit;
-            $items = $table->getAll($start, $limit, $sort, $dir);
-            $totalcount = $table->countAll();
-
-            $data['rows'] = $items;
-            $data['success'] = true;
-            $data['total'] = $totalcount;
-
+            logging('view data central cost');
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -169,8 +127,8 @@ class Tblm_activity_controller {
     function create() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activity');
-        $table = $ci->tblm_activity;
+        $ci->load->model('parameter/tblm_centralcost');
+        $table = $ci->tblm_centralcost;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -224,7 +182,7 @@ class Tblm_activity_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data added successfully';
-                logging('create data master activity');
+                logging('create data central cost');
 
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -241,8 +199,8 @@ class Tblm_activity_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activity');
-        $table = $ci->tblm_activity;
+        $ci->load->model('parameter/tblm_centralcost');
+        $table = $ci->tblm_centralcost;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -296,7 +254,7 @@ class Tblm_activity_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data update successfully';
-                logging('update data master activity');
+                logging('update data central cost');
                 $data['rows'] = $table->get($items[$table->pkey]);
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -312,8 +270,8 @@ class Tblm_activity_controller {
 
     function destroy() {
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activity');
-        $table = $ci->tblm_activity;
+        $ci->load->model('parameter/tblm_centralcost');
+        $table = $ci->tblm_centralcost;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -343,7 +301,7 @@ class Tblm_activity_controller {
 
             $data['success'] = true;
             $data['message'] = $total.' Data deleted successfully';
-            logging('delete data master activity');
+            logging('delete data central cost');
             $table->db->trans_commit(); //Commit Trans
 
         }catch (Exception $e) {

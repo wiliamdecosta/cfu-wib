@@ -12,9 +12,9 @@ class Tblm_activity extends Abstract_model {
 
     public $fields          = array(
                                 'activityid_pk'      => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ActivityID_PK'),
+                                'ubiscode'         => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'BU/Subsidiary'),
                                 'code'                  => array('nullable' => false, 'type' => 'str', 'unique' => true, 'display' => 'CODE'),
                                 'activityname'         => array('nullable' =>  false, 'type' => 'str', 'unique' => false, 'display' => 'ACTIVITYNAME'),
-                                'ubiscode'         => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'UBISCODE'),
                                 'listingno'            => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'LISTINGNO'),
                                 'description'         => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'DESCRIPTION'),
 
@@ -25,8 +25,12 @@ class Tblm_activity extends Abstract_model {
 
                             );
 
-    public $selectClause    = "activity.*, to_char(updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, updatedby lastupdatedby";
-    public $fromClause      = "tblm_activity activity";
+    public $selectClause    = "activity.activityid_pk, activity.code, activity.activityname, activity.ubiscode, activity.listingno, activity.description, activity.creationdate, activity.createdby, activity.updateddate, activity.updatedby,
+                                        to_char(activity.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, activity.updatedby lastupdatedby,
+                                        activity.ubiscode ubiscode_display,
+                                        ub.ubisname";
+    public $fromClause      = "tblm_activity activity
+                                            left join tblm_wibunitbusiness ub on activity.ubiscode = ub.code";
 
     public $refs            = array();
 

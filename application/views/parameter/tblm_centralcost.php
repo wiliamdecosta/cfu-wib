@@ -14,7 +14,7 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>Staff Component</span>
+            <span>Cost Map</span>
         </li>
     </ul>
 </div>
@@ -22,6 +22,18 @@
 <div class="space-4"></div>
 <div class="row">
     <label class="control-label col-md-2">Pencarian :</label>
+    <div class="col-md-3">
+        <div class="input-group">
+            <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
+            <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
+            <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
+                    <span class="fa fa-search bigger-110"></span>
+                </button>
+            </span>
+        </div>
+    </div>
     <div class="col-md-3">
         <div class="input-group">
             <div class="input-group">
@@ -33,17 +45,17 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row"  id="table_placeholder" style="display:none;">
     <div class="col-md-12">
         <table id="grid-table"></table>
         <div id="grid-pager"></div>
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_tblm_activity'); ?>
-<?php $this->load->view('lov/lov_bpc_cost_payroll_div'); ?>
-<?php $this->load->view('lov/lov_bpc_cost_payroll_loker'); ?>
-<?php $this->load->view('lov/lov_bpc_cost_payroll_posisi'); ?>
+<?php $this->load->view('lov/lov_tblm_activity_extra'); ?>
+<?php $this->load->view('lov/lov_exs_cc'); ?>
+<?php $this->load->view('lov/lov_bpc_masakun'); ?>
+<?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
 
 <script>
 /**
@@ -52,86 +64,64 @@
  * @param  {[type]} code [description]
  * @return {[type]}      [description]
  */
+function showLOVBusinessUnit(id, code, name) {
+    modal_lov_tblm_wibunitbusiness_show(id, code, name);
+}
+
 function showLovActivity(id, code, name) {
-    modal_lov_tblm_activity_show(id, code, name);
+    var ubiscode = $('#search_wibunitbusinesscode').val();
+    modal_lov_tblm_activity_show(id, code, name, ubiscode);
 }
 
-function showLovDivisi(id, code) {
-    modal_lov_bpc_cost_payroll_div_show(id, code);
+function showLOVExsCC(id, name) {
+    var ubiscode = $('#search_wibunitbusinesscode').val();
+    modal_lov_exs_cc_show(id, name, ubiscode);
 }
 
-function showLovLoker(id, code) {
-    var id_divisi = $('#form_id_divisi').val();
-
-    if(id_divisi == "") {
-        swal("Info", "Silahkan pilih Division ID terlebih dahulu", "info");
-        return;
-    }
-    modal_lov_bpc_cost_payroll_loker_show(id, code, id_divisi);
+function showLOVBpcMasakun(id, code, name) {
+    modal_lov_bpc_masakun_show(id, code, name);
 }
 
 
-function showLovPosisi(id, code) {
-    var id_divisi = $('#form_id_divisi').val();
-    var id_loker = $('#form_id_loker').val();
-
-    if(id_divisi == ""
-            || id_loker == "") {
-        swal("Info", "Silahkan pilih Division ID & Organization ID terlebih dahulu", "info");
-        return;
-    }
-    modal_lov_bpc_cost_payroll_posisi_show(id, code, id_divisi, id_loker);
+function clearInputCostCenter() {
+    $('#form_cc_code').val('');
+    $('#form_cc_name').val('');
 }
 
-/**
- * [clearInputBusinessUnit called by beforeShowForm method to clean input of statustypeid_fk]
- * @return {[type]} [description]
- */
 function clearInputActivity() {
     $('#form_activityid_fk').val('');
     $('#form_activitycode').val('');
     $('#form_activityname').val('');
 }
 
-function clearInputDivisi() {
-    $('#form_id_divisi').val('');
-    $('#form_nama_divisi').val('');
+function clearInputAkun() {
+    $('#form_accountcode').val('');
+    $('#form_accountname').val('');
+    $('#form_plitem').val('');
 }
 
-function clearInputLoker() {
-    $('#form_id_loker').val('');
-    $('#form_nama_loker').val('');
-}
-
-function clearInputPosisi() {
-    $('#form_id_posisi').val('');
-    $('#form_nama_posisi').val('');
-}
-
-function onChangeDivisi() {
-    clearInputLoker();
-    clearInputPosisi();
-}
-
-function onChangeLoker() {
-    clearInputPosisi();
-}
 </script>
 
 <script>
     function showData(){
         var i_search = $('#i_search').val();
+        var ubiscode = $('#search_wibunitbusinesscode').val();
 
-        jQuery(function($) {
+        if(ubiscode == '') {
+            $('#table_placeholder').hide();
+            return;
+        }
 
-            jQuery("#grid-table").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."parameter.tblm_staffactivitymap_controller/read"; ?>',
-                postData: {
-                    i_search : $('#i_search').val()
-                }
-            });
-            $("#grid-table").trigger("reloadGrid");
+        jQuery("#grid-table").jqGrid('setGridParam',{
+            url: '<?php echo WS_JQGRID."parameter.tblm_centralcost_controller/read"; ?>',
+            postData: {
+                i_search : i_search,
+                ubiscode : ubiscode
+            }
         });
+        $("#grid-table").trigger("reloadGrid");
+        responsive_jqgrid('#grid-table', '#grid-pager');
+        $('#table_placeholder').show();
     }
 </script>
 
@@ -142,13 +132,13 @@ function onChangeLoker() {
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."parameter.tblm_staffactivitymap_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."parameter.tblm_centralcost_controller/crud"; ?>',
             datatype: "json",
             mtype: "POST",
             colModel: [
-                {label: 'ID', name: 'staffactivitymapid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Division ID',
-                    name: 'id_divisi',
+                {label: 'ID', name: 'centralcostid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                /*{label: 'BU/Subsidiary',
+                    name: 'ubiscode',
                     width: 200,
                     sortable: true,
                     editable: true,
@@ -161,12 +151,13 @@ function onChangeLoker() {
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_id_divisi" type="text"  style="background:#FBEC88" readonly class="FormElement form-control" placeholder="Choose Division" onchange="onChangeDivisi();">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLovDivisi(\'form_id_divisi\',\'form_nama_divisi\')">'+
+                                elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
+                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +
-                                        '<input id="form_nama_divisi" readonly type="text" size="30" class="FormElement form-control" placeholder="Division Name">');
-                                $("#form_id_divisi").val(value);
+                                        '<input id="form_wibunitbusinessname" readonly type="text" size="30" class="FormElement form-control" placeholder="Business Unit Name">');
+                                $("#form_wibunitbusinesscode").val(value);
                                 elm.parent().removeClass('jqgrid-required');
                             }, 100);
 
@@ -175,24 +166,28 @@ function onChangeLoker() {
                         "custom_value":function( element, oper, gridval) {
 
                             if(oper === 'get') {
-                                return $("#form_id_divisi").val();
+                                return $("#form_wibunitbusinesscode").val();
                             } else if( oper === 'set') {
-                                $("#form_id_divisi").val(gridval);
+                                $("#form_wibunitbusinesscode").val(gridval);
                                 var gridId = this.id;
                                 // give the editor time to set display
                                 setTimeout(function(){
                                     var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
                                     if(selectedRowId != null) {
-                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'division_name');
-                                        $("#form_nama_divisi").val( code_display );
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubiscode');
+                                        var name_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubisname');
+                                        $("#form_wibunitbusinesscode").val( code_display );
+                                        $("#form_wibunitbusinessname").val( name_display );
                                     }
                                 },100);
                             }
                         }
                     }
                 },
-                {label: 'Organization ID',
-                    name: 'id_loker',
+                */
+                {label: 'Cost Center',name: 'ccgabung',width: 250, align: "left"},
+                {label: 'Cost Center Code',
+                    name: 'cccode',
                     width: 200,
                     sortable: true,
                     editable: true,
@@ -205,56 +200,12 @@ function onChangeLoker() {
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_id_loker" type="text"  readonly style="background:#FBEC88" class="FormElement form-control" onchange="onChangeLoker();" placeholder="Choose Organization">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLovLoker(\'form_id_loker\',\'form_nama_loker\')">'+
-                                        '   <span class="fa fa-search bigger-110"></span>'+
-                                        '</button>&nbsp; ' +
-                                        '<input id="form_nama_loker" readonly type="text" size="30" class="FormElement form-control" placeholder="Organization Name">');
-                                $("#form_id_loker").val(value);
-                                elm.parent().removeClass('jqgrid-required');
-                            }, 100);
-
-                            return elm;
-                        },
-                        "custom_value":function( element, oper, gridval) {
-
-                            if(oper === 'get') {
-                                return $("#form_id_loker").val();
-                            } else if( oper === 'set') {
-                                $("#form_id_loker").val(gridval);
-                                var gridId = this.id;
-                                // give the editor time to set display
-                                setTimeout(function(){
-                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
-                                    if(selectedRowId != null) {
-                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'org_name');
-                                        $("#form_nama_loker").val( code_display );
-                                    }
-                                },100);
-                            }
-                        }
-                    }
-                },
-                {label: 'Job Position ID',
-                    name: 'id_posisi',
-                    width: 200,
-                    sortable: true,
-                    editable: true,
-                    hidden: true,
-                    editrules: {edithidden: true, required:false},
-                    edittype: 'custom',
-                    editoptions: {
-                        "custom_element":function( value  , options) {
-                            var elm = $('<span></span>');
-
-                            // give the editor time to initialize
-                            setTimeout( function() {
-                                elm.append('<input id="form_id_posisi" readonly type="text" class="FormElement form-control" placeholder="Choose Job Position">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLovPosisi(\'form_id_posisi\',\'form_nama_posisi\')">'+
+                                elm.append('<input id="form_cc_code" type="text"  style="background:#FBEC88" readonly class="FormElement form-control" placeholder="Choose Cost Center">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVExsCC(\'form_cc_code\',\'form_cc_name\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +
-                                        '<input id="form_nama_posisi" readonly size="30" type="text" class="FormElement form-control" placeholder="Job Position Name">');
-                                $("#form_id_posisi").val(value);
+                                        '<input id="form_cc_name" readonly type="text" size="30" class="FormElement form-control" placeholder="Cost Center Name">');
+                                $("#form_cc_code").val(value);
                                 elm.parent().removeClass('jqgrid-required');
                             }, 100);
 
@@ -263,23 +214,88 @@ function onChangeLoker() {
                         "custom_value":function( element, oper, gridval) {
 
                             if(oper === 'get') {
-                                return $("#form_id_posisi").val();
+                                return $("#form_cc_code").val();
                             } else if( oper === 'set') {
-                                $("#form_id_posisi").val(gridval);
+                                $("#form_cc_code").val(gridval);
                                 var gridId = this.id;
                                 // give the editor time to set display
                                 setTimeout(function(){
                                     var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
                                     if(selectedRowId != null) {
-                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'job_posisition');
-                                        $("#form_nama_posisi").val( code_display );
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ccname');
+                                        $("#form_cc_name").val( code_display );
                                     }
                                 },100);
                             }
                         }
                     }
                 },
-                {label: 'Activity Code',
+                {label: 'GL Account',name: 'accountgabung',width: 250, align: "left"},
+                {label: 'Account',
+                    name: 'accountcode',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
+                    editoptions: {
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_accountcode" type="text" style="background:#FBEC88" readonly class="FormElement form-control" placeholder="Choose Account">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVBpcMasakun(\'form_accountcode\',\'form_accountname\',\'form_plitem\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button> &nbsp;' +
+                                        '<input id="form_accountname" readonly type="text" size="45" class="FormElement form-control" placeholder="Account Name"> &nbsp;'+
+                                        '<input id="form_plitem" readonly type="text" size="15" class="FormElement form-control" placeholder="PL Item">');
+                                $("#form_accountcode").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_accountcode").val();
+                            } else if( oper === 'set') {
+                                $("#form_accountcode").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'accountname');
+                                        var name_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'plitem');
+                                        $("#form_accountname").val( code_display );
+                                        $("#form_plitem").val( name_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
+                },
+                {label: 'PL Item',name: 'plitem',width: 150, align: "left"},
+                {label: 'BU/Subsidiary',name: 'wibunitbusinessid_fk',width: 150, align: "left",editable: true, hidden:true,
+                    editoptions: {
+                        size: 30,
+                        maxlength:10
+                    },
+                    editrules: {required: true}
+                },
+                {label: 'Indirect Cost?',name: 'isindirectcost',width: 120, align: "left",editable: true, edittype: 'select', hidden:true,
+                    editrules: {edithidden: true, required: false},
+                    editoptions: {
+                    value: "Y:YES;N:NO",
+                    dataInit: function(elem) {
+                        $(elem).width(150);  // set the width which you need
+                    }
+                }},
+
+                {label: 'Activity',
                     name: 'activityid_fk',
                     width: 200,
                     sortable: true,
@@ -294,7 +310,7 @@ function onChangeLoker() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_activityid_fk" type="text"  style="display:none;">'+
-                                        '<input id="form_activitycode" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Activity">'+
+                                        '<input id="form_activitycode" readonly type="text" class="FormElement form-control" placeholder="Choose Activity">'+
                                         '<button class="btn btn-success" type="button" onclick="showLovActivity(\'form_activityid_fk\',\'form_activitycode\',\'form_activityname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +
@@ -326,6 +342,15 @@ function onChangeLoker() {
                         }
                     }
                 },
+                {label: 'Need PCA?',name: 'isneedpca',width: 120, align: "left",editable: true, edittype: 'select', hidden:true,
+                    editrules: {edithidden: true, required: false},
+                    editoptions: {
+                    value: "Y:YES;N:NO",
+                    dataInit: function(elem) {
+                        $(elem).width(150);  // set the width which you need
+                    }
+                }},
+
                 {label: 'Description',name: 'description',width: 200, hidden:true, align: "left",editable: true,
                     edittype:'textarea',
                     editoptions: {
@@ -367,19 +392,12 @@ function onChangeLoker() {
                     },
                     editrules: {edithidden: true}
                 },
-                {label: 'Division',name: 'divisi_gabung',width: 300, align: "left"},
-                {label: 'Organization',name: 'organization_gabung',width: 300, align: "left"},
-                {label: 'Job Position',name: 'jobposition_gabung',width: 300, align: "left"},
-                {label: 'Activity',name: 'activity_gabung',width: 200, align: "left"},
-                {label: 'Last Updated Date',name: 'lastupdateddate',width: 180, align: "left"},
-                {label: 'Last Updated By',name: 'lastupdatedby',width: 150, align: "left"},
-
-                {label: 'activitycode',name: 'activitycode',width: 120, align: "left", hidden: true},
-                {label: 'activityname',name: 'activityname',width: 120, align: "left", hidden: true},
-
-                {label: 'division_name',name: 'division_name',width: 120, align: "left", hidden: true},
-                {label: 'org_name',name: 'org_name',width: 120, align: "left", hidden: true},
-                {label: 'job_posisition',name: 'job_posisition',width: 120, align: "left", hidden: true},
+                {label: 'Last Updated Date',name: 'lastupdateddate',width: 120, align: "left"},
+                {label: 'Last Updated By',name: 'lastupdatedby',width: 120, align: "left"},
+                {label: 'activityname',name: 'activityname',width: 120, align: "left", hidden:true},
+                {label: 'activitycode',name: 'activitycode',width: 120, align: "left", hidden:true},
+                {label: 'ccname',name: 'ccname',width: 120, align: "left", hidden:true},
+                {label: 'accountname',name: 'accountname',width: 120, align: "left", hidden:true},
 
             ],
             height: '100%',
@@ -390,7 +408,7 @@ function onChangeLoker() {
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: false,
+            shrinkToFit: true,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
@@ -410,8 +428,8 @@ function onChangeLoker() {
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."parameter.tblm_staffactivitymap_controller/crud"; ?>',
-            caption: "Staff Component"
+            editurl: '<?php echo WS_JQGRID."parameter.tblm_centralcost_controller/crud"; ?>',
+            caption: "Cost Map"
 
         });
 
@@ -488,11 +506,12 @@ function onChangeLoker() {
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
 
+                    $('#wibunitbusinessid_fk').val( $('#search_wibunitbusinessid_pk').val() );
+
                     setTimeout(function() {
+                        clearInputCostCenter();
                         clearInputActivity();
-                        clearInputDivisi();
-                        clearInputLoker();
-                        clearInputPosisi();
+                        clearInputAkun();
                     },100);
 
                 },
@@ -509,10 +528,10 @@ function onChangeLoker() {
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
 
+                    clearInputCostCenter();
                     clearInputActivity();
-                    clearInputDivisi();
-                    clearInputLoker();
-                    clearInputPosisi();
+                    clearInputAkun();
+
                     return [true,"",response.responseText];
                 }
             },

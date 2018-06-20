@@ -55,12 +55,11 @@
         });
     });
 
-    function modal_lov_tblm_activity_show(the_id_field, the_code_field, the_name_field) {
+    function modal_lov_tblm_activity_show(the_id_field, the_code_field, the_name_field, ubiscode) {
         modal_lov_tblm_activity_set_field_value(the_id_field, the_code_field, the_name_field);
         $("#modal_lov_tblm_activity").modal({backdrop: 'static'});
-        modal_lov_tblm_activity_prepare_table();
+        modal_lov_tblm_activity_prepare_table(ubiscode);
     }
-
 
     function modal_lov_tblm_activity_set_field_value(the_id_field, the_code_field, the_name_field) {
          $("#modal_lov_tblm_activity_id_val").val(the_id_field);
@@ -79,7 +78,8 @@
          $("#"+ $("#modal_lov_tblm_activity_name_val").val()).change();
     }
 
-    function modal_lov_tblm_activity_prepare_table() {
+    function modal_lov_tblm_activity_prepare_table(ubiscode) {
+        $("#modal_lov_tblm_activity_grid_selection").bootgrid("destroy");
         $("#modal_lov_tblm_activity_grid_selection").bootgrid({
              formatters: {
                 "opt-edit" : function(col, row) {
@@ -105,6 +105,9 @@
                 return response;
              },
              url: '<?php echo WS_BOOTGRID."parameter.tblm_activity_controller/readLov"; ?>',
+             post: {
+                 ubiscode: ubiscode
+             },
              selection: true,
              sorting:true
         });

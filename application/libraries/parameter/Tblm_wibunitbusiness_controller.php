@@ -1,33 +1,27 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Tblm_activity_controller
-* @version 2018-06-16 09:12:54
+* @class Tblm_wibunitbusiness_controller
+* @version 2018-06-19 22:26:14
 */
-class Tblm_activity_controller {
+class Tblm_wibunitbusiness_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','activity.activityid_pk');
+        $sidx = getVarClean('sidx','str','wibunitbusinessid_pk');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
-        $ubiscode = getVarClean('ubiscode','str','');
-
-        if(empty($ubiscode)) {
-            $data['success'] = true;
-            return $data;
-        }
 
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_activity');
-            $table = $ci->tblm_activity;
+            $ci->load->model('parameter/tblm_wibunitbusiness');
+            $table = $ci->tblm_wibunitbusiness;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -46,13 +40,10 @@ class Tblm_activity_controller {
             // Filter Table
             $req_param['where'] = array();
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(activity.code) like upper('%".$i_search."%') OR
-                                            upper(activity.activityname) like upper('%".$i_search."%') OR
-                                            upper(activity.description) like upper('%".$i_search."%'))");
-            }
-
-            if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(activity.ubiscode) like upper('".$ubiscode."'))");
+                $table->setCriteria("( upper(code) like upper('%".$i_search."%') OR
+                                            upper(ubisname) like upper('%".$i_search."%') OR
+                                            upper(code2) like upper('%".$i_search."%') OR
+                                            upper(description) like upper('%".$i_search."%'))");
             }
 
             $table->setJQGridParam($req_param);
@@ -94,30 +85,23 @@ class Tblm_activity_controller {
         $start = getVarClean('current','int',0);
         $limit = getVarClean('rowCount','int',5);
 
-        $sort = getVarClean('sort','str','listingno');
+        $sort = getVarClean('sort','str','wibunitbusinessid_pk');
         $dir  = getVarClean('dir','str','asc');
 
         $searchPhrase = getVarClean('searchPhrase', 'str', '');
-
-        $ubiscode = getVarClean('ubiscode','str','');
 
         $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
 
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_activity');
-            $table = $ci->tblm_activity;
+            $ci->load->model('parameter/tblm_wibunitbusiness');
+            $table = $ci->tblm_wibunitbusiness;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(activity.code) like upper('%".$searchPhrase."%') OR
-                                         upper(activity.activityname) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("upper(code) like upper('%".$searchPhrase."%') OR
+                                         upper(ubisname) like upper('%".$searchPhrase."%')");
 
-            }
-
-
-            if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(activity.ubiscode) like upper('".$ubiscode."'))");
             }
 
             $start = ($start-1) * $limit;
@@ -169,8 +153,8 @@ class Tblm_activity_controller {
     function create() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activity');
-        $table = $ci->tblm_activity;
+        $ci->load->model('parameter/tblm_wibunitbusiness');
+        $table = $ci->tblm_wibunitbusiness;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -241,8 +225,8 @@ class Tblm_activity_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activity');
-        $table = $ci->tblm_activity;
+        $ci->load->model('parameter/tblm_wibunitbusiness');
+        $table = $ci->tblm_wibunitbusiness;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -312,8 +296,8 @@ class Tblm_activity_controller {
 
     function destroy() {
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activity');
-        $table = $ci->tblm_activity;
+        $ci->load->model('parameter/tblm_wibunitbusiness');
+        $table = $ci->tblm_wibunitbusiness;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
