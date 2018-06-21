@@ -142,9 +142,7 @@ class Tblt_staffcompmap_controller {
 
                 if($initubiscode != $item['ubiscode']) {
                     $output .= '<tr>';
-                        $output .= '<td>&nbsp;</td>';
-                        $output .= '<td>&nbsp;</td>';
-                        $output .= '<td><b>Total</b></td>';
+                        $output .= '<td colspan="3" align="center"><b>Total</b></td>';
                         $output .= '<td align="right"><b>'.$subtotal['staffqty'].'</b></td>';
                         $output .= '<td align="right"><b>'.($subtotal['staffpct'] * 100).' %</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($subtotal['compensationvalue']).'</b></td>';
@@ -182,9 +180,7 @@ class Tblt_staffcompmap_controller {
             }
 
             $output .= '<tr>';
-                        $output .= '<td>&nbsp;</td>';
-                        $output .= '<td>&nbsp;</td>';
-                        $output .= '<td><b>Total</b></td>';
+                        $output .= '<td colspan="3" align="center"><b>Total</b></td>';
                         $output .= '<td align="right"><b>'.$subtotal['staffqty'].'</b></td>';
                         $output .= '<td align="right"><b>'.($subtotal['staffpct'] * 100).' %</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($subtotal['compensationvalue']).'</b></td>';
@@ -192,9 +188,7 @@ class Tblt_staffcompmap_controller {
                     $output .= '</tr>';
 
             $output .= '<tr class="success">';
-                        $output .= '<td>&nbsp;</td>';
-                        $output .= '<td>&nbsp;</td>';
-                        $output .= '<td><b>Grand Total</b></td>';
+                        $output .= '<td colspan="3" align="center"><b>Grand Total</b></td>';
                         $output .= '<td align="right"><b>'.$grandtotal['staffqty'].'</b></td>';
                         $output .= '<td align="right"><b>'.($grandtotal['staffpct'] * 100).' %</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['compensationvalue']).'</b></td>';

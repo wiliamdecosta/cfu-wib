@@ -155,7 +155,6 @@ $("#tab-3").on("click", function(event) {
 
 <script>
 
-
     function doProcess() {
             var processcode = "<?php echo $this->input->post('processcode'); ?>";
             var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
@@ -287,9 +286,6 @@ $("#tab-3").on("click", function(event) {
     }
 
 </script>
-
-
-
 
 <script>
     jQuery(function($) {
