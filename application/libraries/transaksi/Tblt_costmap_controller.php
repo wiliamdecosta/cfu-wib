@@ -231,11 +231,11 @@ class Tblt_costmap_controller {
                 $output .= '<td valign="top">'.$item['ccname'].'</td>';
                 $output .= '<td valign="top">'.$item['accountcode'].'</td>';
                 $output .= '<td valign="top">'.$item['accountname'].'</td>';
-                $output .= '<td valign="top" align="right">'.numberFormat($item['amount'],0).'</td>';
+                $output .= '<td valign="top" align="right">'.numberFormat($item['amount'],2).'</td>';
                 $output .= '<td valign="top">'.$item['plitemname'].'</td>';
-                $output .= '<td valign="top" align="center">'.$item['isindirectcost'].'</td>';
+                $output .= '<td valign="top" align="center">'.$item['isindirectcost_display'].'</td>';
                 $output .= '<td valign="top">'.$item['activityname'].'</td>';
-                $output .= '<td valign="top" align="center">'.$item['isneedpca'].'</td>';
+                $output .= '<td valign="top" align="center">'.$item['isneedpca_display'].'</td>';
                 $output .= '</tr>';
             }
 

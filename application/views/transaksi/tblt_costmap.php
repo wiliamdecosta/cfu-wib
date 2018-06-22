@@ -302,9 +302,9 @@ $("#tab-3").on("click", function(event) {
                 {label: 'GL Account',name: 'glaccount',width: 250, align: "left"},
                 {label: 'PL Item',name: 'plitemname',width: 300, align: "left"},
                 {label: 'Amount',name: 'amount',width: 150, align: "right"},
-                {label: 'Indirect Cost?',name: 'isindirectcost',width: 150, align: "center"},
+                {label: 'Indirect Cost?',name: 'isindirectcost_display',width: 150, align: "center"},
                 {label: 'Activity',name: 'activityname',width: 250, align: "left"},
-                {label: 'Need PCA?',name: 'isneedpca',width: 150, align: "center"}
+                {label: 'Need PCA?',name: 'isneedpca_display',width: 150, align: "center"}
 
             ],
             height: '100%',

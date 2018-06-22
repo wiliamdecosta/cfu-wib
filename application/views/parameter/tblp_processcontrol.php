@@ -131,7 +131,8 @@
                             'COST_MAP' : 'transaksi.tblt_costmap',
                             'PCA' : 'transaksi.tblt_pca'};
  */
-        var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap'};
+        var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
+                            'COST_MAP' : 'transaksi.tblt_costmap'};
 
         if(link_obj[str_processcode] === undefined) {
             return;

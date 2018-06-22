@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Tblm_centralcost_controller
-* @version 2018-06-16 09:12:54
+* @class Tblm_pca_controller
+* @version 2018-06-21 23:19:30
 */
-class Tblm_centralcost_controller {
+class Tblm_pca_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','a.cccode, a.accountcode');
+        $sidx = getVarClean('sidx','str','a.pcaid_pk');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
@@ -26,8 +26,8 @@ class Tblm_centralcost_controller {
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_centralcost');
-            $table = $ci->tblm_centralcost;
+            $ci->load->model('parameter/tblm_pca');
+            $table = $ci->tblm_pca;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -48,22 +48,18 @@ class Tblm_centralcost_controller {
 
 
             if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(ub.code) like upper('".$ubiscode."'))");
+                $table->setCriteria("(upper(c.code) like upper('".$ubiscode."'))");
             }
 
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(a.cccode) like upper('%".$i_search."%') OR
-                                            upper(a.accountcode) like upper('%".$i_search."%') OR
+                $table->setCriteria("( upper(a.plitemcode) like upper('%".$i_search."%') OR
+                                            upper(a.pcainsource) like upper('%".$i_search."%') OR
                                             upper(a.description) like upper('%".$i_search."%') OR
-                                            upper(b.nama) like upper('%".$i_search."%') OR
-                                            upper(c.nama) like upper('%".$i_search."%') OR
-                                            upper(d.activityname) like upper('%".$i_search."%')
+                                            upper(b.nama) like upper('%".$i_search."%')
                                             )");
             }
 
-            $table->setCriteria("c.kode_lokasi ='9000'");
-            $table->setCriteria("nr.kode_fs = 'CCA'");
-
+            $table->setCriteria("b.kode_fs = 'CCA'");
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();
@@ -89,7 +85,7 @@ class Tblm_centralcost_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data central cost');
+            logging('view data tblm_pca');
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -131,8 +127,8 @@ class Tblm_centralcost_controller {
     function create() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_centralcost');
-        $table = $ci->tblm_centralcost;
+        $ci->load->model('parameter/tblm_pca');
+        $table = $ci->tblm_pca;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -186,7 +182,7 @@ class Tblm_centralcost_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data added successfully';
-                logging('create data central cost');
+                logging('create data tblm_pca');
 
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -203,8 +199,8 @@ class Tblm_centralcost_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_centralcost');
-        $table = $ci->tblm_centralcost;
+        $ci->load->model('parameter/tblm_pca');
+        $table = $ci->tblm_pca;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -258,7 +254,7 @@ class Tblm_centralcost_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data update successfully';
-                logging('update data central cost');
+                logging('update data tblm_pca');
                 $data['rows'] = $table->get($items[$table->pkey]);
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -274,8 +270,8 @@ class Tblm_centralcost_controller {
 
     function destroy() {
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_centralcost');
-        $table = $ci->tblm_centralcost;
+        $ci->load->model('parameter/tblm_pca');
+        $table = $ci->tblm_pca;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -305,7 +301,7 @@ class Tblm_centralcost_controller {
 
             $data['success'] = true;
             $data['message'] = $total.' Data deleted successfully';
-            logging('delete data central cost');
+            logging('delete data tblm_pca');
             $table->db->trans_commit(); //Commit Trans
 
         }catch (Exception $e) {

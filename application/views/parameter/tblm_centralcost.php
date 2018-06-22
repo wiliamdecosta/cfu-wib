@@ -392,8 +392,9 @@ function clearInputAkun() {
                     },
                     editrules: {edithidden: true}
                 },
-                {label: 'Last Updated Date',name: 'lastupdateddate',width: 120, align: "left"},
-                {label: 'Last Updated By',name: 'lastupdatedby',width: 120, align: "left"},
+                {label: 'Indirect Cost?',name: 'isindirectcost_display',width: 120, align: "center"},
+                {label: 'Activity',name: 'activity_display',width: 120, align: "left"},
+                {label: 'Need PCA?',name: 'isneedpca_display',width: 120, align: "center"},
                 {label: 'activityname',name: 'activityname',width: 120, align: "left", hidden:true},
                 {label: 'activitycode',name: 'activitycode',width: 120, align: "left", hidden:true},
                 {label: 'ccname',name: 'ccname',width: 120, align: "left", hidden:true},

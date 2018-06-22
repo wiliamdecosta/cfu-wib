@@ -139,10 +139,10 @@ class Tblt_pca_controller {
                 if($initubiscode != $item['ubiscode']) {
                     $output .= '<tr>';
                         $output .= '<td colspan="3" align="center"><b>Total</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],0).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],2).'</b></td>';
 
                     $output .= '</tr>';
 
@@ -158,10 +158,10 @@ class Tblt_pca_controller {
                     $output .= '<td>'.$item['ubiscode'].'</td>';
                     $output .= '<td>'.$item['activityname'].'</td>';
                     $output .= '<td>'.$item['plitemname'].'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['amount'],0).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['pcaout'],0).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['pcain'],0).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['total'],0).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['amount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['pcaout'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['pcain'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['total'],2).'</td>';
                 $output .= '</tr>';
 
                 $subtotal['amount'] += $item['amount'];
@@ -178,19 +178,19 @@ class Tblt_pca_controller {
 
             $output .= '<tr>';
                         $output .= '<td colspan="3" align="center"><b>Total</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],0).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],2).'</b></td>';
 
                     $output .= '</tr>';
 
             $output .= '<tr class="success">';
                         $output .= '<td colspan="3" align="center"><b>Grand Total</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['amount'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcaout'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcain'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['total'],0).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['amount'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcaout'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcain'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['total'],2).'</b></td>';
                     $output .= '</tr>';
 
         }catch (Exception $e) {
@@ -326,10 +326,10 @@ class Tblt_pca_controller {
                 if($initubiscode != $item['ubiscode']) {
                     $output .= '<tr>';
                         $output .= '<td colspan="3" align="center"><b>Total</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],0).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],2).'</b></td>';
 
                     $output .= '</tr>';
 
@@ -345,10 +345,10 @@ class Tblt_pca_controller {
                     $output .= '<td>'.$item['ubiscode'].'</td>';
                     $output .= '<td>'.$item['activityname'].'</td>';
                     $output .= '<td>'.$item['plitemname'].'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['amount'],0).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['pcaout'],0).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['pcain'],0).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['total'],0).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['amount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['pcaout'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['pcain'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['total'],2).'</td>';
                 $output .= '</tr>';
 
                 $subtotal['amount'] += $item['amount'];
@@ -364,18 +364,18 @@ class Tblt_pca_controller {
 
             $output .= '<tr>';
                         $output .= '<td colspan="3" align="center"><b>Total</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],0).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['amount'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcaout'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['pcain'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],2).'</b></td>';
             $output .= '</tr>';
 
             $output .= '<tr>';
                         $output .= '<td colspan="3" align="center"><b>Grand Total</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['amount'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcaout'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcain'],0).'</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['total'],0).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['amount'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcaout'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcain'],2).'</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($grandtotal['total'],2).'</b></td>';
             $output .= '</tr>';
 
             $output .= '</table>';

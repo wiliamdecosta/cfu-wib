@@ -29,27 +29,18 @@ class Tblm_centralcost extends Abstract_model {
 
                             );
 
-    /* public $selectClause    = "centralcost.centralcostid_pk, centralcost.cccode, centralcost.accountcode, centralcost.wibunitbusinessid_fk, centralcost.isindirectcost, centralcost.activityid_fk, centralcost.isneedpca, centralcost.description, centralcost.creationdate, centralcost.createdby, centralcost.updateddate, centralcost.updatedby,
-                                    to_char(centralcost.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, centralcost.updatedby lastupdatedby,
-                                       ubis.code ubiscode, ubis.ubisname,
-                                       activity.code activitycode, activity.activityname,
-                                       exscc.nama ccname, (centralcost.cccode || ' - ' || exscc.nama) ccgabung,
-                                       akun.nama accountname, (centralcost.accountcode || ' - ' || akun.nama) accountgabung
-                                       ";
-    public $fromClause      = "tblm_centralcost centralcost
-                                        left join tblm_wibunitbusiness ubis on centralcost.wibunitbusinessid_fk = ubis.wibunitbusinessid_pk
-                                        left join tblm_activity activity on centralcost.activityid_fk = activity.activityid_pk
-                                        left join rra.exs_cc exscc on centralcost.cccode = exscc.kode_cc
-                                        left join rra.bpc_masakun akun on centralcost.accountcode = akun.kode_akun
-                                        ";
- */
+
     public $selectClause    = "a.centralcostid_pk, a.cccode, a.accountcode, a.wibunitbusinessid_fk, a.isindirectcost, a.activityid_fk, a.isneedpca, a.description, a.creationdate, a.createdby, a.updateddate, a.updatedby,
                                     to_char(a.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, a.updatedby lastupdatedby,
                                        ub.code ubiscode, ub.ubisname,
                                        d.code activitycode, d.activityname,
                                        b.nama ccname, (a.cccode || ' - ' || b.nama) ccgabung,
                                        c.nama accountname, (a.accountcode || ' - ' || c.nama) accountgabung,
-                                       nr.nama plitem";
+                                       nr.nama plitem,
+                                       decode(a.isindirectcost, 'Y','YES','N','NO') isindirectcost_display,
+                                       d.activityname activity_display,
+                                       decode(a.isneedpca, 'Y','YES','N','NO') isneedpca_display
+                                       ";
 
     public $fromClause      = "tblm_centralcost a
                                         inner join rra.exs_cc b on a.cccode = b.kode_cc
