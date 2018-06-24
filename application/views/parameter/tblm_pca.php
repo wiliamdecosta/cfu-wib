@@ -55,7 +55,6 @@
 <?php $this->load->view('lov/lov_bpc_neraca'); ?>
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
 
-
 <script>
     function showLOVBusinessUnit(id, code, name) {
         modal_lov_tblm_wibunitbusiness_show(id, code, name);
@@ -106,7 +105,7 @@
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'pcaid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'BU/Subsidiary',name: 'wibunitbusinessid_pk',width: 150, align: "left",editable: true, hidden:true,
+                {label: 'BU/Subsidiary',name: 'wibunitbusinessid_fk',width: 150, align: "left",editable: true, hidden:true,
                     editoptions: {
                         size: 30,
                         maxlength:10
@@ -318,7 +317,7 @@
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
 
-                    $('#wibunitbusinessid_pk').val( $('#search_wibunitbusinessid_pk').val() );
+                    $('#wibunitbusinessid_fk').val( $('#search_wibunitbusinessid_pk').val() );
 
                     setTimeout(function() {
                         clearInputPLItem();

@@ -12,7 +12,7 @@ class Tblm_pca extends Abstract_model {
 
     public $fields          = array(
                                 'pcaid_pk'      => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'PCA ID PK'),
-                                'wibunitbusinessid_pk'     => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Business Unit'),
+                                'wibunitbusinessid_fk'     => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Business Unit'),
 
                                 'plitemcode'          => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'PL Item Code'),
                                 'pcainsource'         => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'PCA In Source'),
@@ -26,7 +26,7 @@ class Tblm_pca extends Abstract_model {
                             );
 
 
-    public $selectClause    = "a.pcaid_pk, a.wibunitbusinessid_pk, a.plitemcode, a.pcainsource,
+    public $selectClause    = "a.pcaid_pk, a.wibunitbusinessid_fk, a.plitemcode, a.pcainsource,
                                     a.description, a.plitemcode plitemcodedisplay,
                                     a.pcainsource pcainsourcedisplay,
                                     a.creationdate, a.createdby, a.updateddate, a.updatedby,
@@ -36,7 +36,7 @@ class Tblm_pca extends Abstract_model {
 
     public $fromClause      = "tblm_pca a
                                         inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca
-                                        inner join tblm_wibunitbusiness c on a.wibunitbusinessid_pk = c.wibunitbusinessid_pk";
+                                        inner join tblm_wibunitbusiness c on a.wibunitbusinessid_fk = c.wibunitbusinessid_pk";
     public $refs            = array();
 
     function __construct() {

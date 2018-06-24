@@ -10,7 +10,7 @@ class Tblt_staffcompmap_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','n01');
+        $sidx = getVarClean('sidx','str','s02');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
@@ -121,7 +121,7 @@ class Tblt_staffcompmap_controller {
 
 
             $count = $table->countAll();
-            $items = $table->getAll(0, -1);
+            $items = $table->getAll(0, -1, 's02', 'asc');
 
             if($count < 1) {  echo ''; exit; }
 
@@ -187,14 +187,14 @@ class Tblt_staffcompmap_controller {
                         $output .= '<td align="right"><b>'.($subtotal['compensationpct'] * 100).' %</b></td>';
                     $output .= '</tr>';
 
-            $output .= '<tr class="success">';
+           /*  $output .= '<tr class="success">';
                         $output .= '<td colspan="3" align="center"><b>Grand Total</b></td>';
                         $output .= '<td align="right"><b>'.$grandtotal['staffqty'].'</b></td>';
                         $output .= '<td align="right"><b>'.($grandtotal['staffpct'] * 100).' %</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['compensationvalue']).'</b></td>';
                         $output .= '<td align="right"><b>'.($grandtotal['compensationpct'] * 100).' %</b></td>';
                     $output .= '</tr>';
-
+ */
         }catch (Exception $e) {
             $data = array();
             $data['message'] = $e->getMessage();
