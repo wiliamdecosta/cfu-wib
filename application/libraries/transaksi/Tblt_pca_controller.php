@@ -108,12 +108,14 @@ class Tblt_pca_controller {
 
         $i_process_control_id = getVarClean('i_process_control_id','int',0);
         $i_search = getVarClean('i_search','str','');
+        $ubiscode = getVarClean('ubiscode','str','');
 
         try {
 
             $ci = & get_instance();
             $ci->load->model('transaksi/tblt_pca');
             $table = new Tblt_pca($i_process_control_id, $i_search);
+            $table->setCriteria("upper(s01) = upper('".$ubiscode."')");
 
             $count = $table->countAll();
             $items = $table->getAll(0, -1);
@@ -185,13 +187,13 @@ class Tblt_pca_controller {
 
                     $output .= '</tr>';
 
-            $output .= '<tr class="success">';
+            /* $output .= '<tr class="success">';
                         $output .= '<td colspan="3" align="center"><b>Grand Total</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['amount'],2).'</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcaout'],2).'</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcain'],2).'</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['total'],2).'</b></td>';
-                    $output .= '</tr>';
+                    $output .= '</tr>'; */
 
         }catch (Exception $e) {
             $data = array();

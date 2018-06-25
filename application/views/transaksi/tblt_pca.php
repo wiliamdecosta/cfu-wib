@@ -56,6 +56,18 @@
             <label class="control-label col-md-2">Pencarian :</label>
             <div class="col-md-3">
                 <div class="input-group">
+                    <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
+                    <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
+                    <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
+                            <span class="fa fa-search bigger-110"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
                     <div class="input-group">
                     <input id="i_search" type="text" class="FormElement form-control">
                     <span class="input-group-btn">
@@ -98,6 +110,8 @@
     </div>
 </div>
 
+<?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
+
 <script>
 $("#tab-2").on("click", function(event) {
     event.stopPropagation();
@@ -130,6 +144,18 @@ $("#tab-3").on("click", function(event) {
 </script>
 
 <script>
+/**
+ * [showLOVBusinessUnit called by input menu_icon to show List Of Value (LOV) of icon]
+ * @param  {[type]} id   [description]
+ * @param  {[type]} code [description]
+ * @return {[type]}      [description]
+ */
+function showLOVBusinessUnit(id, code, name) {
+    modal_lov_tblm_wibunitbusiness_show(id, code, name);
+}
+</script>
+
+<script>
     function backToProcessControl() {
         loadContentWithParams("parameter.tblp_processcontrol", {
             i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
@@ -141,30 +167,36 @@ $("#tab-3").on("click", function(event) {
 <script>
     function showData(){
         var i_search = $('#i_search').val();
-        loadDataTable(i_search);
-    }
-</script>
+        var ubiscode = $('#search_wibunitbusinesscode').val();
 
-<script>
-    $(function() {
+
+        if(ubiscode == '') {
+            $('#tbl-pca').hide();
+            $('#btn-group-pca-action').hide();
+            return;
+        }
+
         var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
-
         if(isupdatable == 'Y') {
             $('#btn-group-pca-action').show();
         }
-    });
+        $('#tbl-pca').show();
+        loadDataTable(i_search, ubiscode);
+    }
 </script>
+
 
 <script>
 
-    function loadDataTable(i_search) {
+    function loadDataTable(i_search, ubiscode) {
         $( "#tbl-pca" ).html( 'Loading...');
         $.ajax({
             url: '<?php echo WS_JQGRID."transaksi.tblt_pca_controller/readTable"; ?>',
             type: "POST",
             data: {
                 i_search : i_search,
-                i_process_control_id : <?php echo $this->input->post('processcontrolid_pk'); ?>
+                i_process_control_id : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+                ubiscode : ubiscode
             },
             success: function (data) {
                 $( "#tbl-pca" ).html( data );

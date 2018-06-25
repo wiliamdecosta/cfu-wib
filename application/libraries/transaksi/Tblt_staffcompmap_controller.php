@@ -108,6 +108,7 @@ class Tblt_staffcompmap_controller {
 
         $i_process_control_id = getVarClean('i_process_control_id','int',0);
         $i_search = getVarClean('i_search','str','');
+        $ubiscode = getVarClean('ubiscode','str','');
 
         try {
 
@@ -115,10 +116,14 @@ class Tblt_staffcompmap_controller {
             $ci->load->model('transaksi/tblt_staffcompmap');
             $table = new Tblt_staffcompmap($i_process_control_id);
 
+            if(!empty($ubiscode)) {
+                $table->setCriteria("upper(s02) = upper('".$ubiscode."')");
+            }
+
+
             if(!empty($i_search)) {
                 $table->setCriteria("upper(s04) like '%".strtoupper($i_search)."%'");
             }
-
 
             $count = $table->countAll();
             $items = $table->getAll(0, -1, 's02', 'asc');
