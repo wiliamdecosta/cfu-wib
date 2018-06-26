@@ -311,6 +311,11 @@ class Tblt_pca_controller {
                             <th>Amount after PCA</th>
                         ';
             $output.='</tr>';
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
 
             $subtotal = array('amount' => 0,
                                  'pcaout' => 0,
@@ -372,13 +377,13 @@ class Tblt_pca_controller {
                         $output .= '<td align="right"><b>'.numberFormat($subtotal['total'],2).'</b></td>';
             $output .= '</tr>';
 
-            $output .= '<tr>';
+            /* $output .= '<tr>';
                         $output .= '<td colspan="3" align="center"><b>Grand Total</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['amount'],2).'</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcaout'],2).'</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['pcain'],2).'</b></td>';
                         $output .= '<td align="right"><b>'.numberFormat($grandtotal['total'],2).'</b></td>';
-            $output .= '</tr>';
+            $output .= '</tr>'; */
 
             $output .= '</table>';
             echo $output;

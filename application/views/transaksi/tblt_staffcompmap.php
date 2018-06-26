@@ -97,6 +97,15 @@
                     </table>
                 </div>
             </div>
+            <div class="space-4"></div>
+            <div class="row" id="btn-group-staffcompmap-action" style="display:none;">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-6">
+                    <button class="btn btn-success" id="btn-process" onclick="doProcess();">Process</button>
+                    <button class="btn btn-warning" id="btn-cancel" onclick="cancelProcess();">Cancel Process</button>
+                    <button class="btn btn-primary" id="btn-download" onclick="downloadStaffCompMap();">Download</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -109,6 +118,7 @@ $("#tab-2").on("click", function(event) {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+        statuscode : '<?php echo $this->input->post('statuscode'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
         processcode : '<?php echo $this->input->post('processcode'); ?>',
         tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
@@ -124,6 +134,7 @@ $("#tab-3").on("click", function(event) {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+        statuscode : '<?php echo $this->input->post('statuscode'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
         processcode : '<?php echo $this->input->post('processcode'); ?>',
         tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
@@ -131,6 +142,36 @@ $("#tab-3").on("click", function(event) {
 });
 
 </script>
+
+
+
+
+<script>
+
+    function buttonMode(statuscode) {
+        var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
+
+        if(isupdatable == 'Y') {
+            $('#btn-group-staffcompmap-action').show();
+
+            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
+                $('#btn-process').hide();
+            }else if(statuscode == 'INITIAL') {
+                $('#btn-cancel').hide();
+                $('#btn-download').hide();
+            }
+        }
+    }
+
+
+    $(function() {
+        showData();
+        var statuscode = "<?php echo $this->input->post('statuscode'); ?>";
+        buttonMode(statuscode);
+    });
+</script>
+
+
 
 <?php $this->load->view('lov/lov_payrollcost'); ?>
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
@@ -165,8 +206,7 @@ function showLOVBusinessUnit(id, code, name) {
             $('#tbl-staffcompmap').hide();
             return;
         }
-
-         $('#tbl-staffcompmap').show();
+        $('#tbl-staffcompmap').show();
 
         loadDataTable(i_search, ubiscode);
     }
@@ -204,7 +244,141 @@ function showLOVBusinessUnit(id, code, name) {
 </script>
 
 <script>
-    $(function() {
-        showData();
-    });
+
+    function doProcess() {
+            var processcode = "<?php echo $this->input->post('processcode'); ?>";
+            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+
+            var ajaxOptions = {
+                url: '<?php echo WS_JQGRID."transaksi.tblt_staffcompmap_controller/do_process"; ?>',
+                type: "POST",
+                dataType: "json",
+                data: { i_process_control_id:i_process_control_id,
+                        processcode : processcode },
+                success: function (data) {
+                    if(data.success == true) {
+                        swal('Success',data.message,'success');
+                        showData();
+                    }else {
+                        swal('Attention',data.message,'warning');
+                        showData();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            };
+
+            $.ajax({
+                beforeSend: function( xhr ) {
+                    swal({
+                        title: "Konfirmasi",
+                        text: 'Anda yakin ingin men-submit proses '+ processcode +'?',
+                        type: "info",
+                        showCancelButton: true,
+                        showLoaderOnConfirm: true,
+                        confirmButtonText: "Ya, Yakin",
+                        confirmButtonColor: "#e80c1c",
+                        cancelButtonText: "Tidak",
+                        closeOnConfirm: false,
+                        closeOnCancel: true,
+                        html: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm) {
+                            $.ajax(ajaxOptions);
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    });
+                }
+            });
+    }
+
+    function cancelProcess() {
+            var processcode = "<?php echo $this->input->post('processcode'); ?>";
+            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+
+            var ajaxOptions = {
+                url: '<?php echo WS_JQGRID."transaksi.tblt_staffcompmap_controller/cancel_process"; ?>',
+                type: "POST",
+                dataType: "json",
+                data: { i_process_control_id:i_process_control_id },
+                success: function (data) {
+                    if(data.success == true) {
+                        swal('Success',data.message,'success');
+                        showData();
+                    }else {
+                        swal('Attention',data.message,'warning');
+                        showData();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            };
+
+            $.ajax({
+                beforeSend: function( xhr ) {
+                    swal({
+                        title: "Konfirmasi",
+                        text: 'Anda yakin ingin membatalkan proses?',
+                        type: "info",
+                        showCancelButton: true,
+                        showLoaderOnConfirm: true,
+                        confirmButtonText: "Ya, Yakin",
+                        confirmButtonColor: "#e80c1c",
+                        cancelButtonText: "Tidak",
+                        closeOnConfirm: false,
+                        closeOnCancel: true,
+                        html: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm) {
+                            $.ajax(ajaxOptions);
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    });
+                }
+            });
+    }
+
+    function downloadStaffCompMap() {
+
+            var processcontrolid_pk = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
+            var ubiscode = $('#search_wibunitbusinesscode').val();
+
+            var url = "<?php echo WS_JQGRID . "transaksi.tblt_staffcompmap_controller/download_excel/?"; ?>";
+            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+            url += "&processcontrolid_pk="+processcontrolid_pk;
+            url += "&periodid_fk="+periodid_fk;
+            url += "&ubiscode="+ubiscode;
+
+            swal({
+                title: "Konfirmasi",
+                text: 'Anda yakin ingin melakukan download data?',
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Ya, Yakin",
+                confirmButtonColor: "#538cf6",
+                cancelButtonText: "Tidak",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                html: true
+            },
+            function(isConfirm){
+                if(isConfirm) {
+                    window.location = url;
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+    }
+
 </script>

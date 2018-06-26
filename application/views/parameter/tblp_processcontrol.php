@@ -127,14 +127,14 @@
         var rowData = jQuery("#grid-table").getRowData(id);
         str_processcode = rowData['processcode'].toUpperCase();
 
-        /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
-                            'COST_MAP' : 'transaksi.tblt_costmap',
-                            'PCA' : 'transaksi.tblt_pca',
-                            'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc'}; */
-
         var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
                             'COST_MAP' : 'transaksi.tblt_costmap',
-                            'PCA' : 'transaksi.tblt_pca'};
+                            'PCA' : 'transaksi.tblt_pca',
+                            'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc'};
+
+        /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
+                            'COST_MAP' : 'transaksi.tblt_costmap',
+                            'PCA' : 'transaksi.tblt_pca'}; */
 
         if(link_obj[str_processcode] === undefined) {
             return;
@@ -144,6 +144,7 @@
             processcontrolid_pk: rowData['processcontrolid_pk'],
             processcode : rowData['processcode'],
             isupdatable : rowData['isupdatable'],
+            statuscode: rowData['statuscode'].toUpperCase(),
             tab_1 : link_obj[str_processcode],
             i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
             periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>

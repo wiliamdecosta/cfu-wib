@@ -24,6 +24,15 @@
     <label class="control-label col-md-2">Pencarian :</label>
     <div class="col-md-3">
         <div class="input-group">
+            <select class="FormElement form-control" id="search_costdrivertype">
+                <option value=""> -- Choose Cost Driver Type -- </option>
+                <option value="1"> Entry </option>
+                <option value="2"> Calculation </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="input-group">
             <div class="input-group">
             <input id="i_search" type="text" class="FormElement form-control">
             <span class="input-group-btn">
@@ -33,7 +42,7 @@
         </div>
     </div>
 </div>
-<div class="row"  id="table_placeholder">
+<div class="row"  id="table_placeholder" style="display:none;">
     <div class="col-md-12">
         <table id="grid-table"></table>
         <div id="grid-pager"></div>
@@ -78,17 +87,31 @@ function clearInputBusinessUnit() {
 <script>
     function showData(){
         var i_search = $('#i_search').val();
+        var costdrivertype = $('#search_costdrivertype').val();
+
+        if(costdrivertype == '') {
+            $('#table_placeholder').hide();
+            return;
+        }
 
         jQuery("#grid-table").jqGrid('setGridParam',{
             url: '<?php echo WS_JQGRID."parameter.tblm_costdriver_controller/read"; ?>',
             postData: {
-                i_search : i_search
+                i_search : i_search,
+                costdrivertype : costdrivertype
             }
         });
         $("#grid-table").trigger("reloadGrid");
         responsive_jqgrid('#grid-table', '#grid-pager');
+        $('#table_placeholder').show();
 
     }
+</script>
+
+<script>
+    $('#search_costdrivertype').on('change', function() {
+        showData();
+    });
 </script>
 
 <script>
@@ -103,6 +126,13 @@ function clearInputBusinessUnit() {
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'costdriverid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Cost Driver Type',name: 'costdrivertype',width: 200, align: "left", hidden:true, editable: true,
+                    editoptions: {
+                        size: 30,
+                        maxlength:10
+                    },
+                    editrules: {required: true}
+                },
                 {label: 'BU/Subsidiary',name: 'ubisname',width: 120, align: "left"},
                 {label: 'BU/Subsidiary',
                     name: 'ubiscode',
@@ -513,6 +543,8 @@ function clearInputBusinessUnit() {
                     $('#intladjacentvalue').val(0);
                     $('#towervalue').val(0);
                     $('#infravalue').val(0);
+
+                    $('#costdrivertype').val( $('#search_costdrivertype').val() );
 
                     setTimeout(function() {
                         clearInputBusinessUnit();

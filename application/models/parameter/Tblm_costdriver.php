@@ -33,8 +33,9 @@ class Tblm_costdriver extends Abstract_model {
                                 'creationdate'         => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Creation Date'),
                                 'createdby'             => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'updateddate'          => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Updated Date'),
-                                'updatedby'            => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Updated By')
+                                'updatedby'            => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Updated By'),
 
+                                'costdrivertype'            => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Cost Driver Type')
                             );
 
     public $selectClause    = "a.costdriverid_pk, a.code, a.ubiscode, a.unitid_fk,
@@ -46,6 +47,7 @@ class Tblm_costdriver extends Abstract_model {
                                     a.ubiscode ubiscodedisplay,
                                     b.ubisname,
                                     c.code unitcode, c.unitname,
+                                    a.costdrivertype,
 
                                     a.domtrafficvalue domtrafficvaluedisplay, a.domnetworkvalue domnetworkvaluedisplay, a.intltrafficvalue intltrafficvaluedisplay,
                                     a.intlnetworkvalue intlnetworkvaluedisplay, a.intladjacentvalue intladjacentvaluedisplay, a.towervalue towervaluedisplay, a.infravalue infravaluedisplay

@@ -9,7 +9,7 @@
             </div>
 
             <!-- modal body -->
-            <div class="modal-body" style="height:425px; overflow-y:scroll;">
+            <div class="modal-body" style="height:400px; overflow-y:scroll;">
                 <div class="table-responsive">
                     <table id="modal_lov_payrollcost_grid_selection" class="table table-striped table-bordered table-hover">
                         <thead>
@@ -67,10 +67,6 @@
                         <input type="hidden" id="temp_cfucode">
                         <input type="hidden" id="temp_ubiscode">
                         <input type="hidden" id="temp_idactivity">
-
-                        <button class="btn btn-success" onclick="doProcess();">Process</button>
-                        <button class="btn btn-warning" onclick="cancelProcess();">Cancel Process</button>
-                        <button class="btn btn-primary" onclick="downloadSummary();">Download Summary</button>
                     </div>
                 </div>
             </div>

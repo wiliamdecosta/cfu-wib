@@ -101,9 +101,9 @@
             <div class="row" id="btn-group-pca-action" style="display:none;">
                 <div class="col-xs-4"></div>
                 <div class="col-xs-6">
-                    <button class="btn btn-success" onclick="doProcess();">Process</button>
-                    <button class="btn btn-warning" onclick="cancelProcess();">Cancel Process</button>
-                    <button class="btn btn-primary" onclick="downloadPCA();">Download</button>
+                    <button class="btn btn-success" id="btn-process" onclick="doProcess();">Process</button>
+                    <button class="btn btn-warning" id="btn-cancel" onclick="cancelProcess();">Cancel Process</button>
+                    <button class="btn btn-primary" id="btn-download" onclick="downloadPCA();">Download</button>
                 </div>
             </div>
         </div>
@@ -120,6 +120,7 @@ $("#tab-2").on("click", function(event) {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+        statuscode : '<?php echo $this->input->post('statuscode'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
         processcode : '<?php echo $this->input->post('processcode'); ?>',
         tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
@@ -135,6 +136,7 @@ $("#tab-3").on("click", function(event) {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+        statuscode : '<?php echo $this->input->post('statuscode'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
         processcode : '<?php echo $this->input->post('processcode'); ?>',
         tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
@@ -172,14 +174,9 @@ function showLOVBusinessUnit(id, code, name) {
 
         if(ubiscode == '') {
             $('#tbl-pca').hide();
-            $('#btn-group-pca-action').hide();
             return;
         }
 
-        var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
-        if(isupdatable == 'Y') {
-            $('#btn-group-pca-action').show();
-        }
         $('#tbl-pca').show();
         loadDataTable(i_search, ubiscode);
     }
@@ -209,8 +206,25 @@ function showLOVBusinessUnit(id, code, name) {
 </script>
 
 <script>
+    function buttonMode(statuscode) {
+        var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
+
+        if(isupdatable == 'Y') {
+            $('#btn-group-pca-action').show();
+
+            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
+                $('#btn-process').hide();
+            }else if(statuscode == 'INITIAL') {
+                $('#btn-cancel').hide();
+                $('#btn-download').hide();
+            }
+        }
+    }
+
     $(function() {
         loadDataTable('');
+        var statuscode = "<?php echo $this->input->post('statuscode'); ?>";
+        buttonMode(statuscode);
     });
 </script>
 
@@ -229,8 +243,10 @@ function showLOVBusinessUnit(id, code, name) {
                 success: function (data) {
                     if(data.success == true) {
                         swal('Success',data.message,'success');
+                        showData();
                     }else {
                         swal('Attention',data.message,'warning');
+                        showData();
                     }
                 },
                 error: function (xhr, status, error) {
@@ -277,8 +293,10 @@ function showLOVBusinessUnit(id, code, name) {
                 success: function (data) {
                     if(data.success == true) {
                         swal('Success',data.message,'success');
+                        showData();
                     }else {
                         swal('Attention',data.message,'warning');
+                        showData();
                     }
                 },
                 error: function (xhr, status, error) {

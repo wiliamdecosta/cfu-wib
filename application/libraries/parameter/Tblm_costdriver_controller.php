@@ -16,6 +16,12 @@ class Tblm_costdriver_controller {
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
+        $costdrivertype = getVarClean('costdrivertype','int',0);
+
+        if(empty($costdrivertype)) {
+            $data['success'] = true;
+            return $data;
+        }
 
         try {
 
@@ -45,6 +51,10 @@ class Tblm_costdriver_controller {
                                             upper(b.ubisname) like upper('%".$i_search."%') OR
                                             upper(c.code) like upper('%".$i_search."%') OR
                                             upper(c.unitname) like upper('%".$i_search."%'))");
+            }
+
+            if(!empty($costdrivertype)) {
+                $table->setCriteria("a.costdrivertype = ".$costdrivertype);
             }
 
 
