@@ -31,8 +31,10 @@ class Tblm_activitylist extends Abstract_model {
     public $selectClause    = "a.activitylistid_pk, a.activitytypeid_fk, a.code, a.ubiscode, a.actlistname, a.listingno, a.description,
                                     a.creationdate, a.createdby, a.updateddate, a.updatedby,
                                         to_char(a.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, a.updatedby lastupdatedby,
-                                        a.ubiscode ubiscodedisplay";
-    public $fromClause      = "tblm_activitylist a";
+                                        a.ubiscode ubiscodedisplay,
+                                        b.ubisname";
+    public $fromClause      = "tblm_activitylist a
+                                        left join tblm_wibunitbusiness b on a.ubiscode = b.code";
 
     public $refs            = array();
 

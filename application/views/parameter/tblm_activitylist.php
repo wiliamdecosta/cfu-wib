@@ -40,18 +40,6 @@
                 <label class="control-label col-md-2">Pencarian :</label>
                 <div class="col-md-3">
                     <div class="input-group">
-                        <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
-                        <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
-                        <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
-                                <span class="fa fa-search bigger-110"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="input-group">
                         <div class="input-group">
                         <input id="i_search" type="text" class="FormElement form-control">
                         <span class="input-group-btn">
@@ -61,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="table_placeholder" style="display:none;">
+            <div class="row" id="table_placeholder">
                 <div class="col-xs-12">
                    <table id="grid-table"></table>
                    <div id="grid-pager"></div>
@@ -100,22 +88,14 @@ function clearInputBusinessUnit() {
 <script>
     function showData(){
         var i_search = $('#i_search').val();
-        var ubiscode = $('#search_wibunitbusinesscode').val();
-
-        if(ubiscode == '') {
-            $('#table_placeholder').hide();
-            return;
-        }
 
         jQuery("#grid-table").jqGrid('setGridParam',{
             url: '<?php echo WS_JQGRID."parameter.tblm_activitylist_controller/read"; ?>',
             postData: {
-                i_search : i_search,
-                ubiscode : ubiscode
+                i_search : i_search
             }
         });
         $("#grid-table").trigger("reloadGrid");
-        $('#table_placeholder').show();
         responsive_jqgrid('#grid-table', '#grid-pager');
 
     }
@@ -140,6 +120,54 @@ $("#tab-1").on("click", function(event) {
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'activitylistid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'BU/Subsidiary',name: 'ubiscodedisplay',width: 120, align: "left"},
+                {label: 'BU/Subsidiary',
+                    name: 'ubiscode',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
+                    editoptions: {
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
+                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button> &nbsp;' +
+                                        '<input id="form_wibunitbusinessname" readonly type="text" size="30" class="FormElement form-control" placeholder="Business Unit Name">');
+                                $("#form_wibunitbusinesscode").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_wibunitbusinesscode").val();
+                            } else if( oper === 'set') {
+                                $("#form_wibunitbusinesscode").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubiscode');
+                                        var name_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubisname');
+                                        $("#form_wibunitbusinesscode").val( code_display );
+                                        $("#form_wibunitbusinessname").val( name_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
+                },
                 {label: 'Activity List Code',name: 'code',width: 150, align: "left",editable: true,
                     editoptions: {
                         size: 30,
@@ -147,14 +175,7 @@ $("#tab-1").on("click", function(event) {
                     },
                     editrules: {required: true}
                 },
-                {label: 'BU/Subsidiary',name: 'ubiscode',width: 120, align: "left"},
-                {label: 'BU/Subsidiary',name: 'ubiscode',width: 150, align: "left",editable: true, hidden:true,
-                    editoptions: {
-                        size: 30,
-                        maxlength:10
-                    },
-                    editrules: {required: true}
-                },
+
                 {label: 'Activity List Name',name: 'actlistname',width: 300, align: "left",editable: true,
                     editoptions: {
                         size: 50,
@@ -217,7 +238,8 @@ $("#tab-1").on("click", function(event) {
                     editrules: {edithidden: true}
                 },
                 {label: 'Last Updated Date',name: 'lastupdateddate',width: 120, align: "center"},
-                {label: 'Last Updated By',name: 'lastupdatedby',width: 120, align: "center"}
+                {label: 'Last Updated By',name: 'lastupdatedby',width: 120, align: "center"},
+                {label: 'ubisname',name: 'ubisname',width: 120, hidden:true, align: "center"}
             ],
             height: '100%',
             autowidth: true,
@@ -247,7 +269,7 @@ $("#tab-1").on("click", function(event) {
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."parameter.tblm_activitylist_controller/crud"; ?>',
-            caption: "Status List :: " + '<?php echo $this->input->post('activitytypecode'); ?>'
+            caption: "Activity List :: " + '<?php echo $this->input->post('activitytypecode'); ?>'
 
         });
 
@@ -319,6 +341,10 @@ $("#tab-1").on("click", function(event) {
                     var form = $(e[0]);
                     style_edit_form(form);
 
+                    setTimeout(function() {
+                        clearInputBusinessUnit();
+                    },100);
+
                 },
                 afterShowForm: function(form) {
                     form.closest('.ui-jqdialog').center();
@@ -332,6 +358,8 @@ $("#tab-1").on("click", function(event) {
                     $(".tinfo").html('<div class="ui-state-success">' + response.message + '</div>');
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
+
+                    clearInputBusinessUnit();
 
                     return [true,"",response.responseText];
                 }

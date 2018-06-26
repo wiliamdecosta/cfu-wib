@@ -18,6 +18,8 @@ class Tblm_pca extends Abstract_model {
                                 'pcainsource'         => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'PCA In Source'),
                                 'description'         => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description'),
 
+                                'listingno'         => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'LISTINGNO'),
+
                                 'creationdate'         => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Creation Date'),
                                 'createdby'             => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'updateddate'          => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Updated Date'),
@@ -29,7 +31,7 @@ class Tblm_pca extends Abstract_model {
     public $selectClause    = "a.pcaid_pk, a.wibunitbusinessid_fk, a.plitemcode, a.pcainsource,
                                     a.description, a.plitemcode plitemcodedisplay,
                                     a.pcainsource pcainsourcedisplay,
-                                    a.creationdate, a.createdby, a.updateddate, a.updatedby,
+                                    a.creationdate, a.createdby, a.updateddate, a.updatedby, a.listingno,
                                         to_char(a.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, a.updatedby lastupdatedby,
                                     b.nama plitemname,
                                     c.code ubiscode, c.ubisname";
@@ -60,6 +62,11 @@ class Tblm_pca extends Abstract_model {
             $this->db->set('updateddate',"sysdate",false);
             $this->record['updatedby'] = $userdata['user_name'];
 
+            if(empty($this->record['listingno'])) {
+                $this->db->set('listingno',"null",false);
+                unset($this->record['listingno']);
+            }
+
             $this->record[$this->pkey] = $this->generate_id($this->table, $this->pkey);
 
         }else {
@@ -71,6 +78,11 @@ class Tblm_pca extends Abstract_model {
 
             $this->db->set('updateddate',"sysdate",false);
             $this->record['updatedby'] = $userdata['user_name'];
+
+            if(empty($this->record['listingno'])) {
+                $this->db->set('listingno',"null",false);
+                unset($this->record['listingno']);
+            }
 
         }
         return true;

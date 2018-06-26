@@ -10,7 +10,7 @@ class Tblm_activitylist_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','activitylistid_pk');
+        $sidx = getVarClean('sidx','str','listingno');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
@@ -19,11 +19,11 @@ class Tblm_activitylist_controller {
         $i_search = getVarClean('i_search','str','');
         $ubiscode = getVarClean('ubiscode','str','');
 
-        if(empty($ubiscode)) {
+        /* if(empty($ubiscode)) {
             $data['success'] = true;
             return $data;
         }
-
+ */
         try {
 
             $ci = & get_instance();

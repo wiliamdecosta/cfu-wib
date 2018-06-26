@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Tblm_pca_controller
-* @version 2018-06-21 23:19:30
+* @class Tblm_costdriver_controller
+* @version 2018-06-16 09:12:54
 */
-class Tblm_pca_controller {
+class Tblm_costdriver_controller {
 
     function read() {
 
@@ -16,18 +16,12 @@ class Tblm_pca_controller {
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
-        $ubiscode = getVarClean('ubiscode','str','');
-
-        if(empty($ubiscode)) {
-            $data['success'] = true;
-            return $data;
-        }
 
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_pca');
-            $table = $ci->tblm_pca;
+            $ci->load->model('parameter/tblm_costdriver');
+            $table = $ci->tblm_costdriver;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -45,21 +39,14 @@ class Tblm_pca_controller {
 
             // Filter Table
             $req_param['where'] = array();
-
-
-            if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(c.code) like upper('".$ubiscode."'))");
-            }
-
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(a.plitemcode) like upper('%".$i_search."%') OR
-                                            upper(a.pcainsource) like upper('%".$i_search."%') OR
-                                            upper(a.description) like upper('%".$i_search."%') OR
-                                            upper(b.nama) like upper('%".$i_search."%')
-                                            )");
+                $table->setCriteria("( upper(a.code) like upper('%".$i_search."%') OR
+                                            upper(a.ubiscode) like upper('%".$i_search."%') OR
+                                            upper(b.ubisname) like upper('%".$i_search."%') OR
+                                            upper(c.code) like upper('%".$i_search."%') OR
+                                            upper(c.unitname) like upper('%".$i_search."%'))");
             }
 
-            $table->setCriteria("b.kode_fs = 'CCA'");
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();
@@ -85,7 +72,50 @@ class Tblm_pca_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data tblm_pca');
+            logging('view data tblm_costdriver');
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+        }
+
+        return $data;
+    }
+
+    function readLov() {
+
+        $start = getVarClean('current','int',0);
+        $limit = getVarClean('rowCount','int',5);
+
+        $sort = getVarClean('sort','str','listingno');
+        $dir  = getVarClean('dir','str','asc');
+
+        $searchPhrase = getVarClean('searchPhrase', 'str', '');
+
+        $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
+
+        try {
+
+            $ci = & get_instance();
+            $ci->load->model('parameter/tblm_costdriver');
+            $table = $ci->tblm_costdriver;
+
+            if(!empty($searchPhrase)) {
+                $table->setCriteria("( upper(a.code) like upper('%".$searchPhrase."%') OR
+                                        upper(a.ubiscode) like upper('%".$searchPhrase."%') OR
+                                        upper(b.ubisname) like upper('%".$searchPhrase."%') OR
+                                         upper(c.code) like upper('%".$searchPhrase."%') OR
+                                         upper(c.unitname) like upper('%".$searchPhrase."%')
+                                         )");
+
+            }
+
+            $start = ($start-1) * $limit;
+            $items = $table->getAll($start, $limit, $sort, $dir);
+            $totalcount = $table->countAll();
+
+            $data['rows'] = $items;
+            $data['success'] = true;
+            $data['total'] = $totalcount;
+
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -127,8 +157,8 @@ class Tblm_pca_controller {
     function create() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_pca');
-        $table = $ci->tblm_pca;
+        $ci->load->model('parameter/tblm_costdriver');
+        $table = $ci->tblm_costdriver;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -182,7 +212,7 @@ class Tblm_pca_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data added successfully';
-                logging('create data tblm_pca');
+                logging('create data tblm_costdriver');
 
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -199,8 +229,8 @@ class Tblm_pca_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_pca');
-        $table = $ci->tblm_pca;
+        $ci->load->model('parameter/tblm_costdriver');
+        $table = $ci->tblm_costdriver;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -254,7 +284,7 @@ class Tblm_pca_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data update successfully';
-                logging('update data tblm_pca');
+                logging('update data tblm_costdriver');
                 $data['rows'] = $table->get($items[$table->pkey]);
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -270,8 +300,8 @@ class Tblm_pca_controller {
 
     function destroy() {
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_pca');
-        $table = $ci->tblm_pca;
+        $ci->load->model('parameter/tblm_costdriver');
+        $table = $ci->tblm_costdriver;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -301,7 +331,7 @@ class Tblm_pca_controller {
 
             $data['success'] = true;
             $data['message'] = $total.' Data deleted successfully';
-            logging('delete data tblm_pca');
+            logging('delete data tblm_costdriver');
             $table->db->trans_commit(); //Commit Trans
 
         }catch (Exception $e) {

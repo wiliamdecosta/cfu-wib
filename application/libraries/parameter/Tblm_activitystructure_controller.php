@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Tblm_pca_controller
+* @class Tblm_activitystructure_controller
 * @version 2018-06-21 23:19:30
 */
-class Tblm_pca_controller {
+class Tblm_activitystructure_controller {
 
     function read() {
 
@@ -16,9 +16,9 @@ class Tblm_pca_controller {
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
-        $ubiscode = getVarClean('ubiscode','str','');
+        $activitytypeid_fk = getVarClean('activitytypeid_fk','int',0);
 
-        if(empty($ubiscode)) {
+        if(empty($activitytypeid_fk)) {
             $data['success'] = true;
             return $data;
         }
@@ -26,8 +26,8 @@ class Tblm_pca_controller {
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_pca');
-            $table = $ci->tblm_pca;
+            $ci->load->model('parameter/tblm_activitystructure');
+            $table = $ci->tblm_activitystructure;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -47,19 +47,20 @@ class Tblm_pca_controller {
             $req_param['where'] = array();
 
 
-            if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(c.code) like upper('".$ubiscode."'))");
+            if(!empty($activitytypeid_fk)) {
+                $table->setCriteria("a.activitytypeid_fk = ".$activitytypeid_fk);
             }
 
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(a.plitemcode) like upper('%".$i_search."%') OR
-                                            upper(a.pcainsource) like upper('%".$i_search."%') OR
-                                            upper(a.description) like upper('%".$i_search."%') OR
-                                            upper(b.nama) like upper('%".$i_search."%')
+                $table->setCriteria("( upper(a.ubiscode) like upper('%".$i_search."%') OR
+                                            upper(a.activityid) like upper('%".$i_search."%') OR
+                                            upper(a.ohactivityid1) like upper('%".$i_search."%') OR
+                                            upper(a.ohactivityid2) like upper('%".$i_search."%') OR
+                                            upper(d.activityname) like upper('%".$i_search."%') OR
+                                            upper(e.activityname) like upper('%".$i_search."%') OR
+                                            upper(f.activityname) like upper('%".$i_search."%')
                                             )");
             }
-
-            $table->setCriteria("b.kode_fs = 'CCA'");
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();
@@ -85,7 +86,7 @@ class Tblm_pca_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data tblm_pca');
+            logging('view data tblm_activitystructure');
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -127,8 +128,8 @@ class Tblm_pca_controller {
     function create() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_pca');
-        $table = $ci->tblm_pca;
+        $ci->load->model('parameter/tblm_activitystructure');
+        $table = $ci->tblm_activitystructure;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -182,7 +183,7 @@ class Tblm_pca_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data added successfully';
-                logging('create data tblm_pca');
+                logging('create data tblm_activitystructure');
 
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -199,8 +200,8 @@ class Tblm_pca_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_pca');
-        $table = $ci->tblm_pca;
+        $ci->load->model('parameter/tblm_activitystructure');
+        $table = $ci->tblm_activitystructure;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -254,7 +255,7 @@ class Tblm_pca_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data update successfully';
-                logging('update data tblm_pca');
+                logging('update data tblm_activitystructure');
                 $data['rows'] = $table->get($items[$table->pkey]);
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -270,8 +271,8 @@ class Tblm_pca_controller {
 
     function destroy() {
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_pca');
-        $table = $ci->tblm_pca;
+        $ci->load->model('parameter/tblm_activitystructure');
+        $table = $ci->tblm_activitystructure;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -301,7 +302,7 @@ class Tblm_pca_controller {
 
             $data['success'] = true;
             $data['message'] = $total.' Data deleted successfully';
-            logging('delete data tblm_pca');
+            logging('delete data tblm_activitystructure');
             $table->db->trans_commit(); //Commit Trans
 
         }catch (Exception $e) {

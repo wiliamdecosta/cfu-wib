@@ -27,7 +27,8 @@ class Tblm_activitytype extends Abstract_model {
 
     public $selectClause    = "a.activitytypeid_pk, a.code, a.acttypename, a.listingno,
                                     a.description, a.creationdate, a.createdby, a.updateddate, a.updatedby,
-                                    to_char(a.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, a.updatedby lastupdatedby";
+                                    to_char(a.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, a.updatedby lastupdatedby,
+                                    (a.code || ' - ' || a.acttypename) activitygabung";
     public $fromClause      = "tblm_activitytype a";
 
     public $refs            = array();
