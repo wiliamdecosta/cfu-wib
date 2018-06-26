@@ -127,13 +127,15 @@
         var rowData = jQuery("#grid-table").getRowData(id);
         str_processcode = rowData['processcode'].toUpperCase();
 
+        /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
+                            'COST_MAP' : 'transaksi.tblt_costmap',
+                            'PCA' : 'transaksi.tblt_pca',
+                            'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc'}; */
+
         var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
                             'COST_MAP' : 'transaksi.tblt_costmap',
                             'PCA' : 'transaksi.tblt_pca'};
 
-        /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
-                            'COST_MAP' : 'transaksi.tblt_costmap'};
- */
         if(link_obj[str_processcode] === undefined) {
             return;
         }
