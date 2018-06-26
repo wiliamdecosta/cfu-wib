@@ -162,6 +162,18 @@ $("#tab-3").on("click", function(event) {
         }
     }
 
+    function loadForm(statuscode) {
+        loadContentWithParams("transaksi.tblt_costmap", {
+            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+            statuscode : statuscode,
+            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+            processcode : '<?php echo $this->input->post('processcode'); ?>',
+            tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+        });
+    }
+
     $(function() {
         var statuscode = "<?php echo $this->input->post('statuscode'); ?>";
         buttonMode(statuscode);
@@ -173,20 +185,21 @@ $("#tab-3").on("click", function(event) {
     function doProcess() {
             var processcode = "<?php echo $this->input->post('processcode'); ?>";
             var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var i_batch_control_id =  <?php echo $this->input->post('i_batch_control_id'); ?>;
 
             var ajaxOptions = {
                 url: '<?php echo WS_JQGRID."transaksi.tblt_costmap_controller/do_process"; ?>',
                 type: "POST",
                 dataType: "json",
                 data: { i_process_control_id:i_process_control_id,
-                        processcode : processcode },
+                        processcode : processcode,
+                        i_batch_control_id : i_batch_control_id  },
                 success: function (data) {
                     if(data.success == true) {
                         swal('Success',data.message,'success');
-                        showData();
+                        loadForm(data.statuscode);
                     }else {
                         swal('Attention',data.message,'warning');
-                        showData();
                     }
                 },
                 error: function (xhr, status, error) {
@@ -224,19 +237,20 @@ $("#tab-3").on("click", function(event) {
     function cancelProcess() {
             var processcode = "<?php echo $this->input->post('processcode'); ?>";
             var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var i_batch_control_id =  <?php echo $this->input->post('i_batch_control_id'); ?>;
 
             var ajaxOptions = {
                 url: '<?php echo WS_JQGRID."transaksi.tblt_costmap_controller/cancel_process"; ?>',
                 type: "POST",
                 dataType: "json",
-                data: { i_process_control_id:i_process_control_id },
+                data: { i_process_control_id:i_process_control_id,
+                            i_batch_control_id: i_batch_control_id },
                 success: function (data) {
                     if(data.success == true) {
                         swal('Success',data.message,'success');
-                        showData();
+                        loadForm(data.statuscode);
                     }else {
                         swal('Attention',data.message,'warning');
-                        showData();
                     }
                 },
                 error: function (xhr, status, error) {

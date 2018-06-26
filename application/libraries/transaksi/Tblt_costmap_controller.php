@@ -119,6 +119,7 @@ class Tblt_costmap_controller {
 
         $i_process_control_id = getVarClean('i_process_control_id','int',0);
         $processcode = getVarClean('processcode','str','');
+        $i_batch_control_id = getVarClean('i_batch_control_id','int',0);
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -147,6 +148,12 @@ class Tblt_costmap_controller {
             $data['success'] = true;
             $data['message'] = 'Submit proses '.$processcode.' selesai ';
 
+            $ci->load->model('parameter/tblp_processcontrol');
+            $table = new Tblp_processcontrol($i_batch_control_id, '');
+            $item = $table->get($i_process_control_id);
+
+            $data['statuscode'] = $item['statuscode'];
+
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -157,6 +164,7 @@ class Tblt_costmap_controller {
     function cancel_process() {
 
         $i_process_control_id = getVarClean('i_process_control_id','int',0);
+        $i_batch_control_id = getVarClean('i_batch_control_id','int',0);
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -184,6 +192,13 @@ class Tblt_costmap_controller {
 
             $data['success'] = true;
             $data['message'] = 'Cancel proses selesai ';
+
+            $ci->load->model('parameter/tblp_processcontrol');
+            $table = new Tblp_processcontrol($i_batch_control_id, '');
+            $item = $table->get($i_process_control_id);
+
+            $data['statuscode'] = $item['statuscode'];
+
 
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();

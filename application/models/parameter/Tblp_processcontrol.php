@@ -7,7 +7,7 @@
 class Tblp_processcontrol extends Abstract_model {
 
     public $table           = "";
-    public $pkey            = "";
+    public $pkey            = "n01";
     public $alias           = "";
 
     public $fields          = array(
