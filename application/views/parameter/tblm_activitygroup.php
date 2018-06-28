@@ -9,6 +9,10 @@
             <a href="#">Parameter</a>
             <i class="fa fa-circle"></i>
         </li>
+         <li>
+            <a href="#">Basic</a>
+            <i class="fa fa-circle"></i>
+        </li>
         <li>
             <span>Activity Group</span>
         </li>
