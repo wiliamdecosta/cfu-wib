@@ -17,6 +17,7 @@ class Vw_allactivity_controller {
 
         $searchPhrase = getVarClean('searchPhrase', 'str', '');
         $activitytype = getVarClean('activitytype', 'str', '');
+        $ubiscode = getVarClean('ubiscode', 'str', '');
 
         $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
 
@@ -27,15 +28,23 @@ class Vw_allactivity_controller {
             $table = $ci->vw_allactivity;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria(" ( upper(c.activitycode) like upper('%".$searchPhrase."%') OR
+                /* $table->setCriteria(" ( upper(c.activitycode) like upper('%".$searchPhrase."%') OR
                                          upper(c.activityname) like upper('%".$searchPhrase."%') OR
                                          upper(c.ubiscode) like upper('%".$searchPhrase."%')
+                                         ) ");
+ */
+                $table->setCriteria(" ( upper(c.activitycode) like upper('%".$searchPhrase."%') OR
+                                         upper(c.activityname) like upper('%".$searchPhrase."%')
                                          ) ");
 
             }
 
             if(!empty($activitytype)) {
                 $table->setCriteria("c.activitytype = ".$activitytype);
+            }
+
+            if(!empty($ubiscode)) {
+                $table->setCriteria("upper(c.ubiscode) = upper('".$ubiscode."')");
             }
 
             $start = ($start-1) * $limit;

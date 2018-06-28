@@ -55,10 +55,10 @@
         });
     });
 
-    function modal_lov_vw_allactivity_show(the_id_field, the_code_field, activitytype) {
+    function modal_lov_vw_allactivity_show(the_id_field, the_code_field, activitytype, ubiscode = '') {
         modal_lov_vw_allactivity_set_field_value(the_id_field, the_code_field);
         $("#modal_lov_vw_allactivity").modal({backdrop: 'static'});
-        modal_lov_vw_allactivity_prepare_table(activitytype);
+        modal_lov_vw_allactivity_prepare_table(activitytype, ubiscode);
     }
 
 
@@ -76,7 +76,7 @@
          $("#"+ $("#modal_lov_vw_allactivity_code_val").val()).change();
     }
 
-    function modal_lov_vw_allactivity_prepare_table(activitytype) {
+    function modal_lov_vw_allactivity_prepare_table(activitytype, ubiscode) {
         $("#modal_lov_vw_allactivity_grid_selection").bootgrid('destroy');
         $("#modal_lov_vw_allactivity_grid_selection").bootgrid({
              formatters: {
@@ -104,7 +104,8 @@
              },
              url: '<?php echo WS_BOOTGRID."parameter.vw_allactivity_controller/readLov"; ?>',
              post: {
-                 activitytype: activitytype
+                 activitytype: activitytype,
+                 ubiscode: ubiscode
              },
              selection: true,
              sorting:true

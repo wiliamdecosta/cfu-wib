@@ -65,6 +65,13 @@
 
 <script>
 
+function onChangeUbis() {
+    clearInputActivity();
+    clearInputOverheadAct1();
+    clearInputOverheadAct2();
+    clearInputCostDriver();
+}
+
 function showLOVBusinessUnit(id, code, name) {
     modal_lov_tblm_wibunitbusiness_show(id, code, name);
 }
@@ -77,7 +84,13 @@ function clearInputBusinessUnit() {
 
 function showLOVAllActivity(id, code) {
     var activitytypeid_fk = $('#search_activitytype').val();
-    modal_lov_vw_allactivity_show(id, code, activitytypeid_fk);
+    var ubiscode = $('#form_wibunitbusinesscode').val();
+
+    if(ubiscode == '') {
+        swal('Info','Silahkan pilih BU/Subsidiary terlebih dahulu','info');
+        return;
+    }
+    modal_lov_vw_allactivity_show(id, code, activitytypeid_fk, ubiscode);
 }
 
 function clearInputActivity() {
@@ -92,11 +105,18 @@ function clearInputOverheadAct1() {
 
 function clearInputOverheadAct2() {
     $('#form_ohactivityid2').val('');
-    $('#form_ohactivityid2').val('');
+    $('#form_ohactivityname2').val('');
 }
 
 function showLOVCostDriver(id, code) {
-    modal_lov_tblm_costdriver_show(id, code);
+    var ubiscode = $('#form_wibunitbusinesscode').val();
+
+    if(ubiscode == '') {
+        swal('Info','Silahkan pilih BU/Subsidiary terlebih dahulu','info');
+        return;
+    }
+
+    modal_lov_tblm_costdriver_show(id, code, ubiscode);
 }
 
 function clearInputCostDriver() {
@@ -174,7 +194,7 @@ function clearInputCostDriver() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
-                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
+                                        '<input id="form_wibunitbusinesscode" onchange="onChangeUbis();" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +

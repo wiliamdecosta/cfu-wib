@@ -99,6 +99,7 @@ class Tblm_costdriver_controller {
         $dir  = getVarClean('dir','str','asc');
 
         $searchPhrase = getVarClean('searchPhrase', 'str', '');
+        $ubiscode = getVarClean('ubiscode', 'str', '');
 
         $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
 
@@ -109,13 +110,73 @@ class Tblm_costdriver_controller {
             $table = $ci->tblm_costdriver;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("( upper(a.code) like upper('%".$searchPhrase."%') OR
+                /* $table->setCriteria("( upper(a.code) like upper('%".$searchPhrase."%') OR
                                         upper(a.ubiscode) like upper('%".$searchPhrase."%') OR
                                         upper(b.ubisname) like upper('%".$searchPhrase."%') OR
                                          upper(c.code) like upper('%".$searchPhrase."%') OR
                                          upper(c.unitname) like upper('%".$searchPhrase."%')
                                          )");
+ */
+                $table->setCriteria("( upper(a.code) like upper('%".$searchPhrase."%') OR
+                                         upper(c.code) like upper('%".$searchPhrase."%') OR
+                                         upper(c.unitname) like upper('%".$searchPhrase."%')
+                                         )");
 
+            }
+
+            if(!empty($ubiscode)) {
+                $table->setCriteria("upper(a.ubiscode) = upper('".$ubiscode."')");
+            }
+
+            $start = ($start-1) * $limit;
+            $items = $table->getAll($start, $limit, $sort, $dir);
+            $totalcount = $table->countAll();
+
+            $data['rows'] = $items;
+            $data['success'] = true;
+            $data['total'] = $totalcount;
+
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+        }
+
+        return $data;
+    }
+
+
+    function readLovCostDriverEntry() {
+
+        $start = getVarClean('current','int',0);
+        $limit = getVarClean('rowCount','int',5);
+
+        $sort = getVarClean('sort','str','a.listingno');
+        $dir  = getVarClean('dir','str','asc');
+
+        $searchPhrase = getVarClean('searchPhrase', 'str', '');
+
+        $ubiscode = getVarClean('ubiscode', 'str', '');
+        $costdrivertype = getVarClean('costdrivertype','int',0);
+
+        $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
+
+        try {
+
+            $ci = & get_instance();
+            $ci->load->model('parameter/tblm_costdriver');
+            $table = $ci->tblm_costdriver;
+
+            if(!empty($searchPhrase)) {
+
+                $table->setCriteria("( upper(a.code) like upper('%".$searchPhrase."%') OR
+                                            upper(a.ubiscode) like upper('%".$searchPhrase."%') OR
+                                         upper(c.code) like upper('%".$searchPhrase."%') OR
+                                         upper(c.unitname) like upper('%".$searchPhrase."%')
+                                         )");
+
+            }
+
+            if(!empty($costdrivertype)) {
+                $table->setCriteria("a.costdrivertype = ".$costdrivertype);
             }
 
             $start = ($start-1) * $limit;
