@@ -375,26 +375,26 @@ function showLOVBusinessUnit(id, code, name) {
                 {label: 'PL Item',name: 'plitemgabung',width: 250, align: "left"},
 
                 {label: 'PCA Amount',name: 'pcaamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Pct OH 1',name: 'pctohact1',width: 100, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.') + ' %';
+                    return $.number(cellvalue, 2) + ' %';
                 }},
                 {label: 'Vert Alloc from OH 1',name: 'amountohact1',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                  {label: 'Total after Vert Alloc OH 1',name: 'vallocact1',width: 200, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
 
                 {label: 'Pct OH 2',name: 'pctohact2',width: 100, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.') + ' %';
+                    return $.number(cellvalue, 2) + ' %';
                 }},
                 {label: 'Vert Alloc from OH 2',name: 'amountohact2',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                  {label: 'Total after Vert Alloc OH 2',name: 'vallocact2',width: 200, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }}
             ],
             height: '100%',

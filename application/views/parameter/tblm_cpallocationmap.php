@@ -216,7 +216,9 @@
                 },
                 {label: 'PL Item Name',name: 'plitemname',width: 120, align: "left"},
 
-                {label: 'Allocation(%)',name: 'pctallocationdisplay',width: 80, align: "right"},
+                {label: 'Allocation(%)',name: 'pctallocationdisplay',width: 80, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
                 {label: 'PCT Allocation (%)',name: 'pctallocation',width: 150, hidden:true, align: "right",editable: true,
                     editoptions: {
                         size: 10,
@@ -228,7 +230,7 @@
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 0, ",", "." );
+                            $(element).number( true, 0 );
                         }
                     },
                     editrules: {required: true, edithidden: true},

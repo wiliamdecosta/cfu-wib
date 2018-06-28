@@ -333,7 +333,7 @@ function clearInputCostDriverEntry() {
                     editrules: {required: true, edithidden: true}
                 },
                 {label: 'Dom Traffic',name: 'domtrafficvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Dom Traffic',name: 'domtrafficvalue',width: 150, align: "left", hidden: true, editable: true, number:true,
                     editoptions: {
@@ -346,13 +346,13 @@ function clearInputCostDriverEntry() {
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 2, ",", "." );
+                            $(element).number( true, 2);
                         }
                     },
                     editrules: {required: true, edithidden:true}
                 },
                 {label: 'Dom Network',name: 'domnetworkvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Dom Network',name: 'domnetworkvalue',width: 150, hidden:true, align: "left", editable: true, number:true,
                     editoptions: {
@@ -365,13 +365,13 @@ function clearInputCostDriverEntry() {
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 2, ",", "." );
+                            $(element).number( true, 2);
                         }
                     },
                     editrules: {required: true, edithidden:true}
                 },
                 {label: 'Intl Traffic',name: 'intltrafficvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Intl Traffic',name: 'intltrafficvalue',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
@@ -384,13 +384,13 @@ function clearInputCostDriverEntry() {
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 2, ",", "." );
+                            $(element).number( true, 2);
                         }
                     },
                     editrules: {required: true, edithidden:true}
                 },
                 {label: 'Intl Network',name: 'intlnetworkvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Intl Network',name: 'intlnetworkvalue',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
@@ -403,13 +403,13 @@ function clearInputCostDriverEntry() {
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 2, ",", "." );
+                            $(element).number( true, 2);
                         }
                     },
                     editrules: {required: true, edithidden:true}
                 },
                 {label: 'Intl Adjacent',name: 'intladjacentvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Intl Adjacent',name: 'intladjacentvalue',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
@@ -422,13 +422,13 @@ function clearInputCostDriverEntry() {
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 2, ",", "." );
+                            $(element).number( true, 2);
                         }
                     },
                     editrules: {required: true, edithidden:true}
                 },
                 {label: 'Tower',name: 'towervaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Tower',name: 'towervalue',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
@@ -441,13 +441,13 @@ function clearInputCostDriverEntry() {
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 2, ",", "." );
+                            $(element).number( true, 2);
                         }
                     },
                     editrules: {required: true, edithidden:true}
                 },
                 {label: 'Infrastructure',name: 'infravaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2, ',', '.');
+                    return $.number(cellvalue, 2);
                 }},
                 {label: 'Infrastructure',name: 'infravalue',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
@@ -460,7 +460,7 @@ function clearInputCostDriverEntry() {
                                  }
                             });
                             element.style.textAlign = 'right';
-                            $(element).number( true, 2, ",", "." );
+                            $(element).number( true, 2);
                         }
                     },
                     editrules: {required: true, edithidden:true}
