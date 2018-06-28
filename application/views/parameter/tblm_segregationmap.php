@@ -10,50 +10,57 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="#">Basic</a>
+            <a href="#">Mapping</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>Activity</span>
+            <span>Segregation</span>
         </li>
     </ul>
 </div>
 <!-- end breadcrumb -->
 <div class="space-4"></div>
 <div class="row">
-    <label class="control-label col-md-2">Pencarian :</label>
-    <div class="col-md-3">
-        <div class="input-group">
-            <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
-            <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
-            <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
-            <span class="input-group-btn">
-                <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
-                    <span class="fa fa-search bigger-110"></span>
-                </button>
-            </span>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="input-group">
-            <div class="input-group">
-            <input id="i_search" type="text" class="FormElement form-control">
-            <span class="input-group-btn">
-                <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
-            </span>
+    <div class="col-xs-12">
+            <div class="space-4"></div>
+            <div class="row">
+                <label class="control-label col-md-2">Pencarian :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
+                        <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
+                        <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
+                                <span class="fa fa-search bigger-110"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group">
+                        <input id="i_search" type="text" class="FormElement form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="row"  id="table_placeholder" style="display:none;">
-    <div class="col-md-12">
-        <table id="grid-table"></table>
-        <div id="grid-pager"></div>
+            <div class="row" id="table_placeholder" style="display:none;">
+                <div class="col-xs-12">
+                   <table id="grid-table"></table>
+                   <div id="grid-pager"></div>
+                </div>
+            </div>
     </div>
 </div>
 
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
-
+<?php $this->load->view('lov/lov_tblm_activitylist'); ?>
+<?php $this->load->view('lov/lov_bpc_neraca'); ?>
+<?php $this->load->view('lov/lov_tblm_activitygroup'); ?>
 
 
 <script>
@@ -72,11 +79,40 @@ function showLOVBusinessUnit(id, code, name) {
  * @return {[type]} [description]
  */
 function clearInputBusinessUnit() {
-    $('#form_wibunitbusinessid_pk').val('');
-    $('#form_wibunitbusinesscode').val('');
-    $('#form_wibunitbusinessname').val('');
+    $('#search_wibunitbusinessid_pk').val('');
+    $('#search_wibunitbusinesscode').val('');
+    $('#search_wibunitbusinessname').val('');
+}
+
+function showLOVPLItem(id, code) {
+    modal_lov_bpc_neraca_show(id, code);
+}
+
+function clearInputPLItem() {
+    $('#form_plitemcode').val('');
+    $('#form_plitemname').val('');
+}
+
+function showLOVActivityList(id, code, name) {
+    var ubiscode = $('#search_wibunitbusinesscode').val();
+    modal_lov_tblm_activitylist_show(id, code, name, ubiscode);
+}
+
+function clearInputActivityList() {
+    $('#form_activitylistid_fk').val('');
+    $('#form_actlistname').val('');
+}
+
+function showLOVActivityGroup(id, code) {
+    modal_lov_tblm_activitygroup_show(id, code);
+}
+
+function clearInputActivityGroup() {
+    $('#form_activitygroupid_fk').val('');
+    $('#form_activitygroupcode').val('');
 }
 </script>
+
 
 <script>
     function showData(){
@@ -89,7 +125,7 @@ function clearInputBusinessUnit() {
         }
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."parameter.tblm_activity_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."parameter.tblm_segregationmap_controller/read"; ?>',
             postData: {
                 i_search : i_search,
                 ubiscode : ubiscode
@@ -109,13 +145,24 @@ function clearInputBusinessUnit() {
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."parameter.tblm_activity_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."parameter.tblm_segregationmap_controller/crud"; ?>',
             datatype: "json",
             mtype: "POST",
             colModel: [
-                {label: 'ID', name: 'activityid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                /*{label: 'BU/Subsidiary',
-                    name: 'ubiscode',
+                {label: 'ID', name: 'segregationmapid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+
+                /* View Grid  */
+                {label: 'Activity',name: 'activitydisplay',width: 200, align: "left"},
+                {label: 'Activity Group',name: 'activitygroupdisplay',width: 200, align: "left"},
+                {label: 'Activity Type',name: 'activitytypedisplay',width: 200, align: "left"},
+                {label: 'PL Item',name: 'plitemname',width: 120, align: "left"},
+                {label: 'Last Updated Date',name: 'lastupdateddate',width: 120, align: "center"},
+                {label: 'Last Updated By',name: 'lastupdatedby',width: 120, align: "center"},
+
+
+                /* Form  */
+                {label: 'Activity',
+                    name: 'activitylistid_fk',
                     width: 200,
                     sortable: true,
                     editable: true,
@@ -128,13 +175,13 @@ function clearInputBusinessUnit() {
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
-                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FFFFA2" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
+                                elm.append('<input id="form_activitylistid_fk" type="text"  style="display:none;" readonly class="FormElement form-control">'+
+                                        '<input id="form_actlistname" readonly type="text" style="background:#FFFFA2;" size="30" class="FormElement form-control" placeholder="Choose Activity">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVActivityList(\'form_activitylistid_fk\',\'form_actlistname\',\'acttypename\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
-                                        '</button> &nbsp;' +
-                                        '<input id="form_wibunitbusinessname" readonly type="text" size="30" class="FormElement form-control" placeholder="Business Unit Name">');
-                                $("#form_wibunitbusinesscode").val(value);
+                                        '</button>'
+                                        );
+                                $("#form_activitylistid_fk").val(value);
                                 elm.parent().removeClass('jqgrid-required');
                             }, 100);
 
@@ -143,66 +190,124 @@ function clearInputBusinessUnit() {
                         "custom_value":function( element, oper, gridval) {
 
                             if(oper === 'get') {
-                                return $("#form_wibunitbusinesscode").val();
+                                return $("#form_activitylistid_fk").val();
                             } else if( oper === 'set') {
-                                $("#form_wibunitbusinesscode").val(gridval);
+                                $("#form_activitylistid_fk").val(gridval);
                                 var gridId = this.id;
                                 // give the editor time to set display
                                 setTimeout(function(){
                                     var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
                                     if(selectedRowId != null) {
-                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubiscode');
-                                        var name_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubisname');
-                                        $("#form_wibunitbusinesscode").val( code_display );
-                                        $("#form_wibunitbusinessname").val( name_display );
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'activitydisplay');
+                                        $("#form_actlistname").val( code_display );
                                     }
                                 },100);
                             }
                         }
                     }
                 },
-                */
-                {label: 'BU/Subsidiary',name: 'ubiscode',width: 150, align: "left",editable: true, hidden:true,
+                {label: 'Activity Type',name: 'acttypename',width: 150, align: "left",editable: true, hidden:true,
                     editoptions: {
                         size: 30,
                         maxlength:10
                     },
-                    editrules: {required: true}
+                    editrules: {required: false, edithidden:true}
                 },
-                {label: 'Activity Code',name: 'code',width: 150, align: "left",editable: true,
+                {label: 'Activity Group',
+                    name: 'activitygroupid_fk',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
                     editoptions: {
-                        size: 30,
-                        maxlength:10
-                    },
-                    editrules: {required: true}
-                },
-                {label: 'Activity Name',name: 'activityname',width: 150, align: "left",editable: true,
-                    editoptions: {
-                        size: 30,
-                        maxlength:64
-                    },
-                    editrules: {required: true}
-                },
-                {label: 'Listing No',name: 'listingno',width: 150, align: "left", hidden:true, editable: true, number:true,
-                    editoptions: {
-                        size: 15,
-                        maxlength:255,
-                        dataInit: function(element) {
-                            $(element).keypress(function(e){
-                                 if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                                    return false;
-                                 }
-                            });
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_activitygroupid_fk" type="text"  style="display:none">'+
+                                        '<input id="form_activitygroupcode" readonly type="text" style="background:#FFFFA2;" class="FormElement form-control" placeholder="Choose Activity Group">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVActivityGroup(\'form_activitygroupid_fk\',\'form_activitygroupcode\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>');
+                                $("#form_activitygroupid_fk").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_activitygroupid_fk").val();
+                            } else if( oper === 'set') {
+                                $("#form_activitygroupid_fk").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'activitygroupdisplay');
+                                        $("#form_activitygroupcode").val( code_display );
+                                    }
+                                },100);
+                            }
                         }
-                    },
-                    editrules: {required: false, edithidden: true}
+                    }
+                },
+                {label: 'PL Item',
+                    name: 'plitemcode',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
+                    editoptions: {
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_plitemcode" type="text"  style="display:none;" readonly class="FormElement form-control" placeholder="Choose PL Item">'+
+                                        '<input id="form_plitemname" readonly type="text" size="30" class="FormElement form-control" placeholder="Choose PL Item">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVPLItem(\'form_plitemcode\',\'form_plitemname\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>'
+                                        );
+                                $("#form_plitemcode").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_plitemcode").val();
+                            } else if( oper === 'set') {
+                                $("#form_plitemcode").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'plitemname');
+                                        $("#form_plitemname").val( code_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
                 },
                 {label: 'Description',name: 'description',width: 200, hidden:true, align: "left",editable: true,
                     edittype:'textarea',
                     editoptions: {
                         rows: 2,
                         cols:50,
-                        maxlength:64
+                        maxlength:128
                     },
                     editrules: {required: false, edithidden: true}
                 },
@@ -237,11 +342,7 @@ function clearInputBusinessUnit() {
                         defaultValue: 'By System'
                     },
                     editrules: {edithidden: true}
-                },
-                {label: 'Last Updated Date',name: 'lastupdateddate',width: 120, align: "left"},
-                {label: 'Last Updated By',name: 'lastupdatedby',width: 120, align: "left"},
-                {label: 'ubiscode_display',name: 'ubiscode_display',width: 120, align: "left", hidden:true},
-                {label: 'ubisname',name: 'ubisname',width: 120, align: "left", hidden:true}
+                }
             ],
             height: '100%',
             autowidth: true,
@@ -251,7 +352,7 @@ function clearInputBusinessUnit() {
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
@@ -271,8 +372,8 @@ function clearInputBusinessUnit() {
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."parameter.tblm_activity_controller/crud"; ?>',
-            caption: "Activity"
+            editurl: '<?php echo WS_JQGRID."parameter.tblm_segregationmap_controller/crud"; ?>',
+            caption: "Activity Group"
 
         });
 
@@ -316,6 +417,8 @@ function clearInputBusinessUnit() {
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
 
+                    $('#acttypename').attr('readonly', true);
+
                 },
                 afterShowForm: function(form) {
                     form.closest('.ui-jqdialog').center();
@@ -349,12 +452,13 @@ function clearInputBusinessUnit() {
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
 
-                    $('#ubiscode').val( $('#search_wibunitbusinesscode').val() );
+                    $('#acttypename').attr('readonly', true);
 
                     setTimeout(function() {
-                        clearInputBusinessUnit();
+                        clearInputPLItem();
+                        clearInputActivityList();
+                        clearInputActivityGroup();
                     },100);
-
                 },
                 afterShowForm: function(form) {
                     form.closest('.ui-jqdialog').center();
@@ -369,7 +473,9 @@ function clearInputBusinessUnit() {
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
 
-                    clearInputBusinessUnit();
+                    clearInputPLItem();
+                    clearInputActivityList();
+                    clearInputActivityGroup();
 
                     return [true,"",response.responseText];
                 }

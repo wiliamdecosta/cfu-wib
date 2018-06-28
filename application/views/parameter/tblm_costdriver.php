@@ -149,7 +149,7 @@ function clearInputBusinessUnit() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
-                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
+                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FFFFA2" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +
@@ -204,7 +204,7 @@ function clearInputBusinessUnit() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_unitid_fk" type="text"  style="display:none">'+
-                                        '<input id="form_unitcode" readonly type="text" style="background:#FBEC88" class="FormElement form-control" placeholder="Choose Unit">'+
+                                        '<input id="form_unitcode" readonly type="text" style="background:#FFFFA2" class="FormElement form-control" placeholder="Choose Unit">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVUnit(\'form_unitid_fk\',\'form_unitcode\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');

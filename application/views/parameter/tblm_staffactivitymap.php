@@ -161,7 +161,7 @@ function onChangeLoker() {
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_id_divisi" type="text"  style="background:#FBEC88" readonly class="FormElement form-control" placeholder="Choose Division" onchange="onChangeDivisi();">'+
+                                elm.append('<input id="form_id_divisi" type="text"  style="background:#FFFFA2" readonly class="FormElement form-control" placeholder="Choose Division" onchange="onChangeDivisi();">'+
                                         '<button class="btn btn-success" type="button" onclick="showLovDivisi(\'form_id_divisi\',\'form_nama_divisi\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +
@@ -205,7 +205,7 @@ function onChangeLoker() {
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_id_loker" type="text"  readonly style="background:#FBEC88" class="FormElement form-control" onchange="onChangeLoker();" placeholder="Choose Organization">'+
+                                elm.append('<input id="form_id_loker" type="text"  readonly style="background:#FFFFA2" class="FormElement form-control" onchange="onChangeLoker();" placeholder="Choose Organization">'+
                                         '<button class="btn btn-success" type="button" onclick="showLovLoker(\'form_id_loker\',\'form_nama_loker\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>&nbsp; ' +
@@ -294,7 +294,7 @@ function onChangeLoker() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_activityid_fk" type="text"  style="display:none;">'+
-                                        '<input id="form_activitycode" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Activity">'+
+                                        '<input id="form_activitycode" readonly style="background:#FFFFA2" type="text" class="FormElement form-control" placeholder="Choose Activity">'+
                                         '<button class="btn btn-success" type="button" onclick="showLovActivity(\'form_activityid_fk\',\'form_activitycode\',\'form_activityname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +

@@ -1,34 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Tblm_activitylist_controller
-* @version 2018-06-08 10:15:05
+* @class Tblm_segregationmap_controller
+* @version 2018-06-28 12:35:39
 */
-class Tblm_activitylist_controller {
+class Tblm_segregationmap_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','listingno');
+        $sidx = getVarClean('sidx','str','c.listingno , b.listingno');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
-        $activitytypeid_fk = getVarClean('activitytypeid_fk','int',0);
         $i_search = getVarClean('i_search','str','');
         $ubiscode = getVarClean('ubiscode','str','');
 
-        /* if(empty($ubiscode)) {
+        if(empty($ubiscode)) {
             $data['success'] = true;
             return $data;
         }
- */
+
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_activitylist');
-            $table = $ci->tblm_activitylist;
+            $ci->load->model('parameter/tblm_segregationmap');
+            $table = $ci->tblm_segregationmap;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -47,18 +46,19 @@ class Tblm_activitylist_controller {
             // Filter Table
             $req_param['where'] = array();
 
-            if(!empty($activitytypeid_fk)) {
-                $table->setCriteria('a.activitytypeid_fk = '.$activitytypeid_fk);
-            }
-
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(a.code) like upper('%".$i_search."%') OR
-                                            upper(a.actlistname) like upper('%".$i_search."%') OR
-                                            upper(a.description) like upper('%".$i_search."%'))");
+                $table->setCriteria("(upper(a.plitemcode) like upper('%".$i_search."%') OR
+                                         upper(a.description) like upper('%".$i_search."%') OR
+                                         upper(b.actlistname) like upper('%".$i_search."%') OR
+                                         upper(c.acttypename) like upper('%".$i_search."%') OR
+                                         upper(d.code) like upper('%".$i_search."%') OR
+                                         upper(e.nama) like upper('%".$i_search."%')
+                                         )");
+
             }
 
             if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(a.ubiscode) like upper('".$ubiscode."'))");
+                $table->setCriteria("upper(b.ubiscode) = upper('".$ubiscode."')");
             }
 
             $table->setJQGridParam($req_param);
@@ -85,63 +85,13 @@ class Tblm_activitylist_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data tblm_activitylist');
+            logging('view data tblm_segregationmap');
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
 
         return $data;
     }
-
-
-
-    function readLov() {
-
-        $start = getVarClean('current','int',0);
-        $limit = getVarClean('rowCount','int',5);
-
-        $sort = getVarClean('sort','str','c.listingno, a.listingno');
-        $dir  = getVarClean('dir','str','asc');
-
-        $searchPhrase = getVarClean('searchPhrase', 'str', '');
-        //$status_type_code = getVarClean('status_type','str','');
-        $ubiscode = getVarClean('ubiscode', 'str', '');
-
-        $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
-
-        try {
-
-            $ci = & get_instance();
-            $ci->load->model('parameter/tblm_activitylist');
-            $table = $ci->tblm_activitylist;
-
-            if(!empty($searchPhrase)) {
-                $table->setCriteria(" ( upper(a.code) like upper('%".$searchPhrase."%') OR
-                                         upper(a.actlistname) like upper('%".$searchPhrase."%') OR
-                                         upper(c.acttypename) like upper('%".$searchPhrase."%')
-                                         )");
-
-            }
-
-            if(!empty($ubiscode)) {
-                $table->setCriteria("( upper(a.ubiscode) = upper('".$ubiscode."') )");
-            }
-
-            $start = ($start-1) * $limit;
-            $items = $table->getAll($start, $limit, $sort, $dir);
-            $totalcount = $table->countAll();
-
-            $data['rows'] = $items;
-            $data['success'] = true;
-            $data['total'] = $totalcount;
-
-        }catch (Exception $e) {
-            $data['message'] = $e->getMessage();
-        }
-
-        return $data;
-    }
-
 
     function crud() {
 
@@ -176,8 +126,8 @@ class Tblm_activitylist_controller {
     function create() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activitylist');
-        $table = $ci->tblm_activitylist;
+        $ci->load->model('parameter/tblm_segregationmap');
+        $table = $ci->tblm_segregationmap;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -231,7 +181,7 @@ class Tblm_activitylist_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data added successfully';
-                logging('create data tblm_activitylist');
+                logging('create data tblm_segregationmap');
 
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -248,8 +198,8 @@ class Tblm_activitylist_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activitylist');
-        $table = $ci->tblm_activitylist;
+        $ci->load->model('parameter/tblm_segregationmap');
+        $table = $ci->tblm_segregationmap;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -303,7 +253,7 @@ class Tblm_activitylist_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data update successfully';
-                logging('update data tblm_activitylist');
+                logging('update data tblm_segregationmap');
                 $data['rows'] = $table->get($items[$table->pkey]);
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -319,8 +269,8 @@ class Tblm_activitylist_controller {
 
     function destroy() {
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_activitylist');
-        $table = $ci->tblm_activitylist;
+        $ci->load->model('parameter/tblm_segregationmap');
+        $table = $ci->tblm_segregationmap;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -350,7 +300,7 @@ class Tblm_activitylist_controller {
 
             $data['success'] = true;
             $data['message'] = $total.' Data deleted successfully';
-            logging('delete data tblm_activitylist');
+            logging('delete data tblm_segregationmap');
             $table->db->trans_commit(); //Commit Trans
 
         }catch (Exception $e) {
@@ -363,4 +313,4 @@ class Tblm_activitylist_controller {
     }
 }
 
-/* End of file Status_list_controller.php */
+/* End of file Status_type_controller.php */

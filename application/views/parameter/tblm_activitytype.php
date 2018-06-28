@@ -247,6 +247,12 @@ $("#tab-2").on("click", function(event) {
                     var form = $(e[0]);
                     style_edit_form(form);
 
+                    $('#creationdate').attr('readonly', true);
+                    $('#createdby').attr('readonly', true);
+                    $('#updateddate').attr('readonly', true);
+                    $('#updatedby').attr('readonly', true);
+
+
                 },
                 afterShowForm: function(form) {
                     form.closest('.ui-jqdialog').center();
@@ -274,6 +280,12 @@ $("#tab-2").on("click", function(event) {
                 beforeShowForm: function (e, form) {
                     var form = $(e[0]);
                     style_edit_form(form);
+
+                    $('#creationdate').attr('readonly', true);
+                    $('#createdby').attr('readonly', true);
+                    $('#updateddate').attr('readonly', true);
+                    $('#updatedby').attr('readonly', true);
+
                 },
                 afterShowForm: function(form) {
                     form.closest('.ui-jqdialog').center();

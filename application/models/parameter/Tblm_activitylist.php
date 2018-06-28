@@ -32,9 +32,11 @@ class Tblm_activitylist extends Abstract_model {
                                     a.creationdate, a.createdby, a.updateddate, a.updatedby,
                                         to_char(a.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, a.updatedby lastupdatedby,
                                         a.ubiscode ubiscodedisplay,
-                                        b.ubisname";
+                                        b.ubisname,
+                                        c.acttypename";
     public $fromClause      = "tblm_activitylist a
-                                        left join tblm_wibunitbusiness b on a.ubiscode = b.code";
+                                        left join tblm_wibunitbusiness b on a.ubiscode = b.code
+                                        left join tblm_activitytype c on a.activitytypeid_fk = c.activitytypeid_pk";
 
     public $refs            = array();
 

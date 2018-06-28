@@ -194,7 +194,7 @@ function clearInputCostDriver() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
-                                        '<input id="form_wibunitbusinesscode" onchange="onChangeUbis();" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
+                                        '<input id="form_wibunitbusinesscode" onchange="onChangeUbis();" readonly style="background:#FFFFA2" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +
@@ -241,7 +241,7 @@ function clearInputCostDriver() {
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_activityid" readonly size="30" type="text"  style="background:#FBEC88" class="FormElement form-control" placeholder="Choose Activity">'+
+                                elm.append('<input id="form_activityid" readonly size="30" type="text"  style="background:#FFFFA2" class="FormElement form-control" placeholder="Choose Activity">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVAllActivity(\'form_activityid\',\'form_activityname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +

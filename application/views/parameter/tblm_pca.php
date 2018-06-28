@@ -127,7 +127,7 @@
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_plitemcode" type="text"  style="background:#FBEC88" readonly class="FormElement form-control" placeholder="Choose PL Item">'+
+                                elm.append('<input id="form_plitemcode" type="text"  style="background:#FFFFA2" readonly class="FormElement form-control" placeholder="Choose PL Item">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVPLItem(\'form_plitemcode\',\'form_plitemname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +

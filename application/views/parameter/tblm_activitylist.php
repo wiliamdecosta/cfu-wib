@@ -136,7 +136,7 @@ $("#tab-1").on("click", function(event) {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
-                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FBEC88" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
+                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FFFFA2" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button> &nbsp;' +
@@ -308,6 +308,12 @@ $("#tab-1").on("click", function(event) {
                 beforeShowForm: function (e, form) {
                     var form = $(e[0]);
                     style_edit_form(form);
+
+                    $('#creationdate').attr('readonly', true);
+                    $('#createdby').attr('readonly', true);
+                    $('#updateddate').attr('readonly', true);
+                    $('#updatedby').attr('readonly', true);
+
                 },
                 afterShowForm: function(form) {
                     form.closest('.ui-jqdialog').center();
@@ -340,6 +346,12 @@ $("#tab-1").on("click", function(event) {
                 beforeShowForm: function (e, form) {
                     var form = $(e[0]);
                     style_edit_form(form);
+
+                    $('#creationdate').attr('readonly', true);
+                    $('#createdby').attr('readonly', true);
+                    $('#updateddate').attr('readonly', true);
+                    $('#updatedby').attr('readonly', true);
+
 
                     setTimeout(function() {
                         clearInputBusinessUnit();
