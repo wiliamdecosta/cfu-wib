@@ -59,7 +59,6 @@ class Tblm_cpallocationmap_controller {
                                             )");
             }
 
-            $table->setCriteria("b.kode_fs = 'CCA'");
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();

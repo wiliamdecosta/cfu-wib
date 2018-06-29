@@ -37,7 +37,7 @@ class Tblm_cpallocationmap extends Abstract_model {
                                     d.uraian activityname";
 
     public $fromClause      = "tblm_cpallocationmap a
-                                        inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca
+                                        inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca and b.kode_fs = 'CCA'
                                         inner join tblm_wibunitbusiness c on a.wibunitbusinessid_fk = c.wibunitbusinessid_pk
                                         inner join rra.bpc_cost_activity d on a.idactivityext = d.id";
     public $refs            = array();

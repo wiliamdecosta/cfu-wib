@@ -37,7 +37,7 @@ class Tblm_pca extends Abstract_model {
                                     c.code ubiscode, c.ubisname";
 
     public $fromClause      = "tblm_pca a
-                                        inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca
+                                        inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca and b.kode_fs = 'CCA'
                                         inner join tblm_wibunitbusiness c on a.wibunitbusinessid_fk = c.wibunitbusinessid_pk";
     public $refs            = array();
 
