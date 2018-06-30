@@ -131,7 +131,7 @@
                             'COST_MAP' : 'transaksi.tblt_costmap',
                             'PCA' : 'transaksi.tblt_pca',
                             'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc',
-                            'ENTRY_COST_DRIVER' : 'transaksi.tblt_costdriverentry'};
+                            'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry'};
 
         /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
                             'COST_MAP' : 'transaksi.tblt_costmap',
@@ -212,8 +212,8 @@
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 12,
-            rowList: [12,20,50],
+            rowNum: 20,
+            rowList: [20,50,100],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,

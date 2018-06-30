@@ -51,8 +51,8 @@
             <div class="row" id="btn-group-costdriverentry-action" style="display:none;">
                 <div class="col-xs-4"></div>
                 <div class="col-xs-6">
-                    <button class="btn btn-success" id="btn-process" onclick="copyDefault();">Copy Default</button>
-                    <button class="btn btn-warning" id="btn-cancel" onclick="copyPeriodeLalu();">Copy Periode Lalu</button>
+                    <button class="btn btn-success" id="btn-copy-default" onclick="copyDefault();">Copy Default</button>
+                    <button class="btn btn-warning" id="btn-copy-prevperiod" onclick="copyPeriodeLalu();">Copy Periode Lalu</button>
                 </div>
             </div>
     </div>
@@ -99,11 +99,19 @@ function clearInputCostDriverEntry() {
 
 <script>
 
-    function buttonMode() {
+    function buttonMode(statuscode) {
         var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
 
         if(isupdatable == 'Y') {
             $('#btn-group-costdriverentry-action').show();
+
+            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
+                $('#btn-copy-default').hide();
+                $('#btn-copy-prevperiod').hide();
+            }else if(statuscode == 'INITIAL') {
+                $('#btn-copy-default').show();
+                $('#btn-copy-prevperiod').show();
+            }
         }
     }
 
@@ -120,7 +128,8 @@ function clearInputCostDriverEntry() {
     }
 
     $(function() {
-        buttonMode();
+        var statuscode = "<?php echo $this->input->post('statuscode'); ?>";
+        buttonMode(statuscode);
     });
 
 </script>
