@@ -23,16 +23,22 @@
                 <li class="">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-1">
                         <i class="blue"></i>
-                        <strong> Batch Control </strong>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-2">
-                        <i class="blue"></i>
-                        <strong> Process Control </strong>
+                        <strong> Indirect Cost Segregation </strong>
                     </a>
                 </li>
                 <li class="">
+                    <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-othersegregation">
+                        <i class="blue"></i>
+                        <strong> Other Segregation</strong>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-2">
+                        <i class="blue"></i>
+                        <strong> Process Summary </strong>
+                    </a>
+                </li>
+                <li class="active">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-3">
                         <i class="blue"></i>
                         <strong> Process Log </strong>
@@ -44,6 +50,15 @@
 
         <div class="tab-content no-border">
             <div class="space-4"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-primary" type="button" id="btn-back" onclick="backToProcessControl()"><i class="fa fa-arrow-left"></i> Kembali Process Control</button>
+                </div>
+            </div>
+            <h3> <?php echo 'Indirect Cost Segregation'.' ('.$this->input->post('periodid_fk').')'; ?></h3>
+            <div class="space-4"></div>
+
+
             <div class="row">
             <label class="control-label col-md-2">Pencarian :</label>
             <div class="col-md-3">
@@ -71,28 +86,60 @@
 <script>
     $("#tab-1").on("click", function(event) {
         event.stopPropagation();
-        loadContentWithParams("parameter.tblp_batchcontrol", {});
+
+        var tab_1 = "<?php echo $this->input->post('tab_1'); ?>";
+
+        loadContentWithParams(tab_1, {
+            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+            statuscode : '<?php echo $this->input->post('statuscode'); ?>',
+            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+            processcode : '<?php echo $this->input->post('processcode'); ?>',
+            tab_1 : tab_1
+        });
     });
 
-    $("#tab-3").on("click", function(event) {
 
+    $("#tab-othersegregation").on("click", function(event) {
         event.stopPropagation();
-        var grid = $('#grid-table');
-        processcontrolid_pk = grid.jqGrid ('getGridParam', 'selrow');
-        processcode = grid.jqGrid ('getCell', processcontrolid_pk, 'processcode');
 
-        if(processcontrolid_pk == null) {
-            swal('Informasi','Silahkan pilih salah satu baris process control','info');
-            return false;
-        }
+        loadContentWithParams("transaksi.tblt_segregationother", {
+            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+            statuscode : '<?php echo $this->input->post('statuscode'); ?>',
+            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+            processcode : '<?php echo $this->input->post('processcode'); ?>',
+            tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+        });
 
-        loadContentWithParams("parameter.tblp_logprocesscontrol", {
-            processcontrolid_pk: processcontrolid_pk,
-            processcode : processcode,
+    });
+
+
+    $("#tab-2").on("click", function(event) {
+        event.stopPropagation();
+
+        loadContentWithParams("transaksi.tblt_processsummary_segregation", {
+            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+            statuscode : '<?php echo $this->input->post('statuscode'); ?>',
+            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+            processcode : '<?php echo $this->input->post('processcode'); ?>',
+            tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+        });
+
+    });
+</script>
+
+<script>
+    function backToProcessControl() {
+        loadContentWithParams("parameter.tblp_processcontrol", {
             i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
             periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>
         });
-    });
+    }
 </script>
 
 <script>
@@ -103,10 +150,10 @@
         jQuery(function($) {
 
             jQuery("#grid-table").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."parameter.tblp_processcontrol_controller/read"; ?>',
+                url: '<?php echo WS_JQGRID."parameter.tblp_logprocesscontrol_controller/read"; ?>',
                 postData: {
                     i_search : $('#i_search').val(),
-                    i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>
+                    processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>
                 }
             });
             $("#grid-table").trigger("reloadGrid");
@@ -115,46 +162,8 @@
 
 </script>
 
-<?php $this->load->view('lov/lov_show_detil_processcontrol'); ?>
-<script>
-    function showDetilProcessControl(id) {
+<?php //$this->load->view('lov/lov_show_detil_batchcontrol'); ?>
 
-        var rowData = jQuery("#grid-table").getRowData(id);
-        modal_lov_show_detil_processcontrol_show(rowData);
-    }
-
-    function doProcess(id) {
-        var rowData = jQuery("#grid-table").getRowData(id);
-        str_processcode = rowData['processcode'].toUpperCase();
-
-        /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
-                            'COST_MAP' : 'transaksi.tblt_costmap',
-                            'PCA' : 'transaksi.tblt_pca',
-                            'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc',
-                            'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry',
-                            'SEGREGATION':'transaksi.tblt_segregationact'};
- */
-        var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
-                            'COST_MAP' : 'transaksi.tblt_costmap',
-                            'PCA' : 'transaksi.tblt_pca',
-                            'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc',
-                            'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry'};
-
-        if(link_obj[str_processcode] === undefined) {
-            return;
-        }
-
-        loadContentWithParams(link_obj[str_processcode], {
-            processcontrolid_pk: rowData['processcontrolid_pk'],
-            processcode : rowData['processcode'],
-            isupdatable : rowData['isupdatable'],
-            statuscode: rowData['statuscode'].toUpperCase(),
-            tab_1 : link_obj[str_processcode],
-            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
-            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>
-        });
-    }
-</script>
 
 <script>
 
@@ -163,60 +172,22 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."parameter.tblp_processcontrol_controller/crud"; ?>',
-            postData: { i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>},
+            url: '<?php echo WS_JQGRID."parameter.tblp_logprocesscontrol_controller/crud"; ?>',
+            postData: { processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>},
             datatype: "json",
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'processcontrolid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Detil',width: 80,align: "center",
-                    formatter:function(cellvalue, options, rowObject) {
-                        var key = rowObject['processcontrolid_pk'];
-                        return '<button class="btn btn-primary btn-xs" onclick="showDetilProcessControl('+key+')">Detil</button>';
-                    }
-                },
-                {label: 'Process Type',name: 'processtypecode',width: 150, align: "left", hidden: false},
-                {label: 'Process Code',name: 'processcode',width: 150, align: "left", hidden: true},
-                {label: 'Process Code(Link)',width: 180,align: "left",
-                    formatter:function(cellvalue, options, rowObject) {
-                        var processcode = rowObject['processcode'];
-                        var isaccessible = rowObject['isaccessible'];
-                        var key = rowObject['processcontrolid_pk'];
-
-                        if(isaccessible == 'Y')
-                            return '<button class="btn btn-link btn-xs" onclick="doProcess(\''+key+'\')">'+processcode+'</button>';
-                        else
-                            return processcode;
-                    }
-                },
-                {label: 'Process Status',name: 'statuscode',width: 150, align: "left"},
-                {label: 'Verified?',name: 'isverified',width: 80, align: "left"},
-                {label: 'Valid?',name: 'isvalid',width: 80, align: "left"},
-                {label: 'IsAccessible',name: 'isaccessible',width: 80, align: "left", hidden:true},
-                {label: 'IsUpdateable',name: 'isupdatable',width: 80, align: "left", hidden:true},
-
-                {label: 'Verification Date',name: 'verificationdate',width: 150, align: "left"},
-                {label: 'Verified By ',name: 'verifiedby',width: 150, align: "left"},
-
-                {label: 'description',name: 'description',width: 150, align: "left", hidden: true},
-                {label: 'creationdate',name: 'creationdate',width: 150, align: "left", hidden: true},
-                {label: 'createdby',name: 'createdby',width: 150, align: "left", hidden: true},
-                {label: 'processtypeid_fk,',name: 'processtypeid_fk,',width: 150, align: "left", hidden: true},
-                {label: 'processid_fk,',name: 'processid_fk,',width: 150, align: "left", hidden: true},
-                {label: 'statuslistid_fk,',name: 'statuslistid_fk,',width: 150, align: "left", hidden: true},
-                {label: 'updateddate,',name: 'updateddate,',width: 150, align: "left", hidden: true},
-                {label: 'updatedby,',name: 'updatedby,',width: 150, align: "left", hidden: true},
-                {label: 'pbatchcontrolid_fk,',name: 'pbatchcontrolid_fk,',width: 150, align: "left", hidden: true},
-                {label: 'startprocesstime,',name: 'startprocesstime,',width: 150, align: "left", hidden: true},
-                {label: 'endprocesstime,',name: 'endprocesstime,',width: 150, align: "left", hidden: true},
-                {label: 'procedurename,',name: 'procedurename,',width: 150, align: "left", hidden: true},
-                {label: 'procedureparam,',name: 'procedureparam,',width: 150, align: "left", hidden: true},
+                {label: 'Counter No',name: 'counterno',width: 50, align: "left", hidden:true},
+                {label: 'Log Date',name: 'logdate',width: 100, align: "left"},
+                {label: 'Log Message',name: 'logmessage',width: 150, align: "left"},
+                {label: 'Log Type',name: 'logtype',width: 150, align: "left"}
             ],
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 20,
-            rowList: [20,50,100],
+            rowNum: 12,
+            rowList: [12,20,50],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
@@ -240,8 +211,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."parameter.tblp_processcontrol_controller/crud"; ?>',
-            caption: "Process Control :: " + <?php echo $this->input->post('periodid_fk'); ?>
+            editurl: '<?php echo WS_JQGRID."parameter.tblp_logprocesscontrol_controller/crud"; ?>',
+            caption: "Log Process Control :: <?php echo $this->input->post('processcode'); ?>"
 
         });
 
