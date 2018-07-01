@@ -363,8 +363,8 @@ $("#tab-3").on("click", function(event) {
             datatype: "json",
             mtype: "POST",
             colModel: [
-                {label: 'GL Account',name: 'glaccount',width: 150, align: "left"},
-                {label: 'GL Desc',name: 'gldesc',width: 150, align: "left"},
+                {label: 'GL Account',name: 'glaccount',width: 120, align: "left"},
+                {label: 'GL Desc',name: 'gldesc',width: 250, align: "left"},
                 {label: 'Telin JKT',name: 'telinjkt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
                     return $.number(cellvalue, 2);
                 }},
