@@ -56,75 +56,37 @@
                 </div>
             </div>
 
+            <div class="space-4"></div>
+
             <div class="row">
-            <label class="control-label col-md-2">Pencarian :</label>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
-                    <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
-                    <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
-                            <span class="fa fa-search bigger-110"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="input-group">
+                <label class="control-label col-md-2">Pencarian :</label>
+                <div class="col-md-3">
                     <div class="input-group">
-                    <input id="i_search" type="text" class="FormElement form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
-                    </span>
+                        <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
+                        <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
+                        <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
+                                <span class="fa fa-search bigger-110"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group">
+                        <input id="i_search" type="text" class="FormElement form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
+                        </span>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
             <div class="row">
-                <div class="col-xs-12 table-responsive">
-                   <table class="table table-bordered table-hover table-condensed">
-                        <thead>
-                            <tr>
-                                <th rowspan="2">Activity</th>
-                                <th rowspan="2">Category</th>
-                                <th rowspan="2">PL Item</th>
-                                <th rowspan="2">Amount</th>
-                                <th rowspan="2">Cost Driver</th>
-                                <th colspan="7" style="text-align:center;">Cost Driver</th>
-                                <th colspan="7" style="text-align:center;">Cost Driver Proportion</th>
-                                <th colspan="7" style="text-align:center;">After Segregation</th>
-                            </tr>
-                            <tr>
-                                <th>Dom Traffic</th>
-                                <th>Dom Network</th>
-                                <th>Intl Traffic</th>
-                                <th>Intl Network</th>
-                                <th>Intl Adjacent</th>
-                                <th>Tower</th>
-                                <th>Infrastructure</th>
-
-                                <th>Dom Traffic</th>
-                                <th>Dom Network</th>
-                                <th>Intl Traffic</th>
-                                <th>Intl Network</th>
-                                <th>Intl Adjacent</th>
-                                <th>Tower</th>
-                                <th>Infrastructure</th>
-
-                                <th>Dom Traffic</th>
-                                <th>Dom Network</th>
-                                <th>Intl Traffic</th>
-                                <th>Intl Network</th>
-                                <th>Intl Adjacent</th>
-                                <th>Tower</th>
-                                <th>Infrastructure</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbl-segregation">
-
-                        </tbody>
-                    </table>
+                <div class="col-xs-12">
+                    <table id="grid-table"></table>
+                    <div id="grid-pager"></div>
                 </div>
             </div>
             <div class="space-4"></div>
@@ -212,40 +174,294 @@ function showLOVBusinessUnit(id, code, name) {
     }
 </script>
 
+
 <script>
     function showData(){
         var i_search = $('#i_search').val();
         var ubiscode = $('#search_wibunitbusinesscode').val();
 
-        if(ubiscode == '') {
-            $('#tbl-segregation').hide();
-            return;
-        }
-        $('#tbl-segregation').show();
 
-        loadDataTable(i_search, ubiscode);
+        jQuery(function($) {
+            jQuery("#grid-table").jqGrid('setGridParam',{
+                url: '<?php echo WS_JQGRID."transaksi.tblt_segregationother_controller/read"; ?>',
+                postData: {
+                    i_search : i_search,
+                    processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+                    ubiscode: ubiscode
+                }
+            });
+            $("#grid-table").trigger("reloadGrid");
+        });
     }
 </script>
 
 
 <script>
+    jQuery(function($) {
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
 
-    function loadDataTable(i_search, ubiscode) {
-        $( "#tbl-segregation" ).html( 'Loading...');
-        $.ajax({
-            url: '<?php echo WS_JQGRID."transaksi.tblt_segregationother_controller/readTable"; ?>',
-            type: "POST",
-            data: {
-                i_search : i_search,
-                i_process_control_id : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-                ubiscode : ubiscode
+        jQuery("#grid-table").jqGrid({
+            url: '<?php echo WS_JQGRID."transaksi.tblt_segregationother_controller/crud"; ?>',
+            postData: { processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>},
+            datatype: "json",
+            mtype: "POST",
+            colModel: [
+                {label: 'Activity',name: 'actlistname',width: 250, align: "left"},
+                {label: 'Category',name: 'categorycode',width: 250, align: "left"},
+                {label: 'PL Item',name: 'plitemname',width: 250, align: "left"},
+
+                {label: 'Amount',name: 'amount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Cost Driver',name: 'costdrivercode',width: 250, align: "left"},
+
+                /**Cost Driver */
+                {label: 'Dom Traffic',name: 'cd_domtraffic',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Dom Network',name: 'cd_domnetwork',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Traffic',name: 'cd_intltraffic',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Network',name: 'cd_intlnetwork',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Adjacent',name: 'cd_intladjacent',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Tower',name: 'cd_tower',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Infrastructure',name: 'cd_infra',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+
+                /**Cost Driver Proportion*/
+                {label: 'Dom Traffic',name: 'pct_domtraffic',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Dom Network',name: 'pct_domnetwork',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Traffic',name: 'pct_intltraffic',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Network',name: 'pct_intlnetwork',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Adjacent',name: 'pct_intladjacent',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Tower',name: 'pct_tower',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Infrastructure',name: 'pct_infra',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+
+
+                /**After Segregation*/
+                {label: 'Dom Traffic',name: 'domtrafficamt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Dom Network',name: 'domnetworkamt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Traffic',name: 'intltrafficamt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Network',name: 'intlnetworkamt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Intl Adjacent',name: 'intladjacentamt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Tower',name: 'toweramt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'Infrastructure',name: 'infraamt',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }}
+
+            ],
+            height: '100%',
+            autowidth: true,
+            viewrecords: true,
+            rowNum: 20,
+            rowList: [20,50,100],
+            rownumbers: true, // show row numbers
+            rownumWidth: 35, // the width of the row numbers columns
+            altRows: true,
+            shrinkToFit: false,
+            multiboxonly: true,
+            onSelectRow: function (rowid) {
+                /*do something when selected*/
+
             },
-            success: function (data) {
-                $( "#tbl-segregation" ).html( data );
+            sortorder:'',
+            pager: '#grid-pager',
+            jsonReader: {
+                root: 'rows',
+                id: 'id',
+                repeatitems: false
             },
-            error: function (xhr, status, error) {
-                swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-            }
+            loadComplete: function (response) {
+                if(response.success == false) {
+                    swal({title: 'Attention', text: response.message, html: true, type: "warning"});
+                }
+
+            },
+            //memanggil controller jqgrid yang ada di controller crud
+            editurl: '<?php echo WS_JQGRID."transaksi.tblt_segregationother_controller/crud"; ?>',
+            caption: "Other Segregation"
+
         });
+
+        jQuery("#grid-table").jqGrid('setGroupHeaders', {
+            useColSpanStyle: true,
+            groupHeaders:[
+                {startColumnName: 'cd_domtraffic', align:'center', numberOfColumns: 7, titleText: 'Cost Driver'},
+                {startColumnName: 'pct_domtraffic', align:'center', numberOfColumns: 7, titleText: 'Cost Driver Proportion'},
+                {startColumnName: 'domtrafficamt', align:'center', numberOfColumns: 7, titleText: 'After Segregation'}
+            ]
+        });
+
+        jQuery('#grid-table').jqGrid('navGrid', '#grid-pager',
+            {   //navbar options
+                edit: false,
+                editicon: 'fa fa-pencil blue bigger-120',
+                add: false,
+                addicon: 'fa fa-plus-circle purple bigger-120',
+                del: false,
+                delicon: 'fa fa-trash-o red bigger-120',
+                search: false,
+                searchicon: 'fa fa-search orange bigger-120',
+                refresh: true,
+                afterRefresh: function () {
+                    // some code here
+                    jQuery("#detailsPlaceholder").hide();
+                },
+
+                refreshicon: 'fa fa-refresh green bigger-120',
+                view: false,
+                viewicon: 'fa fa-search-plus grey bigger-120'
+            },
+
+            {
+                // options for the Edit Dialog
+                closeAfterEdit: true,
+                closeOnEscape:true,
+                recreateForm: true,
+                serializeEditData: serializeJSON,
+                width: 'auto',
+                errorTextFormat: function (data) {
+                    return 'Error: ' + data.responseText
+                },
+                beforeShowForm: function (e, form) {
+                    var form = $(e[0]);
+                    style_edit_form(form);
+
+                },
+                afterShowForm: function(form) {
+                    form.closest('.ui-jqdialog').center();
+                },
+                afterSubmit:function(response,postdata) {
+                    var response = jQuery.parseJSON(response.responseText);
+                    if(response.success == false) {
+                        return [false,response.message,response.responseText];
+                    }
+                    return [true,"",response.responseText];
+                }
+            },
+            {
+                //new record form
+                closeAfterAdd: false,
+                clearAfterAdd : true,
+                closeOnEscape:true,
+                recreateForm: true,
+                width: 'auto',
+                errorTextFormat: function (data) {
+                    return 'Error: ' + data.responseText
+                },
+                serializeEditData: serializeJSON,
+                viewPagerButtons: false,
+                beforeShowForm: function (e, form) {
+                    var form = $(e[0]);
+                    style_edit_form(form);
+                },
+                afterShowForm: function(form) {
+                    form.closest('.ui-jqdialog').center();
+                },
+                afterSubmit:function(response,postdata) {
+                    var response = jQuery.parseJSON(response.responseText);
+                    if(response.success == false) {
+                        return [false,response.message,response.responseText];
+                    }
+
+                    $(".tinfo").html('<div class="ui-state-success">' + response.message + '</div>');
+                    var tinfoel = $(".tinfo").show();
+                    tinfoel.delay(3000).fadeOut();
+
+
+                    return [true,"",response.responseText];
+                }
+            },
+            {
+                //delete record form
+                serializeDelData: serializeJSON,
+                recreateForm: true,
+                beforeShowForm: function (e) {
+                    var form = $(e[0]);
+                    style_delete_form(form);
+
+                },
+                afterShowForm: function(form) {
+                    form.closest('.ui-jqdialog').center();
+                },
+                onClick: function (e) {
+                    //alert(1);
+                },
+                afterSubmit:function(response,postdata) {
+                    var response = jQuery.parseJSON(response.responseText);
+                    if(response.success == false) {
+                        return [false,response.message,response.responseText];
+                    }
+                    return [true,"",response.responseText];
+                }
+            },
+            {
+                //search form
+                closeAfterSearch: false,
+                recreateForm: true,
+                afterShowSearch: function (e) {
+                    var form = $(e[0]);
+                    style_search_form(form);
+                    form.closest('.ui-jqdialog').center();
+                },
+                afterRedraw: function () {
+                    style_search_filters($(this));
+                }
+            },
+            {
+                //view record form
+                recreateForm: true,
+                beforeShowForm: function (e) {
+                    var form = $(e[0]);
+                }
+            }
+        );
+
+    });
+
+    function responsive_jqgrid(grid_selector, pager_selector) {
+
+        var parent_column = $(grid_selector).closest('[class*="col-"]');
+        $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+        $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
+
     }
+
 </script>

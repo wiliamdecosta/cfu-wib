@@ -10,13 +10,19 @@ class Tblt_costmap_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','s01, s03');
+        $sidx = getVarClean('sidx','str','s09, s01, s03');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $processcontrolid_pk = getVarClean('processcontrolid_pk','int',0);
         $i_search = getVarClean('i_search','str','');
+        $ubiscode = getVarClean('ubiscode','str','');
+
+        if(empty($ubiscode)) {
+            $data['success'] = true;
+            return $data;
+        }
 
         try {
 
@@ -41,15 +47,9 @@ class Tblt_costmap_controller {
             $req_param['where'] = array();
             // Filter Table
 
-            /*if(!empty($i_search)) {
-                $table->setCriteria("( upper(s01) like upper('%".$i_search."%') OR
-                                            upper(s02) like upper('%".$i_search."%') OR
-                                            upper(s03) like upper('%".$i_search."%') OR
-                                            upper(s04) like upper('%".$i_search."%') OR
-                                            upper(s05) like upper('%".$i_search."%') OR
-                                            upper(s07) like upper('%".$i_search."%')
-                                        )");
-            }*/
+            if(!empty($ubiscode)) {
+                $table->setCriteria("upper(s09) = upper('".$ubiscode."')");
+            }
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();
@@ -217,7 +217,7 @@ class Tblt_costmap_controller {
             $ci->load->model('transaksi/tblt_costmap');
             $table = new Tblt_costmap($processcontrolid_pk, '');
 
-            $items = $table->getAll(0, -1, 's01, s03', 'asc');
+            $items = $table->getAll(0, -1, 's09, s01, s03', 'asc');
             $no = 1;
 
             startExcel("cost_map_".$periodid_fk.".xls");
@@ -227,6 +227,7 @@ class Tblt_costmap_controller {
 
             $output.='<tr>';
                 $output.='<th>NO</th>
+                            <th>BU/SUBSIDIARY</th>
                             <th>CCCODE</th>
                             <th>CCNAME</th>
                             <th>ACCOUNTCODE</th>
@@ -242,6 +243,7 @@ class Tblt_costmap_controller {
             foreach($items as $item) {
                 $output .= '<tr>';
                 $output .= '<td valign="top">'.$no++.'</td>';
+                $output .= '<td valign="top">'.$item['ubiscode'].'</td>';
                 $output .= '<td valign="top">'.$item['cccode'].'</td>';
                 $output .= '<td valign="top">'.$item['ccname'].'</td>';
                 $output .= '<td valign="top">'.$item['accountcode'].'</td>';

@@ -364,11 +364,11 @@ $("#tab-3").on("click", function(event) {
             mtype: "POST",
             colModel: [
                 {label: 'Activity Name',name: 'activityname',width: 350, align: "left"},
-                {label: '% Staff',name: 'pctstaff',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2);
+                {label: '% Staff',name: 'pctstaffpersen',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2) + '%';
                 }},
-                {label: '% Compensation',name: 'pctcompensation',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2);
+                {label: '% Compensation',name: 'pctcompensationpersen',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2) + '%';
                 }},
                 {label: 'Activity Code',name: 'activitycode',width: 200, align: "left"}
 

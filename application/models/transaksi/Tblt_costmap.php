@@ -24,7 +24,8 @@ class Tblt_costmap extends Abstract_model {
                                         s05 plitemname,
                                         s06 isindirectcost, decode(s06, 'Y','YES','N','NO') isindirectcost_display,
                                         s07 activityname,
-                                        s08 isneedpca, decode(s08, 'Y','YES','N','NO') isneedpca_display
+                                        s08 isneedpca, decode(s08, 'Y','YES','N','NO') isneedpca_display,
+                                        s09 ubiscode
                                         ";
 
     public $fromClause      = "table (f_ShowCostMap(%d, '%s'))";

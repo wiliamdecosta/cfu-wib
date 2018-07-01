@@ -16,8 +16,8 @@ class Tblt_telinstaff extends Abstract_model {
 
     public $selectClause    = "n01 periodid_fk,
                                         s01 activityname,
-                                        n02 pctstaff,
-                                        n03 pctcompensation,
+                                        n02 pctstaff, (n02 * 100) pctstaffpersen,
+                                        n03 pctcompensation, (n03 * 100) pctcompensationpersen,
                                         n04 activityid_fk,
                                         n05 pprocesscontrolid_fk,
                                         s02 activitycode

@@ -19,6 +19,11 @@ class Tblt_segregationother_controller {
         $i_search = getVarClean('i_search','str','');
         $ubiscode = getVarClean('ubiscode','str','');
 
+        if(empty($ubiscode)) {
+            $data['success'] = true;
+            return $data;
+        }
+
         try {
 
             $ci = & get_instance();
