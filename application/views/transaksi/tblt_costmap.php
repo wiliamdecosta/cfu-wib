@@ -345,8 +345,8 @@ $("#tab-3").on("click", function(event) {
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 7,
-            rowList: [7,20,50],
+            rowNum: 20,
+            rowList: [20,50,100],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,

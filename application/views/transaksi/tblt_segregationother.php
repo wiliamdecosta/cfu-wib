@@ -56,8 +56,6 @@
                 </div>
             </div>
 
-            <h3> <?php echo 'Other Segregation'.' ('.$this->input->post('periodid_fk').')'; ?></h3>
-
             <div class="row">
             <label class="control-label col-md-2">Pencarian :</label>
             <div class="col-md-3">

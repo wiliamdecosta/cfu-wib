@@ -127,18 +127,19 @@
         var rowData = jQuery("#grid-table").getRowData(id);
         str_processcode = rowData['processcode'].toUpperCase();
 
-        /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
+        var link_obj = {'TELIN_UPLOAD' : 'transaksi.tblt_telinstaff',
+                            'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
                             'COST_MAP' : 'transaksi.tblt_costmap',
                             'PCA' : 'transaksi.tblt_pca',
                             'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc',
                             'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry',
                             'SEGREGATION':'transaksi.tblt_segregationact'};
- */
-        var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
+
+        /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
                             'COST_MAP' : 'transaksi.tblt_costmap',
                             'PCA' : 'transaksi.tblt_pca',
                             'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc',
-                            'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry'};
+                            'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry'}; */
 
         if(link_obj[str_processcode] === undefined) {
             return;
@@ -187,6 +188,7 @@
                             return '<button class="btn btn-link btn-xs" onclick="doProcess(\''+key+'\')">'+processcode+'</button>';
                         else
                             return processcode;
+                            //return '<button class="btn btn-link btn-xs" onclick="doProcess(\''+key+'\')">'+processcode+'</button>';
                     }
                 },
                 {label: 'Process Status',name: 'statuscode',width: 150, align: "left"},
