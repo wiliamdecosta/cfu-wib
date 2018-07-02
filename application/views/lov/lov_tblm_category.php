@@ -1,4 +1,4 @@
-<div id="modal_lov_category" class="modal fade" tabindex="-1" style="overflow-y: scroll;">
+<div id="modal_lov_tblm_category" class="modal fade" tabindex="-1" style="overflow-y: scroll;">
     <div class="modal-dialog" style="width:700px;">
         <div class="modal-content">
             <!-- modal title -->
@@ -7,22 +7,22 @@
                     <span class="form-add-edit-title"> Data Category</span>
                 </div>
             </div>
-            <input type="hidden" id="modal_lov_category_id_val" value="" />
-            <input type="hidden" id="modal_lov_category_code_val" value="" />
+            <input type="hidden" id="modal_lov_tblm_category_id_val" value="" />
+            <input type="hidden" id="modal_lov_tblm_category_code_val" value="" />
 
             <!-- modal body -->
             <div class="modal-body">
                 <div>
-                  <button type="button" class="btn btn-sm btn-success" id="modal_lov_category_btn_blank">
+                  <button type="button" class="btn btn-sm btn-success" id="modal_lov_tblm_category_btn_blank">
                     <span class="fa fa-pencil-square-o bigger-110" aria-hidden="true"></span> BLANK
                   </button>
                 </div>
-                <table id="modal_lov_category_grid_selection" class="table table-striped table-bordered table-hover">
+                <table id="modal_lov_tblm_category_grid_selection" class="table table-striped table-bordered table-hover">
                 <thead>
                   <tr>
-                     <th data-column-id="categoryid_pk" data-sortable="false" data-visible="false">ID Category</th>
+                     <th data-column-id="categoryid_pk" data-sortable="false" data-visible="false">ID CATEGORYID_PK</th>
                      <th data-header-align="center" data-align="center" data-formatter="opt-edit" data-sortable="false" data-width="100">Options</th>
-                     <th data-column-id="code">Code</th>
+                     <th data-column-id="code">Category</th>
                      <th data-column-id="description">Description</th>
                   </tr>
                 </thead>
@@ -46,40 +46,40 @@
 
 <script>
     $(function($) {
-        $("#modal_lov_category_btn_blank").on('click', function() {
-            $("#"+ $("#modal_lov_category_id_val").val()).val("");
-            $("#"+ $("#modal_lov_category_code_val").val()).val("");
-            $("#modal_lov_category").modal("toggle");
+        $("#modal_lov_tblm_category_btn_blank").on('click', function() {
+            $("#"+ $("#modal_lov_tblm_category_id_val").val()).val("");
+            $("#"+ $("#modal_lov_tblm_category_code_val").val()).val("");
+            $("#modal_lov_tblm_category").modal("toggle");
         });
     });
 
-    function modal_lov_category_show(the_id_field, the_code_field) {
-        modal_lov_category_set_field_value(the_id_field, the_code_field);
-        $("#modal_lov_category").modal({backdrop: 'static'});
-        modal_lov_category_prepare_table();
+    function modal_lov_tblm_category_show(the_id_field, the_code_field) {
+        modal_lov_tblm_category_set_field_value(the_id_field, the_code_field);
+        $("#modal_lov_tblm_category").modal({backdrop: 'static'});
+        modal_lov_tblm_category_prepare_table();
     }
 
 
-    function modal_lov_category_set_field_value(the_id_field, the_code_field) {
-         $("#modal_lov_category_id_val").val(the_id_field);
-         $("#modal_lov_category_code_val").val(the_code_field);
+    function modal_lov_tblm_category_set_field_value(the_id_field, the_code_field) {
+         $("#modal_lov_tblm_category_id_val").val(the_id_field);
+         $("#modal_lov_tblm_category_code_val").val(the_code_field);
     }
 
-    function modal_lov_category_set_value(the_id_val, the_code_val) {
-         $("#"+ $("#modal_lov_category_id_val").val()).val(the_id_val);
-         $("#"+ $("#modal_lov_category_code_val").val()).val(the_code_val);
-         $("#modal_lov_category").modal("toggle");
+    function modal_lov_tblm_category_set_value(the_id_val, the_code_val) {
+         $("#"+ $("#modal_lov_tblm_category_id_val").val()).val(the_id_val);
+         $("#"+ $("#modal_lov_tblm_category_code_val").val()).val(the_code_val);
+         $("#modal_lov_tblm_category").modal("toggle");
 
-         $("#"+ $("#modal_lov_category_id_val").val()).change();
-         $("#"+ $("#modal_lov_category_code_val").val()).change();
+         $("#"+ $("#modal_lov_tblm_category_id_val").val()).change();
+         $("#"+ $("#modal_lov_tblm_category_code_val").val()).change();
     }
 
-    function modal_lov_category_prepare_table() {
-        $("#modal_lov_category_grid_selection").bootgrid('reload');
-        $("#modal_lov_category_grid_selection").bootgrid({
+    function modal_lov_tblm_category_prepare_table() {
+        $("#modal_lov_tblm_category_grid_selection").bootgrid('destroy');
+        $("#modal_lov_tblm_category_grid_selection").bootgrid({
              formatters: {
                 "opt-edit" : function(col, row) {
-                    return '<a href="javascript:;" title="Set Value" onclick="modal_lov_category_set_value(\''+ row.categoryid_pk +'\', \''+ row.code +'\')" class="blue"><i class="fa fa-pencil-square-o bigger-130"></i></a>';
+                    return '<a href="javascript:;" title="Set Value" onclick="modal_lov_tblm_category_set_value(\''+ row.categoryid_pk +'\', \''+ row.code +'\')" class="blue"><i class="fa fa-pencil-square-o bigger-130"></i></a>';
                 }
              },
              rowCount:[5,10],
@@ -100,7 +100,7 @@
                 }
                 return response;
              },
-             url: '<?php echo WS_BOOTGRID."data_master.category_controller/readLov"; ?>',
+             url: '<?php echo WS_BOOTGRID."parameter.tblm_category_controller/readLov"; ?>',
              selection: true,
              sorting:true
         });
