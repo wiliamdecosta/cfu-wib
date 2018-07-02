@@ -77,7 +77,7 @@
                 </div>
             </div>
             </div>
-            <div class="row" id="tbl-verticalalloc" style="display:none;">
+            <div class="row" id="tbl-verticalalloc">
                 <div class="col-xs-12">
                     <table id="grid-table"></table>
                     <div id="grid-pager"></div>
@@ -156,13 +156,6 @@ function showLOVBusinessUnit(id, code, name) {
     function showData(){
         var i_search = $('#i_search').val();
         var ubiscode = $('#search_wibunitbusinesscode').val();
-
-        if(ubiscode == '') {
-            $('#tbl-verticalalloc').hide();
-            return;
-        }
-
-        $('#tbl-verticalalloc').show();
 
         jQuery(function($) {
             jQuery("#grid-table").jqGrid('setGridParam',{
