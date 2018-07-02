@@ -174,7 +174,8 @@ class Tblt_telinfinancialgl_controller {
                     $record['telinhk'] = $objPHPExcel->getActiveSheet()->getCell('F'.$row)->getValue();
                     $record['ttl'] = $objPHPExcel->getActiveSheet()->getCell('G'.$row)->getValue();
                     $record['telinau'] = $objPHPExcel->getActiveSheet()->getCell('H'.$row)->getValue();
-                    $record['tsgn'] = $objPHPExcel->getActiveSheet()->getCell('I'.$row)->getValue();
+                    $record['telinus'] = $objPHPExcel->getActiveSheet()->getCell('I'.$row)->getValue();
+                    $record['tsgn'] = $objPHPExcel->getActiveSheet()->getCell('J'.$row)->getValue();
                     $record['pprocesscontrolid_fk'] = $i_process_control_id;
 
                     $table->db->set( $record );

@@ -383,6 +383,9 @@ $("#tab-3").on("click", function(event) {
                 {label: 'Telin US',name: 'telinus',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
                     return $.number(cellvalue, 2);
                 }},
+                {label: 'TSGN',name: 'tsgn',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
                 {label: 'PL Item',name: 'plitemgabung',width: 250, align: "left"},
             ],
             height: '100%',
