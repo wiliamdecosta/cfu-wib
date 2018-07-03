@@ -163,7 +163,7 @@ class Tblt_staffcompmap_controller {
                 }
 
                 $output .= '<tr>';
-                    $output .= '<td>&nbsp;</td>';
+                    $output .= '<td>'.$item['cfucode'].'</td>';
                     $output .= '<td>'.$item['ubiscode'].'</td>';
                     $output .= '<td><a href="javascript:;" onclick="showIndirectCostActivitiesDetail('.$item['periodid_fk'].',\''.$item['cfucode'].'\',\''.$item['ubiscode'].'\',\''.$item['idactivity'].'\');">'.$item['uraian'].'</a></td>';
                     $output .= '<td align="right">'.$item['staffqty'].'</td>';
@@ -370,7 +370,7 @@ class Tblt_staffcompmap_controller {
                 }
 
                 $output .= '<tr>';
-                    $output .= '<td>&nbsp;</td>';
+                    $output .= '<td>'.$item['cfucode'].'</td>';
                     $output .= '<td>'.$item['ubiscode'].'</td>';
                     $output .= '<td>'.$item['uraian'].'</a></td>';
                     $output .= '<td align="right">'.$item['staffqty'].'</td>';
