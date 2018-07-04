@@ -113,6 +113,86 @@ class Tblt_costmap_controller {
         return $data;
     }
 
+    function readTable() {
+
+        $i_process_control_id = getVarClean('i_process_control_id','int',0);
+        $i_search = getVarClean('i_search','str','');
+        $ubiscode = getVarClean('ubiscode','str','');
+
+        try {
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_costmap');
+            $table = new Tblt_costmap($i_process_control_id, $i_search);
+
+            if(!empty($ubiscode)) {
+                $table->setCriteria("upper(s09) = upper('".$ubiscode."')");
+            }
+
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1, 's09, s01, s03', 'asc');
+
+            if($count < 1) {  echo ''; exit; }
+
+            $output = '';
+            $subtotal = array('totalamount' => 0);
+
+            $initubiscode = $items[0]['ubiscode'];
+
+            foreach($items as $item) {
+
+                if($initubiscode != $item['ubiscode']) {
+                    $output .= '<tr>';
+                        $output .= '<td colspan="3" align="center"><b>Total</b></td>';
+                        $output .= '<td align="right"><b>'.numberFormat($subtotal['totalamount']).'</b></td>';
+                        $output .= '<td colspan="3" align="center"></td>';
+                    $output .= '</tr>';
+
+                    $subtotal = array('totalamount' => 0);
+
+                    $initubiscode = $item['ubiscode'];
+                }
+
+                $output .= '<tr>';
+                    $output .= '<td nowrap>'.$item['costcenter'].'</td>';
+                    $output .= '<td nowrap>'.$item['glaccount'].'</td>';                    
+                    $output .= '<td nowrap>'.$item['plitemname'].'</td>';
+                    $output .= '<td nowrap align="right">'.numberFormat($item['amount']).'</td>';
+                    $output .= '<td nowrap align="center">'.$item['isindirectcost_display'].'</td>';
+                    $output .= '<td nowrap>'.$item['activityname'].'</td>';                    
+                    $output .= '<td nowrap align="center">'.$item['isneedpca_display'].'</td>';
+                $output .= '</tr>';
+
+                $subtotal['totalamount'] += $item['amount'];
+                // $subtotal['staffpct'] += $item['staffpct'];
+                // $subtotal['compensationvalue'] += $item['compensationvalue'];
+                // $subtotal['compensationpct'] += $item['compensationpct'];
+
+                // $grandtotal['staffqty'] += $item['staffqty'];
+                // $grandtotal['staffpct'] += $item['staffpct'];
+                // $grandtotal['compensationvalue'] += $item['compensationvalue'];
+                // $grandtotal['compensationpct'] += $item['compensationpct'];
+
+            }
+
+            $output .= '<tr>';
+                $output .= '<td colspan="3" align="center"><b>Total</b></td>';
+                $output .= '<td align="right"><b>'.numberFormat($subtotal['totalamount']).'</b></td>';
+                $output .= '<td colspan="3" align="center"></td>';
+            $output .= '</tr>';
+
+
+        }catch (Exception $e) {
+            $data = array();
+            $data['message'] = $e->getMessage();
+            return $data;
+        }
+
+        echo $output;
+        exit;
+
+    }
 
 
     function do_process() {
@@ -217,6 +297,7 @@ class Tblt_costmap_controller {
             $ci->load->model('transaksi/tblt_costmap');
             $table = new Tblt_costmap($processcontrolid_pk, '');
 
+            $count = $table->countAll();
             $items = $table->getAll(0, -1, 's09, s01, s03', 'asc');
             $no = 1;
 
@@ -240,7 +321,17 @@ class Tblt_costmap_controller {
                             ';
             $output.='</tr>';
 
+            $subtotal = array('totalamount' => 0);
+
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
+
+
             foreach($items as $item) {
+
                 $output .= '<tr>';
                 $output .= '<td valign="top">'.$no++.'</td>';
                 $output .= '<td valign="top">'.$item['ubiscode'].'</td>';
@@ -254,7 +345,15 @@ class Tblt_costmap_controller {
                 $output .= '<td valign="top">'.$item['activityname'].'</td>';
                 $output .= '<td valign="top" align="center">'.$item['isneedpca_display'].'</td>';
                 $output .= '</tr>';
+
+                $subtotal['totalamount'] += $item['amount'];
             }
+
+             $output .= '<tr>';
+                $output .= '<td colspan="6" align="center"><b>Total</b></td>';
+                $output .= '<td align="right"><b>'.numberFormat($subtotal['totalamount'],2).'</b></td>';
+                $output .= '<td colspan="4" align="center"></td>';
+            $output .= '</tr>';
 
             $output .= '</table>';
             echo $output;
