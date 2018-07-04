@@ -129,7 +129,7 @@
 
         var link_obj = {'TELIN_UPLOAD' : 'transaksi.tblt_telinstaff',
                             'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
-                            'COST_MAP' : 'transaksi.tblt_costmap',
+                            'COST_MAP' : 'transaksi.tblt_costmap_new',
                             'PCA' : 'transaksi.tblt_pca',
                             'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc',
                             'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry',
