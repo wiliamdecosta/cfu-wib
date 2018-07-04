@@ -53,8 +53,8 @@
 </div>
 
 <?php $this->load->view('lov/lov_tblm_activity_extra'); ?>
-<?php $this->load->view('lov/lov_exs_cc'); ?>
-<?php $this->load->view('lov/lov_bpc_masakun'); ?>
+<?php $this->load->view('lov/lov_exs_cc2'); ?>
+<?php $this->load->view('lov/lov_bpc_masakun2'); ?>
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
 
 <script>
@@ -75,11 +75,14 @@ function showLovActivity(id, code, name) {
 
 function showLOVExsCC(id, name) {
     var ubiscode = $('#search_wibunitbusinesscode').val();
-    modal_lov_exs_cc_show(id, name, ubiscode);
+    var wibunitbusinessid_fk = $('#search_wibunitbusinessid_pk').val();
+    modal_lov_exs_cc_show(id, name, ubiscode, wibunitbusinessid_fk);
+
 }
 
 function showLOVBpcMasakun(id, code, name) {
-    modal_lov_bpc_masakun_show(id, code, name);
+    var wibunitbusinessid_fk = $('#search_wibunitbusinessid_pk').val();
+    modal_lov_bpc_masakun_show(id, code, name, wibunitbusinessid_fk);
 }
 
 
@@ -137,54 +140,6 @@ function clearInputAkun() {
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'centralcostid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                /*{label: 'BU/Subsidiary',
-                    name: 'ubiscode',
-                    width: 200,
-                    sortable: true,
-                    editable: true,
-                    hidden: true,
-                    editrules: {edithidden: true, required:false},
-                    edittype: 'custom',
-                    editoptions: {
-                        "custom_element":function( value  , options) {
-                            var elm = $('<span></span>');
-
-                            // give the editor time to initialize
-                            setTimeout( function() {
-                                elm.append('<input id="form_wibunitbusinessid_pk" type="text"  style="display:none;">'+
-                                        '<input id="form_wibunitbusinesscode" readonly style="background:#FFFFA2" type="text" class="FormElement form-control" placeholder="Choose Business Unit">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVBusinessUnit(\'form_wibunitbusinessid_pk\',\'form_wibunitbusinesscode\',\'form_wibunitbusinessname\')">'+
-                                        '   <span class="fa fa-search bigger-110"></span>'+
-                                        '</button> &nbsp;' +
-                                        '<input id="form_wibunitbusinessname" readonly type="text" size="30" class="FormElement form-control" placeholder="Business Unit Name">');
-                                $("#form_wibunitbusinesscode").val(value);
-                                elm.parent().removeClass('jqgrid-required');
-                            }, 100);
-
-                            return elm;
-                        },
-                        "custom_value":function( element, oper, gridval) {
-
-                            if(oper === 'get') {
-                                return $("#form_wibunitbusinesscode").val();
-                            } else if( oper === 'set') {
-                                $("#form_wibunitbusinesscode").val(gridval);
-                                var gridId = this.id;
-                                // give the editor time to set display
-                                setTimeout(function(){
-                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
-                                    if(selectedRowId != null) {
-                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubiscode');
-                                        var name_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'ubisname');
-                                        $("#form_wibunitbusinesscode").val( code_display );
-                                        $("#form_wibunitbusinessname").val( name_display );
-                                    }
-                                },100);
-                            }
-                        }
-                    }
-                },
-                */
                 {label: 'Cost Center',name: 'ccgabung',width: 250, align: "left"},
                 {label: 'Cost Center Code',
                     name: 'cccode',

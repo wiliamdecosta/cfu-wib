@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Exs_cc Model
+ * Tblm_costcenter Model
  *
  */
-class Exs_cc extends Abstract_model {
+class Tblm_costcenter extends Abstract_model {
 
-    public $table           = "rra.exs_cc";
-    public $pkey            = "kode_cc";
+    public $table           = "tblm_costcenter";
+    public $pkey            = "costcenterid_pk";
     public $alias           = "";
 
     public $fields          = array(
 
                             );
 
-    public $selectClause    = "kode_cc , kode_cc as kode, kode_lokasi, kode_ubis, nama, kode_witel, level_spasi, kode_induk, rowindex";
-    public $fromClause      = "rra.exs_cc";
+    public $selectClause    = "costcenterid_pk, cccode kode, ccname nama, parentcode, orglevel, sourcetype, description, creationdate, createdby, updateddate, updatedby";
+    public $fromClause      = "tblm_costcenter";
 
     public $refs            = array();
 

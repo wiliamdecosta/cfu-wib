@@ -40,6 +40,13 @@ class Tblt_telinfinancialcc_controller {
 
             $req_param['where'] = array();
             // Filter Table
+             if(!empty($i_search)) {
+                $table->setCriteria("( upper(s01) like upper('%".$i_search."%') OR
+                                                upper(s02) like upper('%".$i_search."%') OR
+                                                upper(s03) like upper('%".$i_search."%') OR
+                                                upper(s04) like upper('%".$i_search."%')
+                                            )");
+            }
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();

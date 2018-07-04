@@ -10,7 +10,7 @@ class Tblm_centralcost_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','a.cccode, a.accountcode');
+        $sidx = getVarClean('sidx','str','cccode, accountcode');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
@@ -48,21 +48,21 @@ class Tblm_centralcost_controller {
 
 
             if(!empty($ubiscode)) {
-                $table->setCriteria("(upper(ub.code) like upper('".$ubiscode."'))");
+                $table->setCriteria("(upper(ubiscode) like upper('".$ubiscode."'))");
             }
 
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(a.cccode) like upper('%".$i_search."%') OR
-                                            upper(a.accountcode) like upper('%".$i_search."%') OR
-                                            upper(a.description) like upper('%".$i_search."%') OR
-                                            upper(b.nama) like upper('%".$i_search."%') OR
-                                            upper(c.nama) like upper('%".$i_search."%') OR
-                                            upper(d.activityname) like upper('%".$i_search."%')
+                $table->setCriteria("( upper(cccode) like upper('%".$i_search."%') OR
+                                            upper(accountcode) like upper('%".$i_search."%') OR
+                                            upper(description) like upper('%".$i_search."%') OR
+                                            upper(ccname) like upper('%".$i_search."%') OR
+                                            upper(accountname) like upper('%".$i_search."%') OR
+                                            upper(activityname) like upper('%".$i_search."%')
                                             )");
             }
 
-            $table->setCriteria("c.kode_lokasi ='9000'");
-            $table->setCriteria("nr.kode_fs = 'CCA'");
+            //$table->setCriteria("c.kode_lokasi ='9000'");
+            //$table->setCriteria("nr.kode_fs = 'CCA'");
 
 
             $table->setJQGridParam($req_param);
