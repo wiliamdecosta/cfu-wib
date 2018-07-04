@@ -83,7 +83,7 @@
                         <thead>
                             <tr>
                                 <th>Cost Center</th>
-                                <th>GL Account 12</th>
+                                <th>GL Account</th>
                                 <th>PL Item</th>
                                 <th>Amount</th>
                                 <th align="center">Indirect Cost?</th>
