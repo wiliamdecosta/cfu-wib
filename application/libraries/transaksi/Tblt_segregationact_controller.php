@@ -9,13 +9,13 @@ class Tblt_segregationact_controller {
     function read() {
 
         $page = getVarClean('page','int',1);
-        $limit = getVarClean('rows','int',5);
+        $limit = getVarClean('rows','int',20);
         $sidx = getVarClean('sidx','str','s01, s02');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
-        $i_process_control_id = getVarClean('i_process_control_id','int',0);
+        $i_process_control_id = getVarClean('processcontrolid_pk','int',0);
         $i_search = getVarClean('i_search','str','');
         $ubiscode = getVarClean('ubiscode','str','');
 

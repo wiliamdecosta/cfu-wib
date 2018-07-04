@@ -55,8 +55,8 @@
         $("#modal_lov_tblm_costdriverentry_btn_blank").on('click', function() {
             $("#"+ $("#modal_lov_tblm_costdriverentry_codecostdriver_val").val()).val("");
             $("#"+ $("#modal_lov_tblm_costdriverentry_ubiscode_val").val()).val("");
-            $("#"+ $("#modal_lov_tblm_costdriverentry_unitidfk_val").val()).val("");
-            $("#"+ $("#modal_lov_tblm_costdriverentry_unitcode_val").val()).val("");
+            //$("#"+ $("#modal_lov_tblm_costdriverentry_unitidfk_val").val()).val("");
+            //$("#"+ $("#modal_lov_tblm_costdriverentry_unitcode_val").val()).val("");
 
             $("#modal_lov_tblm_costdriverentry").modal("toggle");
         });
@@ -72,21 +72,21 @@
     function modal_lov_tblm_costdriverentry_set_field_value(costdriver, ubiscode, unitidfk, unitcode) {
          $("#modal_lov_tblm_costdriverentry_codecostdriver_val").val(costdriver);
          $("#modal_lov_tblm_costdriverentry_ubiscode_val").val(ubiscode);
-         $("#modal_lov_tblm_costdriverentry_unitidfk_val").val(unitidfk);
-         $("#modal_lov_tblm_costdriverentry_unitcode_val").val(unitcode);
+         //$("#modal_lov_tblm_costdriverentry_unitidfk_val").val(unitidfk);
+         //$("#modal_lov_tblm_costdriverentry_unitcode_val").val(unitcode);
     }
 
     function modal_lov_tblm_costdriverentry_set_value(costdriver, ubiscode, unitidfk, unitcode) {
          $("#"+ $("#modal_lov_tblm_costdriverentry_codecostdriver_val").val()).val(costdriver);
          $("#"+ $("#modal_lov_tblm_costdriverentry_ubiscode_val").val()).val(ubiscode);
-         $("#"+ $("#modal_lov_tblm_costdriverentry_unitidfk_val").val()).val(unitidfk);
-         $("#"+ $("#modal_lov_tblm_costdriverentry_unitcode_val").val()).val(unitcode);
+         //$("#"+ $("#modal_lov_tblm_costdriverentry_unitidfk_val").val()).val(unitidfk);
+         //$("#"+ $("#modal_lov_tblm_costdriverentry_unitcode_val").val()).val(unitcode);
          $("#modal_lov_tblm_costdriverentry").modal("toggle");
 
          $("#"+ $("#modal_lov_tblm_costdriverentry_codecostdriver_val").val()).change();
          $("#"+ $("#modal_lov_tblm_costdriverentry_ubiscode_val").val()).change();
-         $("#"+ $("#modal_lov_tblm_costdriverentry_unitidfk_val").val()).change();
-         $("#"+ $("#modal_lov_tblm_costdriverentry_unitcode_val").val()).change();
+         //$("#"+ $("#modal_lov_tblm_costdriverentry_unitidfk_val").val()).change();
+         //$("#"+ $("#modal_lov_tblm_costdriverentry_unitcode_val").val()).change();
     }
 
     function modal_lov_tblm_costdriverentry_prepare_table(costdrivertype) {

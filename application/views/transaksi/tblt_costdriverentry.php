@@ -52,12 +52,25 @@
                 <div class="col-xs-4"></div>
                 <div class="col-xs-6">
                     <button class="btn btn-success" id="btn-copy-default" onclick="copyDefault();">Copy Default</button>
-                    <button class="btn btn-warning" id="btn-copy-prevperiod" onclick="copyPeriodeLalu();">Copy Periode Lalu</button>
+                    <button class="btn btn-info" id="btn-copy-prevperiod" onclick="copyPeriodeLalu();">Copy Periode Lalu</button>
+                    <button class="btn btn-warning" id="btn-cancel" onclick="cancelProcess();">Cancel Process</button>
+                    <button class="btn btn-primary" id="btn-download" onclick="downloadCostDriverEntry();">Download</button>
                 </div>
             </div>
     </div>
 </div>
 <?php $this->load->view('lov/lov_tblm_costdriverentry'); ?>
+<?php $this->load->view('lov/lov_tblm_unit'); ?>
+
+
+<?php
+
+    $ci = & get_instance();
+    $ci->load->model('transaksi/tblt_costdriverentry');
+    $table = new Tblt_costdriverentry($this->input->post('processcontrolid_pk'), '');
+    $table_kosong = $table->countAll() == 0 ? 'Y' : 'N';
+
+?>
 
 <script>
     function backToProcessControl() {
@@ -79,6 +92,16 @@ function clearInputCostDriverEntry() {
     $('#unitid_fk').val('');
     $('#unitcode').val('');
 }
+
+function showLOVUnit(id, code) {
+    modal_lov_tblm_unit_show(id, code);
+}
+
+function clearInputUnit() {
+    $('#form_unitid_fk').val('');
+    $('#form_unitcode').val('');
+}
+
 </script>
 
 <script>
@@ -101,16 +124,23 @@ function clearInputCostDriverEntry() {
 
     function buttonMode(statuscode) {
         var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
+        var table_kosong = "<?php echo $table_kosong; ?>";
 
         if(isupdatable == 'Y') {
             $('#btn-group-costdriverentry-action').show();
 
-            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
-                $('#btn-copy-default').hide();
-                $('#btn-copy-prevperiod').hide();
-            }else if(statuscode == 'INITIAL') {
+            if(table_kosong == 'Y') {
                 $('#btn-copy-default').show();
                 $('#btn-copy-prevperiod').show();
+
+                $('#btn-cancel').hide();
+                $('#btn-download').hide();
+            }else  {
+                $('#btn-copy-default').hide();
+                $('#btn-copy-prevperiod').hide();
+
+                $('#btn-cancel').show();
+                $('#btn-download').show();
             }
         }
     }
@@ -239,6 +269,91 @@ function clearInputCostDriverEntry() {
                 }
             });
     }
+
+
+    function cancelProcess() {
+            var processcode = "<?php echo $this->input->post('processcode'); ?>";
+            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var i_batch_control_id =  <?php echo $this->input->post('i_batch_control_id'); ?>;
+
+            var ajaxOptions = {
+                url: '<?php echo WS_JQGRID."transaksi.tblt_costdriverentry_controller/cancel_process"; ?>',
+                type: "POST",
+                dataType: "json",
+                data: { i_process_control_id:i_process_control_id,
+                            i_batch_control_id: i_batch_control_id },
+                success: function (data) {
+                    if(data.success == true) {
+                        swal('Success',data.message,'success');
+                        loadForm(data.statuscode);
+                    }else {
+                        swal('Attention',data.message,'warning');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            };
+
+            $.ajax({
+                beforeSend: function( xhr ) {
+                    swal({
+                        title: "Konfirmasi",
+                        text: 'Anda yakin ingin membatalkan proses?',
+                        type: "info",
+                        showCancelButton: true,
+                        showLoaderOnConfirm: true,
+                        confirmButtonText: "Ya, Yakin",
+                        confirmButtonColor: "#e80c1c",
+                        cancelButtonText: "Tidak",
+                        closeOnConfirm: false,
+                        closeOnCancel: true,
+                        html: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm) {
+                            $.ajax(ajaxOptions);
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    });
+                }
+            });
+    }
+
+    function downloadCostDriverEntry() {
+
+            var processcontrolid_pk = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
+
+            var url = "<?php echo WS_JQGRID . "transaksi.tblt_costdriverentry_controller/download_excel/?"; ?>";
+            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+            url += "&processcontrolid_pk="+processcontrolid_pk;
+            url += "&periodid_fk="+periodid_fk;
+
+            swal({
+                title: "Konfirmasi",
+                text: 'Anda yakin ingin melakukan download data?',
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Ya, Yakin",
+                confirmButtonColor: "#538cf6",
+                cancelButtonText: "Tidak",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                html: true
+            },
+            function(isConfirm){
+                if(isConfirm) {
+                    window.location = url;
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+    }
 </script>
 
 
@@ -280,7 +395,7 @@ function clearInputCostDriverEntry() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append(
-                                        '<input id="form_code" size="50" readonly type="text" style="background:#FBEC88" class="FormElement form-control" placeholder="Choose Cost Driver">'+
+                                        '<input id="form_code" size="50" readonly type="text" style="background:#FFFFA2" class="FormElement form-control" placeholder="Choose Cost Driver">'+
                                         '<button class="btn btn-success" id="btn-lov-costdriver" type="button" onclick="showLOVCostDriverEntry(\'form_code\',\'ubiscode\',\'unitid_fk\',\'unitcode\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');
@@ -311,20 +426,50 @@ function clearInputCostDriverEntry() {
                     },
                     editrules: {edithidden: true}
                 },
-                {label: 'unitid_fk',name: 'unitid_fk',width: 150, hidden: true,  align: "left",editable: true,
-                    editoptions: {
-                        size: 15,
-                        maxlength:10
-                    },
-                    editrules: {edithidden: false}
-                },
                 {label: 'Unit',name: 'unitcodedisplay',width: 150, align: "left"},
-                {label: 'Unit Code',name: 'unitcode',width: 150, hidden: true,  align: "left",editable: true,
+                {label: 'Unit Code',
+                    name: 'unitid_fk',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
                     editoptions: {
-                        size: 30,
-                        maxlength:255
-                    },
-                    editrules: {edithidden: true}
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_unitid_fk" type="text"  style="display:none">'+
+                                        '<input id="form_unitcode" readonly type="text" style="background:#FFFFA2" class="FormElement form-control" placeholder="Choose Unit">'+
+                                        '<button class="btn btn-success" id="btn-lov-unit" type="button" onclick="showLOVUnit(\'form_unitid_fk\',\'form_unitcode\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>');
+                                $("#form_unitid_fk").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_unitid_fk").val();
+                            } else if( oper === 'set') {
+                                $("#form_unitid_fk").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'unitcodedisplay');
+                                        $("#form_unitcode").val( code_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
                 },
                 {label: 'Listing No',name: 'listingno',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
@@ -553,8 +698,7 @@ function clearInputCostDriverEntry() {
                     style_edit_form(form);
 
                     $('#ubiscode').attr('readonly', true);
-                    $('#unitcode').attr('readonly', true);
-                    $('#unitid_fk').attr('readonly', true);
+
                     setTimeout(function() {
                         $('#btn-lov-costdriver').hide();
                     },100);
@@ -591,8 +735,6 @@ function clearInputCostDriverEntry() {
                     style_edit_form(form);
 
                     $('#ubiscode').attr('readonly', true);
-                    $('#unitcode').attr('readonly', true);
-                    $('#unitid_fk').attr('readonly', true);
 
                     $('#domtrafficvalue').val(0);
                     $('#domnetworkvalue').val(0);
@@ -601,6 +743,12 @@ function clearInputCostDriverEntry() {
                     $('#intladjacentvalue').val(0);
                     $('#towervalue').val(0);
                     $('#infravalue').val(0);
+
+                    setTimeout(function() {
+                        clearInputCostDriverEntry();
+                        clearInputUnit();
+                    },100);
+
 
                 },
                 afterShowForm: function(form) {
@@ -619,6 +767,8 @@ function clearInputCostDriverEntry() {
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
 
+                    clearInputCostDriverEntry();
+                    clearInputUnit();
 
                     return [true,"",response.responseText];
                 }

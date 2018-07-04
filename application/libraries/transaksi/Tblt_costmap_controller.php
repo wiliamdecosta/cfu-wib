@@ -156,11 +156,11 @@ class Tblt_costmap_controller {
 
                 $output .= '<tr>';
                     $output .= '<td nowrap>'.$item['costcenter'].'</td>';
-                    $output .= '<td nowrap>'.$item['glaccount'].'</td>';                    
+                    $output .= '<td nowrap>'.$item['glaccount'].'</td>';
                     $output .= '<td nowrap>'.$item['plitemname'].'</td>';
                     $output .= '<td nowrap align="right">'.numberFormat($item['amount']).'</td>';
                     $output .= '<td nowrap align="center">'.$item['isindirectcost_display'].'</td>';
-                    $output .= '<td nowrap>'.$item['activityname'].'</td>';                    
+                    $output .= '<td nowrap>'.$item['activityname'].'</td>';
                     $output .= '<td nowrap align="center">'.$item['isneedpca_display'].'</td>';
                 $output .= '</tr>';
 
