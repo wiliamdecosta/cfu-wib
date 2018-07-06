@@ -385,7 +385,7 @@ function clearInputCostDriver() {
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>'
                                         );
-                                $("#form_costdriverid_fk");
+                                $("#form_costdriverid_fk").val(value);
                                 elm.parent().removeClass('jqgrid-required');
                             }, 100);
 
