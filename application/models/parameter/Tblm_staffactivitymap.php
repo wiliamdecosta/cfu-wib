@@ -42,6 +42,10 @@ class Tblm_staffactivitymap extends Abstract_model {
                                         inner join tblm_activity activity on sam.activityid_fk = activity.activityid_pk";
 
     public $refs            = array();
+    public $multiUnique  = array('id_divisi',
+                                        'id_loker',
+                                        'id_posisi');
+
 
     function __construct() {
         parent::__construct();
@@ -55,6 +59,9 @@ class Tblm_staffactivitymap extends Abstract_model {
         if($this->actionType == 'CREATE') {
             //do something
             // example :
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
 
             unset($this->record['creationdate']);
             unset($this->record['updateddate']);
@@ -69,6 +76,10 @@ class Tblm_staffactivitymap extends Abstract_model {
         }else {
             //do something
             //example:
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
+
             unset($this->record['creationdate']);
             unset($this->record['createdby']);
             unset($this->record['updateddate']);

@@ -27,8 +27,9 @@ class Bpc_cost_payroll_loker_controller {
             $table = $ci->bpc_cost_payroll_loker;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(id) like upper('%".$searchPhrase."%') OR
-                                         upper(loker) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("( upper(id) like upper('%".$searchPhrase."%') OR
+                                         upper(loker) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 

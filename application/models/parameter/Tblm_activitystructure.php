@@ -90,6 +90,8 @@ class Tblm_activitystructure extends Abstract_model {
 
     public $refs            = array();
 
+    public $multiUnique  = array('activityid','ubiscode');
+
     function __construct() {
         $this->fromClause .= " inner join ".$this->vw_allactivity."d on a.activityid = d.activitycode";
         $this->fromClause .= " left join ".$this->vw_allactivity."e on a.ohactivityid1 = e.activitycode";
@@ -107,6 +109,10 @@ class Tblm_activitystructure extends Abstract_model {
             //do something
             // example :
 
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
+
             unset($this->record['creationdate']);
             unset($this->record['updateddate']);
 
@@ -123,6 +129,11 @@ class Tblm_activitystructure extends Abstract_model {
             $this->record[$this->pkey] = $this->generate_id($this->table, $this->pkey);
 
         }else {
+
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
+
             //do something
             //example:
             unset($this->record['creationdate']);

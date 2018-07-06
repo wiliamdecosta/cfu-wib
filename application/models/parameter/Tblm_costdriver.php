@@ -13,7 +13,7 @@ class Tblm_costdriver extends Abstract_model {
     public $fields          = array(
                                 'costdriverid_pk'      => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ActivityID_PK'),
 
-                                'code'                  => array('nullable' => false, 'type' => 'str', 'unique' => true, 'display' => 'Cost Driver'),
+                                'code'                  => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Cost Driver'),
 
                                 'ubiscode'         => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'BU/Subsidiary'),
                                 'unitid_fk'         => array('nullable' =>  false, 'type' => 'str', 'unique' => false, 'display' => 'Unit Code'),
@@ -57,6 +57,7 @@ class Tblm_costdriver extends Abstract_model {
                                         inner join tblm_unit c on a.unitid_fk = c.unitid_pk";
 
     public $refs            = array();
+    public $multiUnique  = array('code', 'ubiscode');
 
     function __construct() {
         parent::__construct();
@@ -70,6 +71,9 @@ class Tblm_costdriver extends Abstract_model {
         if($this->actionType == 'CREATE') {
             //do something
             // example :
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
 
             unset($this->record['creationdate']);
             unset($this->record['updateddate']);
@@ -89,6 +93,10 @@ class Tblm_costdriver extends Abstract_model {
         }else {
             //do something
             //example:
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
+
             unset($this->record['creationdate']);
             unset($this->record['createdby']);
             unset($this->record['updateddate']);

@@ -90,8 +90,9 @@ class Tblm_statustype_controller {
             $table = $ci->tblm_statustype;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(code) like upper('%".$searchPhrase."%') OR
-                                         upper(description) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("( upper(code) like upper('%".$searchPhrase."%') OR
+                                         upper(description) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 

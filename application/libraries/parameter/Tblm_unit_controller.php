@@ -99,8 +99,9 @@ class Tblm_unit_controller {
             $table = $ci->tblm_unit;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(code) like upper('%".$searchPhrase."%') OR
-                                         upper(unitname) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("( upper(code) like upper('%".$searchPhrase."%') OR
+                                         upper(unitname) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 

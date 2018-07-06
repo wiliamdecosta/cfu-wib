@@ -25,10 +25,10 @@ class Bpc_masakun_controller {
             $table = $ci->bpc_masakun;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(c.kode_akun) like upper('%".$searchPhrase."%') OR
+                $table->setCriteria("(upper(c.kode_akun) like upper('%".$searchPhrase."%') OR
                                          upper(c.nama) like upper('%".$searchPhrase."%') OR
                                          upper(nr.nama) like upper('%".$searchPhrase."%')
-                                         ");
+                                         )");
 
             }
 
@@ -69,16 +69,16 @@ class Bpc_masakun_controller {
                 $ci->load->model('parameter/bpc_masakun');
                 $table = $ci->bpc_masakun;
 
-                if(!empty($searchPhrase)) {
-                    $table->setCriteria("upper(c.kode_akun) like upper('%".$searchPhrase."%') OR
-                                            upper(c.nama) like upper('%".$searchPhrase."%') OR
-                                            upper(nr.nama) like upper('%".$searchPhrase."%')
-                                            ");
-
-                }
-
                 $table->setCriteria("nr.kode_fs = 'CCA'");
                 $table->setCriteria("c.kode_lokasi = '9000'");
+
+                if(!empty($searchPhrase)) {
+                    $table->setCriteria("(upper(c.kode_akun) like upper('%".$searchPhrase."%') OR
+                                            upper(c.nama) like upper('%".$searchPhrase."%') OR
+                                            upper(nr.nama) like upper('%".$searchPhrase."%')
+                                            )");
+
+                }
 
                 $sort = getVarClean('sort','str','c.kode_akun');
                 $dir  = getVarClean('dir','str','asc');
@@ -93,10 +93,10 @@ class Bpc_masakun_controller {
                 $table = $ci->tblm_glplitem;
 
                 if(!empty($searchPhrase)) {
-                    $table->setCriteria("upper(a.glaccount) like upper('%".$searchPhrase."%') OR
+                    $table->setCriteria("(upper(a.glaccount) like upper('%".$searchPhrase."%') OR
                                             upper(a.gldesc) like upper('%".$searchPhrase."%') OR
                                             upper(nr.nama) like upper('%".$searchPhrase."%')
-                                            ");
+                                            )");
                 }
 
                 $sort = getVarClean('sort','str','a.glaccount');

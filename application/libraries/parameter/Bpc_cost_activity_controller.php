@@ -25,9 +25,9 @@ class Bpc_cost_activity_controller {
             $table = $ci->bpc_cost_activity;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(a.id) like upper('%".$searchPhrase."%') OR
+                $table->setCriteria("(upper(a.id) like upper('%".$searchPhrase."%') OR
                                          upper(a.uraian) like upper('%".$searchPhrase."%')
-                                         ");
+                                         )");
             }
 
             $start = ($start-1) * $limit;

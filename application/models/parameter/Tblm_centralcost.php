@@ -132,6 +132,9 @@ class Tblm_centralcost extends Abstract_model {
 
     public $refs            = array();
 
+    public $multiUnique  = array('cccode',
+                                        'accountcode');
+
     function __construct() {
         parent::__construct();
     }
@@ -144,6 +147,9 @@ class Tblm_centralcost extends Abstract_model {
         if($this->actionType == 'CREATE') {
             //do something
             // example :
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
 
             unset($this->record['creationdate']);
             unset($this->record['updateddate']);
@@ -158,6 +164,10 @@ class Tblm_centralcost extends Abstract_model {
         }else {
             //do something
             //example:
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
+
             unset($this->record['creationdate']);
             unset($this->record['createdby']);
             unset($this->record['updateddate']);

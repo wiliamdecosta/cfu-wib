@@ -25,8 +25,9 @@ class Bpc_cost_payroll_div_controller {
             $table = $ci->bpc_cost_payroll_div;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(kode_div) like upper('%".$searchPhrase."%') OR
-                                         upper(nama) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("(upper(kode_div) like upper('%".$searchPhrase."%') OR
+                                         upper(nama) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 

@@ -70,6 +70,8 @@ class Abstract_model extends  CI_Model {
 
     public $jqGridParamSearch = array();
 
+	public $multiUnique = array();
+
 	function __construct() {
 
 		parent::__construct();
@@ -582,6 +584,56 @@ class Abstract_model extends  CI_Model {
 
     public function setJQGridParam($param) {
         $this->jqGridParamSearch = $param;
+	}
+
+
+	public function isMultipleUnique() {
+
+		$id = '';
+		if(isset($this->record[$this->pkey])) {
+			$id = $this->record[$this->pkey];
+		}
+
+        $fields = $this->multiUnique;
+        if(count($fields) == 0) return false;
+
+        $sql = "SELECT COUNT(1) total FROM ".$this->table."
+                    WHERE ";
+
+        $loop = 0;
+        foreach($this->multiUnique as $field) {
+            $statement = '';
+            $type = $this->fields[$field]['type'];
+
+            if($type == 'str' || $type == 'date') {
+                $statement = $field." = '".$this->record[$field]."'";
+            }else {
+                $statement = $field." = ".$this->record[$field];
+            }
+
+            if($loop != 0) {
+                $sql .= " AND ";
+                $sql .= $statement;
+            }else {
+                $sql .= $statement;
+            }
+            $loop++;
+        }
+
+        if(!empty($id)) {
+            $sql .= " AND ".$this->pkey." != ".$id;
+        }
+
+        $query = $this->db->query($sql);
+		$row = $query->row_array();
+
+		$countitems = $row['total'];
+		$query->free_result();
+
+		if($countitems > 0) return true;
+
+        return false;
+
     }
 
 }

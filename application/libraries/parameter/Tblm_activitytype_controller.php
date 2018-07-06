@@ -99,8 +99,9 @@ class Tblm_activitytype_controller {
             $table = $ci->tblm_activitytype;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(code) like upper('%".$searchPhrase."%') OR
-                                         upper(acttypename) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("( upper(code) like upper('%".$searchPhrase."%') OR
+                                         upper(acttypename) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 

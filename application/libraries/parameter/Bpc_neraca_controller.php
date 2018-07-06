@@ -24,13 +24,13 @@ class Bpc_neraca_controller {
             $ci->load->model('parameter/bpc_neraca');
             $table = $ci->bpc_neraca;
 
-            if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(a.kode_neraca) like upper('%".$searchPhrase."%') OR
-                                         upper(a.nama) like upper('%".$searchPhrase."%')
-                                         ");
-            }
-
             $table->setCriteria("a.kode_fs = 'CCA'");
+
+            if(!empty($searchPhrase)) {
+                $table->setCriteria("(upper(a.kode_neraca) like upper('%".$searchPhrase."%') OR
+                                         upper(a.nama) like upper('%".$searchPhrase."%')
+                                         )");
+            }
 
             $start = ($start-1) * $limit;
             $items = $table->getAll($start, $limit, $sort, $dir);

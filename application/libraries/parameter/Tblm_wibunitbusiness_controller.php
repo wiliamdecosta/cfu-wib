@@ -99,8 +99,9 @@ class Tblm_wibunitbusiness_controller {
             $table = $ci->tblm_wibunitbusiness;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(code) like upper('%".$searchPhrase."%') OR
-                                         upper(ubisname) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("( upper(code) like upper('%".$searchPhrase."%') OR
+                                         upper(ubisname) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 

@@ -42,6 +42,10 @@ class Tblm_cpallocationmap extends Abstract_model {
                                         inner join rra.bpc_cost_activity d on a.idactivityext = d.id";
     public $refs            = array();
 
+    public $multiUnique  = array('wibunitbusinessid_fk',
+                                            'idactivityext',
+                                            'plitemcode');
+
     function __construct() {
         parent::__construct();
     }
@@ -54,6 +58,10 @@ class Tblm_cpallocationmap extends Abstract_model {
         if($this->actionType == 'CREATE') {
             //do something
             // example :
+
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
 
             if($this->record['pctallocation'] < 0 or
                     $this->record['pctallocation'] > 100) {
@@ -74,6 +82,9 @@ class Tblm_cpallocationmap extends Abstract_model {
         }else {
             //do something
             //example:
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
 
             if($this->record['pctallocation'] < 0 or
                     $this->record['pctallocation'] > 100) {

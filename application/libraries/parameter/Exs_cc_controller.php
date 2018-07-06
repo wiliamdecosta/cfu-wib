@@ -26,8 +26,8 @@ class Exs_cc_controller {
             $table = $ci->exs_cc;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(kode_cc) like upper('%".$searchPhrase."%') OR
-                                         upper(nama) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("(upper(kode_cc) like upper('%".$searchPhrase."%') OR
+                                         upper(nama) like upper('%".$searchPhrase."%'))");
 
             }
 
@@ -74,8 +74,9 @@ class Exs_cc_controller {
                 $table = $ci->exs_cc;
 
                 if(!empty($searchPhrase)) {
-                    $table->setCriteria("upper(kode_cc) like upper('%".$searchPhrase."%') OR
-                                            upper(nama) like upper('%".$searchPhrase."%')");
+                    $table->setCriteria("(upper(kode_cc) like upper('%".$searchPhrase."%') OR
+                                            upper(nama) like upper('%".$searchPhrase."%')
+                                            )");
 
                 }
 

@@ -44,6 +44,11 @@ class Tblm_segregationmap extends Abstract_model {
 
     public $refs            = array();
 
+    public $multiUnique  = array('activitylistid_fk',
+                                            'activitygroupid_fk');
+
+
+
     function __construct() {
         parent::__construct();
     }
@@ -56,6 +61,10 @@ class Tblm_segregationmap extends Abstract_model {
         if($this->actionType == 'CREATE') {
             //do something
             // example :
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
+
             unset($this->record['creationdate']);
             unset($this->record['updateddate']);
 
@@ -69,6 +78,9 @@ class Tblm_segregationmap extends Abstract_model {
         }else {
             //do something
             //example:
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
 
             unset($this->record['creationdate']);
             unset($this->record['createdby']);

@@ -110,8 +110,9 @@ class Tblm_activity_controller {
             $table = $ci->tblm_activity;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(activity.code) like upper('%".$searchPhrase."%') OR
-                                         upper(activity.activityname) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("(upper(activity.code) like upper('%".$searchPhrase."%') OR
+                                         upper(activity.activityname) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 

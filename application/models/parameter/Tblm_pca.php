@@ -37,9 +37,13 @@ class Tblm_pca extends Abstract_model {
                                     c.code ubiscode, c.ubisname";
 
     public $fromClause      = "tblm_pca a
-                                        inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca and b.kode_fs = 'CCA'
+                                        inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca
                                         inner join tblm_wibunitbusiness c on a.wibunitbusinessid_fk = c.wibunitbusinessid_pk";
     public $refs            = array();
+
+    public $multiUnique  = array('wibunitbusinessid_fk',
+                                        'plitemcode');
+
 
     function __construct() {
         parent::__construct();
@@ -53,6 +57,9 @@ class Tblm_pca extends Abstract_model {
         if($this->actionType == 'CREATE') {
             //do something
             // example :
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
 
             unset($this->record['creationdate']);
             unset($this->record['updateddate']);
@@ -72,6 +79,11 @@ class Tblm_pca extends Abstract_model {
         }else {
             //do something
             //example:
+
+            if($this->isMultipleUnique()) {
+                throw new Exception('Duplicate unique key');
+            }
+
             unset($this->record['creationdate']);
             unset($this->record['createdby']);
             unset($this->record['updateddate']);

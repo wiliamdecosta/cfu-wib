@@ -98,8 +98,9 @@ class Tblm_statuslist_controller {
             $table = $ci->tblm_statuslist;
 
             if(!empty($searchPhrase)) {
-                $table->setCriteria("upper(code) like upper('%".$searchPhrase."%') OR
-                                         upper(buname) like upper('%".$searchPhrase."%')");
+                $table->setCriteria("( upper(code) like upper('%".$searchPhrase."%') OR
+                                         upper(buname) like upper('%".$searchPhrase."%')
+                                         )");
 
             }
 
