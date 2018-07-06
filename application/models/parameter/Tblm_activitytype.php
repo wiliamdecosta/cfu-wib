@@ -31,7 +31,7 @@ class Tblm_activitytype extends Abstract_model {
                                     (a.code || ' - ' || a.acttypename) activitygabung";
     public $fromClause      = "tblm_activitytype a";
 
-    public $refs            = array();
+    public $refs            = array('tblm_activitylist' => 'activitytypeid_fk');
 
     function __construct() {
         parent::__construct();

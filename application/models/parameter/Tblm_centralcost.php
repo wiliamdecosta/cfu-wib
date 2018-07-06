@@ -8,7 +8,7 @@ class Tblm_centralcost extends Abstract_model {
 
     public $table           = "tblm_centralcost";
     public $pkey            = "centralcostid_pk";
-    public $alias           = "centralcost";
+    public $alias           = "";
 
     public $fields          = array(
                                 'centralcostid_pk'      => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Central Cost ID PK'),
