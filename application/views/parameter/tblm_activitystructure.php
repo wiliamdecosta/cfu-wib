@@ -380,7 +380,7 @@ function clearInputCostDriver() {
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_costdriverid_fk" readonly type="text"  style="display:none;">'+
-                                        '<input id="form_costdrivercode" size="30" readonly type="text" class="FormElement form-control" placeholder="Choose Cost Driver">'+
+                                        '<input id="form_costdrivercode" style="background:#FFFFA2" size="30" readonly type="text" class="FormElement form-control" placeholder="Choose Cost Driver">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVCostDriver(\'form_costdriverid_fk\',\'form_costdrivercode\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>'
