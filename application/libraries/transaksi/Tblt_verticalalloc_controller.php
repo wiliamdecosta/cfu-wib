@@ -216,7 +216,7 @@ class Tblt_verticalalloc_controller {
 
             //$table->setCriteria("upper(s01) = upper('".$ubiscode."')");
 
-            $items = $table->getAll(0, -1, 's01', 'asc');
+            $items = $table->getAll(0, -1);
             $no = 1;
 
             startExcel("verticalalloc_".$periodid_fk.".xls");
