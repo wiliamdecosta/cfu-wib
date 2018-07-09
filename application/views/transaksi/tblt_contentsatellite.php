@@ -53,7 +53,7 @@
             <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
 
             <div class="row">
-            <label class="control-label col-md-2">Pencarian :</label>        
+            <label class="control-label col-md-2">Pencarian :</label>
             <div class="col-md-3">
                 <div class="input-group">
                     <div class="input-group">
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="space-4"></div>
-            <div class="row" id="btn-group-pca-action" style="display:none;">
+            <div class="row" id="btn-group-contentsatellite-action" style="display:none;">
                 <div class="col-xs-4"></div>
                 <div class="col-xs-6">
                     <button class="btn btn-success" id="btn-process" onclick="doProcess();">Process</button>
@@ -188,7 +188,7 @@ $("#tab-3").on("click", function(event) {
         var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
 
         if(isupdatable == 'Y') {
-            $('#btn-group-pca-action').show();
+            $('#btn-group-contentsatellite-action').show();
 
             if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
                 $('#btn-process').hide();
