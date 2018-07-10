@@ -214,7 +214,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."transaksi.tblt_contentsatdetail_controller/crud"; ?>',
-            caption: "Log Process Control :: <?php echo $this->input->post('processcode'); ?>"
+            caption: "Detail Info :: <?php echo $this->input->post('processcode'); ?>"
 
         });
 
