@@ -179,10 +179,18 @@
                 {label: 'Subject Code',name: 'subjectcode',width: 150, align: "left"},
                 {label: 'Item Code',name: 'itemcode',width: 150, align: "left"},
                 {label: 'Value 1',name: 'value1',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2);
+                    if (cellvalue != null){
+                        return $.number(cellvalue, 2);
+                    }else{
+                        return '';
+                    }
                 }},
                 {label: 'Value 2',name: 'value2',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    return $.number(cellvalue, 2);
+                    if (cellvalue != null){
+                        return $.number(cellvalue, 2);
+                    }else{
+                        return '';
+                    }
                 }}
             ],
             height: '100%',

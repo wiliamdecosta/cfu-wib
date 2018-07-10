@@ -65,7 +65,7 @@ class Tblt_contentsatellite_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data tblt_pca');
+            logging('view data tblt_contentsatellite');
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -283,7 +283,7 @@ class Tblt_contentsatellite_controller {
             $count = $table->countAll();
             $items = $table->getAll(0, -1);
 
-            startExcel("pca_".$periodid_fk.".xls");
+            startExcel("contentsatellite_".$periodid_fk.".xls");
 
             $output = '';
             $output .='<table  border="1">';
