@@ -55,7 +55,7 @@
                     <button class="btn btn-primary" type="button" id="btn-back" onclick="backToProcessControl()"><i class="fa fa-arrow-left"></i> Kembali Process Control</button>
                 </div>
             </div>
-            <h3> <?php echo 'Log Process Control'.' ('.$this->input->post('periodid_fk').')'; ?></h3>
+            <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
             <div class="space-4"></div>
 
 
