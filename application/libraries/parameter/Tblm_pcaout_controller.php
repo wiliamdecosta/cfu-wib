@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Tblm_glplitem_controller
+* @class Tblm_pcaout_controller
 * @version 2018-06-21 23:19:30
 */
-class Tblm_glplitem_controller {
+class Tblm_pcaout_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','a.glaccount');
+        $sidx = getVarClean('sidx','str','a.ubiscode');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
@@ -21,8 +21,8 @@ class Tblm_glplitem_controller {
         try {
 
             $ci = & get_instance();
-            $ci->load->model('parameter/tblm_glplitem');
-            $table = $ci->tblm_glplitem;
+            $ci->load->model('parameter/tblm_pcaout');
+            $table = $ci->tblm_pcaout;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -43,8 +43,8 @@ class Tblm_glplitem_controller {
 
 
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(a.glaccount) like upper('%".$i_search."%') OR
-                                            upper(a.gldesc) like upper('%".$i_search."%') OR
+                $table->setCriteria("( upper(a.ubiscode) like upper('%".$i_search."%') OR
+                                            upper(a.activitycode) like upper('%".$i_search."%') OR
                                             upper(a.plitemcode) like upper('%".$i_search."%') 
                                             )");
             }
@@ -73,7 +73,7 @@ class Tblm_glplitem_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data tblm_glplitem');
+            logging('view data tblm_pcaout');
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -111,52 +111,12 @@ class Tblm_glplitem_controller {
         return $data;
     }
 
-    function readLov() {
-
-        $start = getVarClean('current','int',0);
-        $limit = getVarClean('rowCount','int',5);
-
-        $sort = getVarClean('sort','str','a.glaccount');
-        $dir  = getVarClean('dir','str','asc');
-
-        $searchPhrase = getVarClean('searchPhrase', 'str', '');
-
-        $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
-
-        try {
-
-            $ci = & get_instance();
-            $ci->load->model('parameter/tblm_glplitem');
-            $table = $ci->tblm_glplitem;
-
-            if(!empty($searchPhrase)) {
-                $table->setCriteria("(upper(a.glaccount) like upper('%".$searchPhrase."%') OR
-                                         upper(a.gldesc) like upper('%".$searchPhrase."%')
-                                         )");
-
-            }
-
-            $start = ($start-1) * $limit;
-            $items = $table->getAll($start, $limit, $sort, $dir);
-            $totalcount = $table->countAll();
-
-            $data['rows'] = $items;
-            $data['success'] = true;
-            $data['total'] = $totalcount;
-
-        }catch (Exception $e) {
-            $data['message'] = $e->getMessage();
-        }
-
-        return $data;
-    }
-
 
     function create() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_glplitem');
-        $table = $ci->tblm_glplitem;
+        $ci->load->model('parameter/tblm_pcaout');
+        $table = $ci->tblm_pcaout;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -210,7 +170,7 @@ class Tblm_glplitem_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data added successfully';
-                logging('create data tblm_glplitem');
+                logging('create data tblm_pcaout');
 
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -227,8 +187,8 @@ class Tblm_glplitem_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_glplitem');
-        $table = $ci->tblm_glplitem;
+        $ci->load->model('parameter/tblm_pcaout');
+        $table = $ci->tblm_pcaout;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -282,7 +242,7 @@ class Tblm_glplitem_controller {
 
                 $data['success'] = true;
                 $data['message'] = 'Data update successfully';
-                logging('update data tblm_glplitem');
+                logging('update data tblm_pcaout');
                 $data['rows'] = $table->get($items[$table->pkey]);
             }catch (Exception $e) {
                 $table->db->trans_rollback(); //Rollback Trans
@@ -298,8 +258,8 @@ class Tblm_glplitem_controller {
 
     function destroy() {
         $ci = & get_instance();
-        $ci->load->model('parameter/tblm_glplitem');
-        $table = $ci->tblm_glplitem;
+        $ci->load->model('parameter/tblm_pcaout');
+        $table = $ci->tblm_pcaout;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -329,7 +289,7 @@ class Tblm_glplitem_controller {
 
             $data['success'] = true;
             $data['message'] = $total.' Data deleted successfully';
-            logging('delete data tblm_glplitem');
+            logging('delete data tblm_pcaout');
             $table->db->trans_commit(); //Commit Trans
 
         }catch (Exception $e) {
@@ -340,6 +300,13 @@ class Tblm_glplitem_controller {
         }
         return $data;
     }
+
+    function combo(){
+        $ci = & get_instance();
+        $ci->load->model('parameter/tblm_pcaout');
+        $table = $ci->tblm_pcaout;
+        $table->html_select_options_casetype();
+    }
 }
 
-/* End of file Activity_controller.php */
+/* End of file Tblm_pcaout_controller.php */
