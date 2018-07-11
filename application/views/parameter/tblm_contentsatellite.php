@@ -134,12 +134,12 @@
                     editrules: {required: true}
                 },
                 {label: 'PL Item', name: 'plitemcode', width: 150, editable: false, hidden: false},
-                {label: 'Value Source',name: 'valuesource',width: 200, align: "left",editable: true,
+                {label: 'Value Source',name: 'valuesource',width: 200, align: "left",editable: true, hidden: true,
                     editoptions: {
                         size: 30,
                         maxlength:32
                     },
-                    editrules: {required: false}
+                    editrules: {required: false, edithidden: true}
                 },
                 {label: 'Listing No',name: 'listingno',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
