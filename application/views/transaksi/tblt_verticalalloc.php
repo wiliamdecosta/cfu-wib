@@ -393,8 +393,8 @@ function showLOVBusinessUnit(id, code, name) {
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 20,
-            rowList: [20,50,100],
+            rowNum: 12,
+            rowList: [12,50,100],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
