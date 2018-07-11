@@ -10,11 +10,11 @@
             <i class="fa fa-circle"></i>
         </li>
          <li>
-            <a href="#">Master</a>
+            <a href="#">Mapping</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>Telin Cost Center</span>
+            <span>Content Satellite</span>
         </li>
     </ul>
 </div>
@@ -45,15 +45,15 @@
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_tblm_costcenter'); ?>
+<?php $this->load->view('lov/lov_pl_item_contentsatellite'); ?>
 <script>
-    function showLOVPCostCenter(id, code) {
-        modal_lov_tblm_costcenter_show(id, code);
+    function showLOVPLItem(plitem, plitemgroup) {
+        modal_lov_pl_item_show(plitem, plitemgroup);
     }
 
-    function clearCostCenter() {
-        $('#form_costcenterid_pk').val('');
-        $('#form_costcentercode').val('');
+    function clearInputPLItem() {
+        $('#form_plitem').val('');
+        $('#plitemgroupcode').val('');
     }
 </script>
 <script>
@@ -61,7 +61,7 @@
         var i_search = $('#i_search').val();
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."parameter.tblm_costcenter_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."parameter.tblm_contentsatellite_controller/read"; ?>',
             postData: {
                 i_search : i_search
             }
@@ -77,32 +77,18 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."parameter.tblm_costcenter_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."parameter.tblm_contentsatellite_controller/crud"; ?>',
             datatype: "json",
             mtype: "POST",
             colModel: [
-                {label: 'ID', name: 'costcenterid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Cost Center Code',name: 'cccode',width: 200, align: "left",editable: true,
-                    editoptions: {
-                        size: 30,
-                        maxlength:64
-                    },
-                    editrules: {required: true}
-                },
-                {label: 'Cost Center Name',name: 'ccname',width: 200, align: "left",editable: true,
-                    editoptions: {
-                        size: 30,
-                        maxlength:64
-                    },
-                    editrules: {required: true}
-                },
-                {label: 'Parent Code',
-                    name: 'parentcode',
+                {label: 'ID', name: 'contentsatelliteid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'PL Item',
+                    name: 'plitemcode',
                     width: 200,
                     sortable: true,
                     editable: true,
                     hidden: true,
-                    editrules: {edithidden: true, required:false},
+                    editrules: {edithidden: true, required:true},
                     edittype: 'custom',
                     editoptions: {
                         "custom_element":function( value  , options) {
@@ -110,12 +96,12 @@
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_costcenterid_pk" type="text"  style="display:none">'+
-                                        '<input id="form_costcentercode" readonly type="text" class="FormElement form-control" placeholder="Choose PL Item Group">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVPCostCenter(\'form_costcenterid_pk\',\'form_costcentercode\')">'+
+                                elm.append('<input id="form_plitem" readonly type="text" style="background:#FFFFA2" class="FormElement form-control" placeholder="Choose PL Item">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVPLItem(\'form_plitem\',\'plitemgroupcode\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
-                                        '</button>');
-                                $("#form_costcentercode").val(value);
+                                        '</button>'
+                                        );
+                                $("#form_plitem").val(value);
                                 elm.parent().removeClass('jqgrid-required');
                             }, 100);
 
@@ -124,23 +110,38 @@
                         "custom_value":function( element, oper, gridval) {
 
                             if(oper === 'get') {
-                                return $("#form_costcentercode").val();
+                                return $("#form_plitem").val();
                             } else if( oper === 'set') {
-                                $("#form_costcentercode").val(gridval);
+                                $("#form_plitem").val(gridval);
                                 var gridId = this.id;
                                 // give the editor time to set display
                                 setTimeout(function(){
                                     var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
                                     if(selectedRowId != null) {
-                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'parentcode');
-                                        $("#form_costcentercode").val( code_display );
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'plitemgroupcode');
+                                        $("#plitemgroupcode").val( code_display );
                                     }
                                 },100);
                             }
                         }
                     }
                 },
-                {label: 'Level',name: 'orglevel',width: 150, align: "left", hidden:true, editable: true, number:true,
+                {label: 'PL Item Group', name: 'plitemgroupcode', width: 150, align: "left", editable: true, hidden: false,
+                    editoptions: {
+                        size: 30,
+                        maxlength:32
+                    },
+                    editrules: {required: true}
+                },
+                {label: 'PL Item', name: 'plitemcode', width: 150, editable: false, hidden: false},
+                {label: 'Value Source',name: 'valuesource',width: 200, align: "left",editable: true,
+                    editoptions: {
+                        size: 30,
+                        maxlength:32
+                    },
+                    editrules: {required: false}
+                },
+                {label: 'Listing No',name: 'listingno',width: 150, align: "left", hidden:true, editable: true, number:true,
                     editoptions: {
                         size: 15,
                         maxlength:255,
@@ -152,16 +153,8 @@
                             });
                         }
                     },
-                    editrules: {required: false, edithidden: true}
+                    editrules: {required: true, edithidden: true}
                 },
-                {label: 'Source',name: 'sourcetype',width: 100, align: "left",editable: true, edittype: 'select', hidden:true,
-                    editrules: {edithidden: true, required: false},
-                    editoptions: {
-                    value: "Telkom Group:Telkom Group;Telin:Telin",
-                    dataInit: function(elem) {
-                        $(elem).width(150);  // set the width which you need
-                    }
-                }},
                 {label: 'Description',name: 'description',width: 200, align: "left",editable: true, hidden:true,
                     edittype:'textarea',
                     editoptions: {
@@ -231,8 +224,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."parameter.tblm_costcenter_controller/crud"; ?>',
-            caption: "Telin Cost Center"
+            editurl: '<?php echo WS_JQGRID."parameter.tblm_contentsatellite_controller/crud"; ?>',
+            caption: "Content Satellite"
 
         });
 
@@ -310,7 +303,7 @@
                     $('#updatedby').attr('readonly', true);
 
                     setTimeout(function() {
-                        clearCostCenter();
+                        clearInputPLItem();
                     },100);
                 },
                 afterShowForm: function(form) {
@@ -326,7 +319,7 @@
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
 
-                    clearCostCenter();
+                    clearInputPLItem();
 
                     return [true,"",response.responseText];
                 }
