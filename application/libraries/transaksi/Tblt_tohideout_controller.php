@@ -259,15 +259,15 @@ class Tblt_tohideout_controller {
 
             foreach($items as $item) {
                 $output .= '<tr>';
-                    $output .= '<td>'.$item['plgroup'].'</td>';
+                    $output .= '<td>'.$item['plgroupname'].'</td>';
                     $output .= '<td>'.$item['plitemname'].'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['domtrafficamt'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['domnetworkamt'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intltrafficamt'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intlnetworkamt'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intladjacentamt'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['toweramt'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['infraamt'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['domnetworkamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['intltrafficamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['intlnetworkamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['intladjacentamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['toweramount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['infraamount'],2).'</td>';
                 $output .= '</tr>';
 
                 // $total['totdomtrafficamt'] += $item['domtrafficamt'];
