@@ -134,7 +134,8 @@
                             'VERTICAL_ALLOC' : 'transaksi.tblt_verticalalloc',
                             'COST_DRIVER_ENTRY' : 'transaksi.tblt_costdriverentry',
                             'SEGREGATION' : 'transaksi.tblt_segregationact',
-                            'IC_CONTENT_SATELLITE' : 'transaksi.tblt_contentsatellite'
+                            'IC_CONTENT_SATELLITE' : 'transaksi.tblt_contentsatellite',
+                            'TO_HIDE_OUT_1_PL' : 'transaksi.tblt_tohideout'
                         };
 
         /* var link_obj = {'STAFF_COMP_MAP' : 'transaksi.tblt_staffcompmap',
