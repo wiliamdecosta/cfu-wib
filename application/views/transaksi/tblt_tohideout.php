@@ -573,14 +573,16 @@ function showLOVBusinessUnit(id, code, name) {
         jQuery("#grid-table").jqGrid('setGroupHeaders', {
             useColSpanStyle: true, 
             groupHeaders:[
-                {startColumnName: 'plgroupname', numberOfColumns: 1, titleText: ''},
-                {startColumnName: 'plitemname', numberOfColumns: 1, titleText: ''},
-                {startColumnName: 'domtrafficamount', numberOfColumns: 4, titleText: 'Carrier'},
-                {startColumnName: 'intladjacentamount', numberOfColumns: 1, titleText: 'Intl Adjacent'},
-                {startColumnName: 'toweramount', numberOfColumns: 1, titleText: 'Towers'},
-                {startColumnName: 'infraamount', numberOfColumns: 1, titleText: 'Infrastructure'}
+                // {startColumnName: 'plgroupname', numberOfColumns: 1, titleText: ''},
+                // {startColumnName: 'plitemname', numberOfColumns: 1, titleText: ''},
+                {startColumnName: 'domtrafficamount', numberOfColumns: 4, titleText: '<center>Carrier</center>', className: 'ui-th-column ui-th-ltr'},
+                {startColumnName: 'intladjacentamount', numberOfColumns: 1, titleText: 'Intl Adjacent', className: 'ui-th-column ui-th-ltr'},
+                {startColumnName: 'toweramount', numberOfColumns: 1, titleText: 'Towers', className: 'ui-th-column ui-th-ltr'},
+                {startColumnName: 'infraamount', numberOfColumns: 1, titleText: 'Infrastructure', className: 'ui-th-column ui-th-ltr'}
             ]
         });
+
+        // jQuery(".ui-th-column-header ui-th-ltr").addClass("active");
 
     });
 
