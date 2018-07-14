@@ -323,9 +323,9 @@ function showLOVBusinessUnit(id, code, name) {
         jQuery("#grid-table").jqGrid('setGroupHeaders', {
             useColSpanStyle: true,
             groupHeaders:[
-                {startColumnName: 'cd_domtraffic', align:'center', numberOfColumns: 7, titleText: 'Cost Driver'},
-                {startColumnName: 'pct_domtraffic', align:'center', numberOfColumns: 7, titleText: 'Cost Driver Proportion'},
-                {startColumnName: 'domtrafficamt', align:'center', numberOfColumns: 7, titleText: 'After Segregation'}
+                {startColumnName: 'cd_domtraffic', align:'center', numberOfColumns: 7, titleText: '<center>Cost Driver</center>', className: 'ui-th-column ui-th-ltr'},
+                {startColumnName: 'pct_domtraffic', align:'center', numberOfColumns: 7, titleText: '<center>Cost Driver Proportion</center>', className: 'ui-th-column ui-th-ltr'},
+                {startColumnName: 'domtrafficamt', align:'center', numberOfColumns: 7, titleText: '<center>After Segregation</center>', className: 'ui-th-column ui-th-ltr'}
             ]
         });
 

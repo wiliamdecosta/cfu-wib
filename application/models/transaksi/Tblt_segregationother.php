@@ -21,6 +21,7 @@ class Tblt_segregationother extends Abstract_model {
                                         a.s05 categorycode,
                                         a.n01 amount,
                                         a.n02 costdriverid_fk,
+                                        a.s06 costdrivercode,
                                         a.n03 cd_domtraffic,
                                         a.n04 cd_domnetwork,
                                         a.n05 cd_intltraffic,
@@ -41,12 +42,10 @@ class Tblt_segregationother extends Abstract_model {
                                         a.n20 intlnetworkamt,
                                         a.n21 intladjacentamt,
                                         a.n22 toweramt,
-                                        a.n23 infraamt,
-                                        b.code costdrivercode
+                                        a.n23 infraamt
                                         ";
 
-    public $fromClause      = "table (f_ShowSegregationOther(%d, '%s')) a
-                                        left join tblm_costdriver b on a.n02 = b.costdriverid_pk";
+    public $fromClause      = "table (f_ShowSegregationOther(%d, '%s')) a";
 
     public $refs            = array();
 
