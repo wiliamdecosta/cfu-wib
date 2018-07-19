@@ -64,4 +64,29 @@ function getUserRoles() {
     return $result;
 }
 
+function cekCancel($i_process_control_id){
+    $ci =& get_instance();
+
+    $sql = "BEGIN "
+            . " IsCancelAllowed ("
+            . " :i_process_control_id, "
+            . " :o_result_msg, "
+            . " :o_result_code "
+            . "); END;";
+
+            $stmt = oci_parse($ci->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_process_control_id', $i_process_control_id);
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_result_msg', $o_result_msg, 2000000);
+            oci_bind_by_name($stmt, ':o_result_code', $o_result_code, 2000000);
+
+
+            ociexecute($stmt);
+
+            return $o_result_code;
+}
+
 ?>
