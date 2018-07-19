@@ -408,6 +408,8 @@ class Tblt_costdriverentry_controller {
 
             $userdata = $ci->session->userdata;
 
+            cekCancel($i_process_control_id);
+
             $sql = "BEGIN "
                     . " pack_CostDriver.CancelCDEntry("
                     . " :i_process_control_id, "

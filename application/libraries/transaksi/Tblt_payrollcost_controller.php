@@ -328,6 +328,8 @@ class Tblt_payrollcost_controller {
 
             $userdata = $ci->session->userdata;
 
+            cekCancel($i_process_control_id);
+
            $sql = "BEGIN "
                     . " pack_StaffCompMap.CancelStaffCompMap("
                     . " :i_process_control_id, "

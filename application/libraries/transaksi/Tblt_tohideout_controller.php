@@ -174,7 +174,9 @@ class Tblt_tohideout_controller {
 
             $userdata = $ci->session->userdata;
 
-           $sql = "BEGIN "
+            cekCancel($i_process_control_id);
+            
+            $sql = "BEGIN "
                     . " pack_ToHideOut.CancelToHideOut("
                     . " :i_process_control_id, "
                     . " :i_user_name"

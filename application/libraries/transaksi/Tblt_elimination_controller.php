@@ -238,6 +238,8 @@ class Tblt_elimination_controller {
 
             $userdata = $ci->session->userdata;
 
+            cekCancel($i_process_control_id);
+
             $sql = "BEGIN "
                     . " pack_PLElimination.CancelPLElimination("
                     . " :i_process_control_id, "

@@ -250,7 +250,9 @@ class Tblt_segregationact_controller {
 
             $userdata = $ci->session->userdata;
 
-           $sql = "BEGIN "
+            cekCancel($i_process_control_id);
+            
+            $sql = "BEGIN "
                     . " pack_Segregation.CancelSegregation("
                     . " :i_process_control_id, "
                     . " :i_user_name"
@@ -442,7 +444,9 @@ class Tblt_segregationact_controller {
 
             $userdata = $ci->session->userdata;
 
-           $sql = "BEGIN "
+            cekCancel($i_process_control_id);
+            
+            $sql = "BEGIN "
                     . " pack_Segregation.CancelSegreCalc("
                     . " :i_process_control_id, "
                     . " :i_user_name"

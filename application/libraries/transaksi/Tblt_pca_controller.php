@@ -268,6 +268,8 @@ class Tblt_pca_controller {
 
             $userdata = $ci->session->userdata;
 
+            cekCancel($i_process_control_id);
+
            $sql = "BEGIN "
                     . " pack_PCA.CancelPCA("
                     . " :i_process_control_id, "

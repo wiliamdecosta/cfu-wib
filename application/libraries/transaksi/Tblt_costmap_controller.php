@@ -256,6 +256,8 @@ class Tblt_costmap_controller {
 
             $userdata = $ci->session->userdata;
 
+            cekCancel($i_process_control_id);
+
            $sql = "BEGIN "
                     . " pack_CostMap.CancelCostMap("
                     . " :i_process_control_id, "

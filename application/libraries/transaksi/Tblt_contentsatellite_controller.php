@@ -241,6 +241,8 @@ class Tblt_contentsatellite_controller {
 
             $userdata = $ci->session->userdata;
 
+           cekCancel($i_process_control_id);
+           
            $sql = "BEGIN "
                     . " pack_ContentSatellite.CancelSatellite("
                     . " :i_process_control_id, "

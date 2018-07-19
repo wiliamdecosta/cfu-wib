@@ -164,6 +164,8 @@ class Tblt_costdrivercalc_controller {
 
             $userdata = $ci->session->userdata;
 
+            cekCancel($i_process_control_id);
+            
             $sql = "BEGIN "
                     . " pack_CostDriver.CancelCDCalc("
                     . " :i_process_control_id, "

@@ -86,7 +86,9 @@ function cekCancel($i_process_control_id){
 
             ociexecute($stmt);
 
-            return $o_result_code;
+            if($o_result_code != 0) {
+                throw new Exception( $o_result_msg );
+            }
 }
 
 ?>

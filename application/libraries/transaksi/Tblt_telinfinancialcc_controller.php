@@ -237,6 +237,8 @@ class Tblt_telinfinancialcc_controller {
             $table = new Tblt_telinfinancialcc($i_process_control_id, '');
 
             $userdata = $ci->session->userdata;
+            
+            cekCancel($i_process_control_id);
 
             $sql = "BEGIN "
                     . " pack_TelinUpload.CancelFinancialCC("

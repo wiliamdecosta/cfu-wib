@@ -174,7 +174,9 @@ class Tblt_plafterelim_controller {
 
             $userdata = $ci->session->userdata;
 
-           $sql = "BEGIN "
+            cekCancel($i_process_control_id);
+            
+            $sql = "BEGIN "
                     . " pack_PLAfterElim.CancelPLAfterElim("
                     . " :i_process_control_id, "
                     . " :i_user_name"

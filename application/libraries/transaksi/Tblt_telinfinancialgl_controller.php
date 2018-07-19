@@ -254,6 +254,8 @@ class Tblt_telinfinancialgl_controller {
 
             $userdata = $ci->session->userdata;
 
+            cekCancel($i_process_control_id);
+            
             $sql = "BEGIN "
                     . " pack_TelinUpload.CancelFinancialGL("
                     . " :i_process_control_id, "
