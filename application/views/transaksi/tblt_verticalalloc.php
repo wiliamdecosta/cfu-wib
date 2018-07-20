@@ -77,6 +77,17 @@
                 </div>
             </div>
             </div>
+            <div class="space-4"></div>
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4">
+                <b>SUM PCA Amount : <span class="green">xxx</span></b> <br>
+                <b>SUM Vert Alloc from OH 1 : <span class="green">xxx</span></b> <br>
+                <b>SUM Total after Vert Alloc OH 1 : <span class="green">xxx</span></b> <br>
+                <b>SUM Vert Alloc from OH 2 : <span class="green">xxx</span></b> <br>
+                <b>SUM Total after Vert Alloc OH 2 : <span class="green">xxx</span></b> <br><br>
+            </div>
+
             <div class="row" id="tbl-verticalalloc">
                 <div class="col-xs-12">
                     <table id="grid-table"></table>
