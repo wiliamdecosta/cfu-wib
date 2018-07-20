@@ -10,7 +10,7 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>PL Final</span>
+            <span>Final PL</span>
         </li>
     </ul>
 </div>

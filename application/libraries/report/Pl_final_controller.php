@@ -10,10 +10,11 @@ class Pl_final_controller {
 
         $i_batch_control_id = getVarClean('pbatchcontrolid_pk','int',0);
         $i_search = getVarClean('i_search','str','');
+
         try {
 
             $ci = & get_instance();
-            $ci->load->model('transaksi/pl_final');
+            $ci->load->model('report/pl_final');
             $table = new Pl_final($i_batch_control_id, $i_search);
 
             $count = $table->countAll();
@@ -40,7 +41,6 @@ class Pl_final_controller {
 
             }
 
-
         }catch (Exception $e) {
             $data = array();
             $data['message'] = $e->getMessage();
@@ -49,6 +49,8 @@ class Pl_final_controller {
 
         echo $output;
         exit;
+
+        
 
     }
 
@@ -65,7 +67,7 @@ class Pl_final_controller {
             $count = $table->countAll();
             $items = $table->getAll(0, -1);
 
-            startExcel("pl_final_".$periodid_fk.".xls");
+            startExcel("final_pl_".$periodid_fk.".xls");
 
             $output = '';
             $output .= '<div style="font-size: 18px; font-weight : bold;"> P&L by Business Line (After Elimination) </div>';

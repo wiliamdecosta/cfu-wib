@@ -10,7 +10,7 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>PL Final</span>
+            <span>Final PL</span>
         </li>
     </ul>
 </div>
@@ -39,9 +39,9 @@
                                 <th rowspan="2" style="vertical-align: middle;">P&L Line Item </th>
                                 <th colspan="4" style="text-align: center;">Carrier</th>
                                 <th rowspan="2" style="vertical-align: middle;">International Adjacent</th>
-                                <th rowspan="2" style="vertical-align: middle;">Towers</th>
-                                <th rowspan="2" style="vertical-align: middle;">Infrastructure</th>
-                                <th rowspan="2"  style="vertical-align: middle;">Simple Total</th>
+                                <th rowspan="2" style="vertical-align: middle; text-align: center;">Towers</th>
+                                <th rowspan="2" style="vertical-align: middle; text-align: center;">Infrastructure</th>
+                                <th rowspan="2"  style="vertical-align: middle; text-align: center;">Simple Total</th>
                             </tr>
                             <tr>
                                 <th style="text-align: center;">Domestic Traffic</th>
@@ -75,11 +75,11 @@
 </script>
 
 <script>
-    function showData(){
-        var i_search = '';
+    // function showData(){
+        // var i_search = '';
 
-        loadDataTable(i_search);
-    }
+        // loadDataTable(i_search);
+    // }
 </script>
 
 <script>
@@ -142,13 +142,13 @@
 </script>
 
 <script>
-    function loadDataTable(i_search) {
-        $( "#pl-final" ).html( 'Loading...');
+    // function loadDataTable(i_search) {
+        // $( "#pl-final" ).html( 'Loading...');
         $.ajax({
             url: '<?php echo WS_JQGRID."report.pl_final_controller/readTable"; ?>',
             type: "POST",
             data: {
-                i_search : i_search,
+                i_search : '',
                 pbatchcontrolid_pk : <?php echo $this->input->post('pbatchcontrolid_pk'); ?>
             },
             success: function (data) {
@@ -158,5 +158,5 @@
                 swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
             }
         });
-    }
+    // }
 </script>
