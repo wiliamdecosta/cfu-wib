@@ -95,7 +95,7 @@ class Bpc_masakun_controller {
                 if(!empty($searchPhrase)) {
                     $table->setCriteria("(upper(a.glaccount) like upper('%".$searchPhrase."%') OR
                                             upper(a.gldesc) like upper('%".$searchPhrase."%') OR
-                                            upper(nr.nama) like upper('%".$searchPhrase."%')
+                                            upper(b.nama) like upper('%".$searchPhrase."%')
                                             )");
                 }
 
