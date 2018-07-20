@@ -243,6 +243,15 @@ class Tblt_verticalalloc_controller {
                             ';
             $output.='</tr>';
 
+             $subtotal = array('sumpcaamount' => 0,
+                                 'sumamountohact1' => 0,
+                                'sumvallocact1' => 0,
+                                'amountohact2' => 0,
+                                'sumvallocact2' => 0);
+
+
+            $initubiscode = $items[0]['ubiscode'];
+
             foreach($items as $item) {
                 $output .= '<tr>';
                 $output .= '<td valign="top">'.$no++.'</td>';
@@ -259,10 +268,57 @@ class Tblt_verticalalloc_controller {
                 $output .= '<td valign="top" align="right">'.numberFormat($item['amountohact2'],2).'</td>';
                 $output .= '<td valign="top" align="right">'.numberFormat($item['vallocact2'],2).'</td>';
                 $output .= '</tr>';
+
+                $subtotal['sumpcaamount'] += $item['pcaamount'];
+                $subtotal['sumamountohact1'] += $item['amountohact1'];
+                $subtotal['sumvallocact1'] += $item['vallocact1'];
+                $subtotal['amountohact2'] += $item['amountohact2'];
+                $subtotal['sumvallocact2'] += $item['vallocact2'];
             }
+
+            $output .= '<tr>';
+                $output .= '<td colspan="6" align="center"><b>Total</b></td>';
+                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumpcaamount'],2).'</td>';
+                $output .= '<td valign="top" align="right"></td>';
+                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumamountohact1'],2).'</td>';
+                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumvallocact1'],2).'</td>';
+                $output .= '<td valign="top" align="right"></td>';
+                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['amountohact2'],2).'</td>';
+                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumvallocact2'],2).'</td>';
+            $output .= '</tr>';
 
             $output .= '</table>';
             echo $output;
+            exit;
+
+    }
+
+    function sum_verticalalloc() {
+
+            $processcontrolid_pk = getVarClean('processcontrolid_pk', 'int', 0);
+            $ubiscode = getVarClean('ubiscode','str','');
+
+            $data = array('rows' => array(), 'success' => false, 'message' => '');
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_verticalalloc');
+            $table = new Tblt_verticalalloc($processcontrolid_pk, '');
+
+            $sql = "SELECT   sum(n01) sum_pcaamount,
+                             sum(n03) sum_amountohact1,
+                             sum(n04) sum_vallocact1,
+                             sum(n06) sum_amountohact2,
+                             sum(n07) sum_vallocact2
+                      FROM   table (f_ShowVertAlloc (?, '')) where s01 = ? ";
+
+            $result = $table->db->query($sql, array($processcontrolid_pk, $ubiscode));
+            $rows = $result->row_array();
+
+            $data['success'] = true;
+            $data['message'] = 'sukses';
+            $data['rows'] = $rows;
+          
+            echo json_encode($data);
             exit;
 
     }

@@ -78,14 +78,14 @@
             </div>
             </div>
             <div class="space-4"></div>
-            <div class="col-md-8">
+            <div class="col-md-7">
             </div>
-            <div class="col-md-4">
-                <b>SUM PCA Amount : <span class="green">xxx</span></b> <br>
-                <b>SUM Vert Alloc from OH 1 : <span class="green">xxx</span></b> <br>
-                <b>SUM Total after Vert Alloc OH 1 : <span class="green">xxx</span></b> <br>
-                <b>SUM Vert Alloc from OH 2 : <span class="green">xxx</span></b> <br>
-                <b>SUM Total after Vert Alloc OH 2 : <span class="green">xxx</span></b> <br><br>
+            <div class="col-md-5">
+                <b>SUM PCA Amount : <span class="green"><label id="sum-pca-amount">xxx</label></span></b> <br>
+                <b>SUM Vert Alloc from OH 1 : <span class="green"><label id="sum-vert-all">xxx</label></span></b> <br>
+                <b>SUM Total after Vert Alloc OH 1 : <span class="green"><label id="sum-tot-after">xxx</label></span></b> <br>
+                <b>SUM Vert Alloc from OH 2 : <span class="green"><label id="sum-vert-all2">xxx</label></span></b> <br>
+                <b>SUM Total after Vert Alloc OH 2 : <span class="green"><label id="sum-tot-after2">xxx</label></span></b> <br><br>
             </div>
 
             <div class="row" id="tbl-verticalalloc">
@@ -167,6 +167,7 @@ function showLOVBusinessUnit(id, code, name) {
     function showData(){
         var i_search = $('#i_search').val();
         var ubiscode = $('#search_wibunitbusinesscode').val();
+        var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
 
         jQuery(function($) {
             jQuery("#grid-table").jqGrid('setGridParam',{
@@ -180,6 +181,8 @@ function showLOVBusinessUnit(id, code, name) {
             $("#grid-table").trigger("reloadGrid");
             responsive_jqgrid('#grid-table', '#grid-pager');
         });
+
+        loadSum(ubiscode, i_process_control_id);
     }
 </script>
 
@@ -569,4 +572,35 @@ function showLOVBusinessUnit(id, code, name) {
 
     }
 
+</script>
+<script>
+    function loadSum(i_ubiscode, i_processcontrolid_pk){
+        $.ajax({
+                url: '<?php echo WS_JQGRID."transaksi.tblt_verticalalloc_controller/sum_verticalalloc"; ?>',
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    ubiscode : i_ubiscode,
+                    processcontrolid_pk : i_processcontrolid_pk
+                },
+                success: function (data) {
+                    if (data.success){
+                        var sum_pcaamount = $.number(data.rows.sum_pcaamount, 2);
+                        var sum_amountohact1 = $.number(data.rows.sum_amountohact1, 2);
+                        var sum_vallocact1 = $.number(data.rows.sum_vallocact1, 2);
+                        var sum_amountohact2 = $.number(data.rows.sum_amountohact2, 2);
+                        var sum_vallocact2 = $.number(data.rows.sum_vallocact2, 2);
+
+                        $('#sum-pca-amount').text(sum_pcaamount);
+                        $('#sum-vert-all').text(sum_amountohact1);
+                        $('#sum-tot-after').text(sum_vallocact1);
+                        $('#sum-vert-all2').text(sum_amountohact2);
+                        $('#sum-tot-after2').text(sum_vallocact2);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            });
+    }
 </script>
