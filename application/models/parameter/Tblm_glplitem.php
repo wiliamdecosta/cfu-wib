@@ -31,7 +31,7 @@ class Tblm_glplitem extends Abstract_model {
                                         to_char(a.updateddate, 'DD-MON-YYYY HH24:MI') lastupdateddate, a.updatedby lastupdatedby,
                                     b.nama plitemname,
                                     a.plitemcode||' - '||b.nama plitemcodedisplay,
-                                    c.code plitemgroupdisplay";
+                                    c.code plitemgroupdisplay, a.glaccount accountcode, a.gldesc accountname, b.nama plitem";
 
     public $fromClause      = "tblm_glplitem a
                                         inner join rra.bpc_neraca b on a.plitemcode = b.kode_neraca and b.kode_fs = 'CCA'
