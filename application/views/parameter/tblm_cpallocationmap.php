@@ -238,15 +238,15 @@
                         elmsuffix:'<i data-placement="left" class="orange"> (0 - 100) </i>'
                     }
                 },
-                {label: 'Description',name: 'description',width: 200, hidden:true, align: "left",editable: true,
-                    edittype:'textarea',
-                    editoptions: {
-                        rows: 2,
-                        cols:50,
-                        maxlength:64
-                    },
-                    editrules: {required: false, edithidden: true}
-                },
+                // {label: 'Description',name: 'description',width: 200, hidden:true, align: "left",editable: true,
+                //     edittype:'textarea',
+                //     editoptions: {
+                //         rows: 2,
+                //         cols:50,
+                //         maxlength:64
+                //     },
+                //     editrules: {required: false, edithidden: true}
+                // },
                 {label: 'Creation Date',name: 'creationdate',width: 150, hidden: true,  align: "left",editable: true,
                     editoptions: {
                         size: 15,

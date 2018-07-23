@@ -351,9 +351,9 @@ function clearInputBusinessUnit() {
 
                     $('#ubiscode').val( $('#search_wibunitbusinesscode').val() );
 
-                    setTimeout(function() {
-                        clearInputBusinessUnit();
-                    },100);
+                    // setTimeout(function() {
+                    //     clearInputBusinessUnit();
+                    // },100);
 
                 },
                 afterShowForm: function(form) {
@@ -369,7 +369,7 @@ function clearInputBusinessUnit() {
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
 
-                    clearInputBusinessUnit();
+                    // clearInputBusinessUnit();
 
                     return [true,"",response.responseText];
                 }
