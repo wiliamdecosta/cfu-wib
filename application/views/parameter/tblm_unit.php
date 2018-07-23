@@ -6,7 +6,7 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="#">Parameter</a>
+            <a href="#">Parameters</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>

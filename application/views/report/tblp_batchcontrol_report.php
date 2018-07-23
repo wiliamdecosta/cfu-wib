@@ -6,7 +6,7 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="#">Process</a>
+            <a href="#">Reports</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
