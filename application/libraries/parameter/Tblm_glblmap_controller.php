@@ -112,6 +112,45 @@ class Tblm_glblmap_controller {
     }
 
 
+    function readLov() {
+
+        $start = getVarClean('current','int',0);
+        $limit = getVarClean('rowCount','int',5);
+
+        $sort = getVarClean('sort','str','');
+        $dir  = getVarClean('dir','str','');
+
+        $searchPhrase = getVarClean('searchPhrase', 'str', '');
+
+        $data = array('rows' => array(), 'success' => false, 'message' => '', 'current' => $start, 'rowCount' => $limit, 'total' => 0);
+
+        try {
+
+            $ci = & get_instance();
+            $ci->load->model('parameter/tblm_plitemtype');
+            $table = $ci->tblm_plitemtype;
+
+            if(!empty($searchPhrase)) {
+                $table->setCriteria("(upper(plitemtype) like upper('%".$searchPhrase."%')
+                                         )");
+            }
+
+            $start = ($start-1) * $limit;
+            $items = $table->getAll($start, $limit, $sort, $dir);
+            $totalcount = $table->countAll();
+
+            $data['rows'] = $items;
+            $data['success'] = true;
+            $data['total'] = $totalcount;
+
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+        }
+
+        return $data;
+    }
+
+
     function create() {
 
         $ci = & get_instance();

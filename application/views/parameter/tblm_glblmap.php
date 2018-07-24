@@ -41,8 +41,17 @@
 </div>
 
 <?php $this->load->view('lov/lov_tblm_category'); ?>
+<?php $this->load->view('lov/lov_tblm_plitemtype'); ?>
 
 <script>
+    function showLOVPLItemType(code) {
+        modal_lov_tblm_plitemtype_show(code);
+    }
+
+    function clearInputPLItemType() {
+        $('#form_plitemtype').val('');
+    }
+
     function showLOVCategroy(id, code) {
         modal_lov_tblm_category_show(id, code);
     }
@@ -124,7 +133,50 @@
                         maxlength:96
                     },
                     editrules: {required: false}
-                },                
+                },          
+                {label: 'PL Item Type',
+                    name: 'plitemtype',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
+                    editoptions: {
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_plitemtype" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose PL Item Type">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVPLItemType(\'form_plitemtype\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>');
+                                $("#form_plitemtype").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_plitemtype").val();
+                            } else if( oper === 'set') {
+                                $("#form_plitemtype").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        // var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'form_plitemtype');
+                                        // $("#form_plitemtype").val( code_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
+                },      
                 {label: 'DWS Categroy', name: 'dwscategory_display',width: 250, align: "left"},
                 {label: 'DWS Categroy',
                     name: 'dwscategoryid_fk',
@@ -516,6 +568,7 @@
                         clearInputInfratelCategroy();
                         clearInputTelinCategroy();
                         clearInputTelinSGCategroy();
+                        clearInputPLItemType();
                     },100);
 
                 },
@@ -540,6 +593,7 @@
                     clearInputInfratelCategroy();
                     clearInputTelinCategroy();
                     clearInputTelinSGCategroy();
+                    clearInputPLItemType();
                     return [true,"",response.responseText];
                 }
             },
