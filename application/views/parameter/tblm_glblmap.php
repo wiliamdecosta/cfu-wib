@@ -42,8 +42,18 @@
 
 <?php $this->load->view('lov/lov_tblm_category'); ?>
 <?php $this->load->view('lov/lov_tblm_plitemtype'); ?>
+<?php $this->load->view('lov/lov_tblm_glplitem_new'); ?>
 
 <script>
+    function showLOVPLItem(glacc, gldesc) {
+        modal_lov_tblm_glplitem_show(glacc, gldesc);
+    }
+
+    function clearInputPLItem() {
+        $('#form_glacc').val('');
+        $('#gldesc').val('');
+    }
+
     function showLOVPLItemType(code) {
         modal_lov_tblm_plitemtype_show(code);
     }
@@ -113,12 +123,50 @@
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'glblmapid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'GL Account',name: 'glaccount',width: 150, align: "left",editable: true,
+                {label: 'GL Account',name: 'glaccount',width: 150, align: "left",editable: false },                
+                {label: 'GL Account',
+                    name: 'glaccount',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
                     editoptions: {
-                        size: 30,
-                        maxlength:10
-                    },
-                    editrules: {required: true}
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_glacc" readonly type="text" style="background:#FFFFA2;" size="30" class="FormElement form-control" placeholder="Choose GL Account">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVPLItem(\'form_glacc\',\'gldesc\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>'
+                                        );
+                                $("#form_glacc").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_glacc").val();
+                            } else if( oper === 'set') {
+                                $("#form_glacc").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'gldesc');
+                                        $("#form_gldesc").val( code_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
                 },
                 {label: 'GL Desc',name: 'gldesc',width: 250, align: "left",editable: true,
                     editoptions: {
@@ -525,6 +573,7 @@
                     $('#createdby').attr('readonly', true);
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
+                    $('#gldesc').attr('readonly', true);
 
                 },
                 afterShowForm: function(form) {
@@ -561,6 +610,7 @@
                     $('#createdby').attr('readonly', true);
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
+                    $('#gldesc').attr('readonly', true);
 
                     setTimeout(function() {
                         clearInputDWSCategroy();
@@ -569,6 +619,7 @@
                         clearInputTelinCategroy();
                         clearInputTelinSGCategroy();
                         clearInputPLItemType();
+                        clearInputPLItem();
                     },100);
 
                 },
@@ -594,6 +645,7 @@
                     clearInputTelinCategroy();
                     clearInputTelinSGCategroy();
                     clearInputPLItemType();
+                    clearInputPLItem();
                     return [true,"",response.responseText];
                 }
             },

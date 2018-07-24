@@ -7,39 +7,16 @@
 class Tblm_glplitem_new extends Abstract_model {
 
     public $table           = "tblm_glplitem";
-    public $pkey            = "glplitemid_pk";
+    public $pkey            = "";
     public $alias           = "a";
 
-    public $fields          = array(
-                                'glplitemid_pk'      => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'GLPLITEMID PK'),
-                                'glaccount'          => array('nullable' => false, 'type' => 'str', 'unique' => true, 'display' => 'GL Account'),
-                                'gldesc'             => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'GL Desc'),
-                                'plitemcode'             => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'PL Item'),
-                                'plitemgroupid_fk'     => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'PL Item Group'),
-                                'description'         => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description'),
-                                'creationdate'         => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Creation Date'),
-                                'createdby'             => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
-                                'updateddate'          => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Updated Date'),
-                                'updatedby'            => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Updated By')
-
-                            );
+    public $fields          = array();
 
 
-    public $selectClause    = "a.accountcode ,
-                                a.accountname,
-                                a.plitemcode,
-                                a.plitem";
+    public $selectClause    = "a.glaccount ,
+                                a.gldesc";
 
-    public $fromClause      = "(select x.glaccount accountcode,
-                                    x.gldesc accountname,
-                                    x.plitemcode,
-                                    nr.nama plitem
-                                from tblm_glplitem x,
-                                    rra.bpc_neraca nr
-                                where x.plitemcode = nr.kode_neraca and
-                                    nr.kode_fs = 'CCA'
-                                order by x.glaccount
-                                ) a";
+    public $fromClause      = "tblm_glplitem a";
     public $refs            = array();
 
     function __construct() {
