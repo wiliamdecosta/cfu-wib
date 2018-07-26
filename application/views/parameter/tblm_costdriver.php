@@ -28,6 +28,7 @@
                 <option value=""> -- Choose Cost Driver Type -- </option>
                 <option value="1"> Entry </option>
                 <option value="2"> Calculation </option>
+                <option value="3"> PL </option>
             </select>
         </div>
     </div>
