@@ -108,7 +108,8 @@ function showLOVPeriod(id, code, status) {
 <script>
     function buttonMode(status, statuscode) {
 
-        if(status == 'OPEN') {
+        if(status == 'OPEN') {           
+            $('#edit_grid-table').show();
             $('#btn-group-cpallpcadjust-action').show();
 
             if(statuscode > 0) {
@@ -118,6 +119,7 @@ function showLOVPeriod(id, code, status) {
             }
         }else{
             $('#btn-group-cpallpcadjust-action').hide();
+            $('#edit_grid-table').hide();
         }
     }
 
@@ -158,7 +160,7 @@ function showLOVPeriod(id, code, status) {
                 success: function (data) {
                     if(data.success == true) {
                         swal('Success',data.message,'success');
-                        loadForm(i_search, periodid_fk, status, 1);
+                        loadForm(i_search, periodid_fk, status, data.records);
                     }else {
                         swal('Attention',data.message,'warning');
                     }
@@ -210,8 +212,9 @@ function showLOVPeriod(id, code, status) {
                 success: function (data) {
                     if(data.success == true) {
                         swal('Success',data.message,'success');
-                        loadForm(i_search, periodid_fk, status, 0);
-                    }else {                    
+                        loadForm(i_search, periodid_fk, status, data.records);
+                    }else {  
+                        console.log(data.records);                
                         swal('Attention',data.message,'warning');
                     }
                 },
@@ -414,13 +417,20 @@ function showLOVPeriod(id, code, status) {
                     var form = $(e[0]);
                     style_edit_form(form);
 
+                    var status = $('#search_status').val();
+
+                    // if(status == 'OPEN'){
+                    //     swal('Attention', 'Maaf anda tidak bisa melakukan Edit data \n Status period sudah Close','warning');
+                    //     return false;
+                    // }
+
                     $('#periodid_fk').attr('readonly', true);
                     $('#ubiscode').attr('readonly', true);
                     $('#activitycode').attr('readonly', true);
                     $('#activityname').attr('readonly', true);
                     $('#plitemcode').attr('readonly', true);
                     $('#plitemnme').attr('readonly', true);
-                
+
 
                 },
                 afterShowForm: function(form) {

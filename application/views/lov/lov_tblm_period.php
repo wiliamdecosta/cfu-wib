@@ -80,7 +80,7 @@
     }
 
     function modal_lov_tblt_cpallocadjust_prepare_table() {    
-        // $("#modal_lov_tblt_cpallocadjust_grid_selection").bootgrid('reload');
+        $("#modal_lov_tblt_cpallocadjust_grid_selection").bootgrid('destroy');
         $("#modal_lov_tblt_cpallocadjust_grid_selection").bootgrid({
              formatters: {
                 "opt-edit" : function(col, row) {

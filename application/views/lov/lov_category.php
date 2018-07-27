@@ -75,7 +75,7 @@
     }
 
     function modal_lov_category_prepare_table() {
-        $("#modal_lov_category_grid_selection").bootgrid('reload');
+        $("#modal_lov_category_grid_selection").bootgrid('destroy');
         $("#modal_lov_category_grid_selection").bootgrid({
              formatters: {
                 "opt-edit" : function(col, row) {

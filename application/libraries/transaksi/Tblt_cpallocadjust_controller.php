@@ -237,6 +237,8 @@ class Tblt_cpallocadjust_controller {
             $ci = & get_instance();
             $ci->load->model('transaksi/tblt_cpallocadjust');
             $table = $ci->tblt_cpallocadjust;
+            $table->setCriteria("a.periodid_fk = ".$periodid_fk);
+            $count = $table->countAll();
 
             $userdata = $ci->session->userdata;
 
@@ -262,9 +264,11 @@ class Tblt_cpallocadjust_controller {
             ociexecute($stmt);
 
             if($o_result_code == 1){
+                $data['records'] = $count;
                 $data['success'] = true;
                 $data['message'] = $o_result_msg;
             }else{
+                $data['records'] = $count;
                 $data['success'] = false;
                 $data['message'] = $o_result_msg;
             }
@@ -287,6 +291,8 @@ class Tblt_cpallocadjust_controller {
             $ci = & get_instance();
             $ci->load->model('transaksi/tblt_cpallocadjust');
             $table = $ci->tblt_cpallocadjust;
+            $table->setCriteria("a.periodid_fk = ".$periodid_fk);
+            $count = $table->countAll();
 
             $userdata = $ci->session->userdata;
 
@@ -312,9 +318,11 @@ class Tblt_cpallocadjust_controller {
             ociexecute($stmt);
 
             if($o_result_code == 1){
+                $data['records'] = $count;
                 $data['success'] = true;
                 $data['message'] = $o_result_msg;
             }else{
+                $data['records'] = $count;
                 $data['success'] = false;
                 $data['message'] = $o_result_msg;
             }
