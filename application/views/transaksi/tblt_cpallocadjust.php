@@ -214,7 +214,7 @@ function showLOVPeriod(id, code, status) {
                         swal('Success',data.message,'success');
                         loadForm(i_search, periodid_fk, status, data.records);
                     }else {  
-                        console.log(data.records);                
+                        // console.log(data.records);                
                         swal('Attention',data.message,'warning');
                     }
                 },
