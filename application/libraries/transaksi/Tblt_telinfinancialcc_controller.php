@@ -163,8 +163,13 @@ class Tblt_telinfinancialcc_controller {
                     $record = array();
                     $record['periodid_fk'] = $periodid_fk;
                     $record['costcentercode'] = $objPHPExcel->getActiveSheet()->getCell('A'.$row)->getValue();
-                    $record['glaccount'] = $objPHPExcel->getActiveSheet()->getCell('B'.$row)->getValue();
+                    $record['glaccount'] = $objPHPExcel->getActiveSheet()->getCell('B'.$row)->getValue();                    
                     $record['amount'] = $objPHPExcel->getActiveSheet()->getCell('C'.$row)->getValue();
+
+                    if ($record['amount'] == "-"){
+                        $record['amount'] = 0;
+                    }
+                    
                     $record['pprocesscontrolid_fk'] = $i_process_control_id;
 
                     $table->db->set( $record );
