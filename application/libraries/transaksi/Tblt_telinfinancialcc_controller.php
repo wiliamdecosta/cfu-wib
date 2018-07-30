@@ -167,7 +167,7 @@ class Tblt_telinfinancialcc_controller {
                     $record['amount'] = $objPHPExcel->getActiveSheet()->getCell('C'.$row)->getValue();
 
                     if ($record['amount'] == "-"){
-                        $record['amount'] = 0;
+                        $record['amount'] = "0";
                     }
                     
                     $record['pprocesscontrolid_fk'] = $i_process_control_id;

@@ -238,7 +238,7 @@ class Tblt_cpallocadjust_controller {
             $ci->load->model('transaksi/tblt_cpallocadjust');
             $table = $ci->tblt_cpallocadjust;
             $table->setCriteria("a.periodid_fk = ".$periodid_fk);
-            $count = $table->countAll();
+            
 
             $userdata = $ci->session->userdata;
 
@@ -262,6 +262,8 @@ class Tblt_cpallocadjust_controller {
 
 
             ociexecute($stmt);
+
+            $count = $table->countAll();
 
             if($o_result_code == 1){
                 $data['records'] = $count;
@@ -292,7 +294,7 @@ class Tblt_cpallocadjust_controller {
             $ci->load->model('transaksi/tblt_cpallocadjust');
             $table = $ci->tblt_cpallocadjust;
             $table->setCriteria("a.periodid_fk = ".$periodid_fk);
-            $count = $table->countAll();
+            
 
             $userdata = $ci->session->userdata;
 
@@ -317,6 +319,8 @@ class Tblt_cpallocadjust_controller {
 
             ociexecute($stmt);
 
+            $count = $table->countAll();
+            
             if($o_result_code == 1){
                 $data['records'] = $count;
                 $data['success'] = true;
