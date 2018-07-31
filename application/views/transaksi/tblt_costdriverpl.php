@@ -20,13 +20,13 @@
     <div class="col-xs-12">
         <div class="tabbable">
             <ul class="nav nav-tabs">
-                <li class="active">
+                <li class="">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-1">
                         <i class="blue"></i>
                         <strong> <?php echo $this->input->post('processcode'); ?> </strong>
                     </a>
                 </li>
-                <li class="">
+                <li class="active">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-cost-driver">
                         <i class="blue"></i>
                         <strong> Cost Driver PL </strong>
@@ -56,44 +56,33 @@
                         <strong> Process Log </strong>
                     </a>
                 </li>
+
             </ul>
         </div>
 
         <div class="tab-content no-border">
             <div class="space-4"></div>
-
             <div class="row">
                 <div class="col-md-3">
                     <button class="btn btn-primary" type="button" id="btn-back" onclick="backToProcessControl()"><i class="fa fa-arrow-left"></i> Kembali Process Control</button>
                 </div>
             </div>
+            <h3> <?php echo 'Cost Driver PL '.' ('.$this->input->post('periodid_fk').')'; ?></h3>
+            <div class="space-4"></div>
 
-            <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
 
             <div class="row">
-            <label class="control-label col-md-2">Pencarian :</label>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
-                    <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
-                    <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
-                            <span class="fa fa-search bigger-110"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="input-group">
+                <label class="control-label col-md-2">Pencarian :</label>
+                <div class="col-md-3">
                     <div class="input-group">
-                    <input id="i_search" type="text" class="FormElement form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
-                    </span>
+                        <div class="input-group">
+                        <input id="i_search" type="text" class="FormElement form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
+                        </span>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
@@ -101,33 +90,22 @@
                     <div id="grid-pager"></div>
                 </div>
             </div>
-            <div class="space-4"></div>
-            <div class="row" id="btn-group-tohideout-action" style="display:none;">
-                <div class="col-xs-4"></div>
-                <div class="col-xs-6">
-                    <button class="btn btn-success" id="btn-process" onclick="doProcess();">Process</button>
-                    <button class="btn btn-warning" id="btn-cancel" onclick="cancelProcess();">Cancel Process</button>
-                    <button class="btn btn-primary" id="btn-download" onclick="downloadPCA();">Download</button>
-                </div>
-            </div>
-        </div>
+            <div class="space-4"></div>            
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
-
 <script>
-$("#tab-cost-driver").on("click", function(event) {
+$("#tab-1").on("click", function(event) {
     event.stopPropagation();
-
-    loadContentWithParams("transaksi.tblt_costdriverpl", {
+    var tab_1 = "<?php echo $this->input->post('tab_1'); ?>";
+    loadContentWithParams( tab_1, {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
         statuscode : '<?php echo $this->input->post('statuscode'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
         processcode : '<?php echo $this->input->post('processcode'); ?>',
-        tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+        tab_1 : tab_1
     });
 
 });
@@ -196,18 +174,6 @@ $("#tab-3").on("click", function(event) {
 </script>
 
 <script>
-/**
- * [showLOVBusinessUnit called by input menu_icon to show List Of Value (LOV) of icon]
- * @param  {[type]} id   [description]
- * @param  {[type]} code [description]
- * @return {[type]}      [description]
- */
-function showLOVBusinessUnit(id, code, name) {
-    modal_lov_tblm_wibunitbusiness_show(id, code, name);
-}
-</script>
-
-<script>
     function backToProcessControl() {
         loadContentWithParams("parameter.tblp_processcontrol", {
             i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
@@ -216,19 +182,16 @@ function showLOVBusinessUnit(id, code, name) {
     }
 </script>
 
+
 <script>
     function showData(){
         var i_search = $('#i_search').val();
-        var ubiscode = $('#search_wibunitbusinesscode').val();
-
-
         jQuery(function($) {
             jQuery("#grid-table").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/read"; ?>',
+                url: '<?php echo WS_JQGRID."transaksi.tblt_costdriverpl_controller/read"; ?>',
                 postData: {
                     i_search : i_search,
-                    processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-                    ubiscode: ubiscode
+                    processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>
                 }
             });
             $("#grid-table").trigger("reloadGrid");
@@ -236,26 +199,10 @@ function showLOVBusinessUnit(id, code, name) {
     }
 </script>
 
-
-
 <script>
-    function buttonMode(statuscode) {
-        var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
-
-        if(isupdatable == 'Y') {
-            $('#btn-group-tohideout-action').show();
-
-            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
-                $('#btn-process').hide();
-            }else if(statuscode == 'INITIAL') {
-                $('#btn-cancel').hide();
-                $('#btn-download').hide();
-            }
-        }
-    }
 
     function loadForm(statuscode) {
-        loadContentWithParams("transaksi.tblt_tohideout", {
+        loadContentWithParams("transaksi.tblt_costdrivercalc", {
             i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
             periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
             isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
@@ -266,150 +213,6 @@ function showLOVBusinessUnit(id, code, name) {
         });
     }
 
-    $(function() {
-        var statuscode = "<?php echo $this->input->post('statuscode'); ?>";
-        buttonMode(statuscode);
-    });
-</script>
-
-<script>
-
-    function doProcess() {
-            var processcode = "<?php echo $this->input->post('processcode'); ?>";
-            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
-            var i_batch_control_id =  <?php echo $this->input->post('i_batch_control_id'); ?>;
-
-            var ajaxOptions = {
-                url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/do_process"; ?>',
-                type: "POST",
-                dataType: "json",
-                data: { i_process_control_id:i_process_control_id,
-                        processcode : processcode,
-                         i_batch_control_id : i_batch_control_id},
-                success: function (data) {
-                    if(data.success == true) {
-                        swal('Success',data.message,'success');
-                        loadForm(data.statuscode);
-                    }else {
-                        swal('Attention',data.message,'warning');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                }
-            };
-
-            $.ajax({
-                beforeSend: function( xhr ) {
-                    swal({
-                        title: "Konfirmasi",
-                        text: 'Anda yakin ingin men-submit proses '+ processcode +'?',
-                        type: "info",
-                        showCancelButton: true,
-                        showLoaderOnConfirm: true,
-                        confirmButtonText: "Ya, Yakin",
-                        confirmButtonColor: "#e80c1c",
-                        cancelButtonText: "Tidak",
-                        closeOnConfirm: false,
-                        closeOnCancel: true,
-                        html: true
-                    },
-                    function(isConfirm){
-                        if(isConfirm) {
-                            $.ajax(ajaxOptions);
-                            return true;
-                        }else {
-                            return false;
-                        }
-                    });
-                }
-            });
-    }
-
-    function cancelProcess() {
-            var processcode = "<?php echo $this->input->post('processcode'); ?>";
-            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
-            var i_batch_control_id =  <?php echo $this->input->post('i_batch_control_id'); ?>;
-
-            var ajaxOptions = {
-                url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/cancel_process"; ?>',
-                type: "POST",
-                dataType: "json",
-                data: { i_process_control_id:i_process_control_id,
-                        i_batch_control_id : i_batch_control_id },
-                success: function (data) {
-                    if(data.success == true) {
-                        swal('Success',data.message,'success');
-                        loadForm(data.statuscode);
-                    }else {
-                        swal('Attention',data.message,'warning');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                }
-            };
-
-            $.ajax({
-                beforeSend: function( xhr ) {
-                    swal({
-                        title: "Konfirmasi",
-                        text: 'Anda yakin ingin membatalkan proses?',
-                        type: "info",
-                        showCancelButton: true,
-                        showLoaderOnConfirm: true,
-                        confirmButtonText: "Ya, Yakin",
-                        confirmButtonColor: "#e80c1c",
-                        cancelButtonText: "Tidak",
-                        closeOnConfirm: false,
-                        closeOnCancel: true,
-                        html: true
-                    },
-                    function(isConfirm){
-                        if(isConfirm) {
-                            $.ajax(ajaxOptions);
-                            return true;
-                        }else {
-                            return false;
-                        }
-                    });
-                }
-            });
-    }
-
-    function downloadPCA() {
-
-            var processcontrolid_pk = <?php echo $this->input->post('processcontrolid_pk'); ?>;
-            var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
-
-            var url = "<?php echo WS_JQGRID . "transaksi.tblt_tohideout_controller/download_excel/?"; ?>";
-            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
-            url += "&processcontrolid_pk="+processcontrolid_pk;
-            url += "&periodid_fk="+periodid_fk;
-
-            swal({
-                title: "Konfirmasi",
-                text: 'Anda yakin ingin melakukan download data?',
-                type: "info",
-                showCancelButton: true,
-                showLoaderOnConfirm: true,
-                confirmButtonText: "Ya, Yakin",
-                confirmButtonColor: "#538cf6",
-                cancelButtonText: "Tidak",
-                closeOnConfirm: true,
-                closeOnCancel: true,
-                html: true
-            },
-            function(isConfirm){
-                if(isConfirm) {
-                    window.location = url;
-                    return true;
-                }else {
-                    return false;
-                }
-            });
-    }
-
 </script>
 
 <script>
@@ -418,62 +221,47 @@ function showLOVBusinessUnit(id, code, name) {
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/crud"; ?>',
-            postData: { processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>},
+            url: '<?php echo WS_JQGRID."transaksi.tblt_costdriverpl_controller/crud"; ?>',
+            postData: { i_process_control_id : <?php echo $this->input->post('processcontrolid_pk'); ?>},
             datatype: "json",
             mtype: "POST",
             colModel: [
-                {label: 'Group',name: 'plgroupname',width: 350, align: "left"},
-                {label: 'PL Item',name: 'plitemname',width: 250, align: "left"},
-                {label: 'Domestic Traffic',name: 'domtrafficamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
+
+                {label: 'PERIODID_FK',name: 'periodid_fk',width: 150, hidden: true,  align: "left",editable: true,
+                    editoptions: {
+                        size: 15,
+                        maxlength:10,
+                        defaultValue: <?php echo $this->input->post('periodid_fk'); ?>
+                    },
+                    editrules: {edithidden: false}
+                },
+                {label: 'Ubis/Subsidiary',name: 'ubiscodedisplay',width: 150, align: "left"},
+                {label: 'Cost Driver',name: 'costdriver',width: 150, align: "left"},
+                {label: 'Ubis/Subsidiary',name: 'ubiscode',width: 150, hidden: true,  align: "left",editable: false},
+                {label: 'Unit',name: 'unitcodedisplay',width: 150, align: "left"},                
+                {label: 'Listing No',name: 'listingno',width: 150, align: "left", hidden:true, editable: false, number:true},
+                {label: 'Dom Traffic',name: 'domtrafficvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
                 }},
-                {label: 'Domestic Network',name: 'domnetworkamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
+                {label: 'Dom Network',name: 'domnetworkvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
                 }},
-                {label: 'Intl Traffic',name: 'intltrafficamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
+                {label: 'Intl Traffic',name: 'intltrafficvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
                 }},
-                {label: 'Intl Network',name: 'intlnetworkamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
+                {label: 'Intl Network',name: 'intlnetworkvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
                 }},
-                {label: 'Intl Adjacent',name: 'intladjacentamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
+                {label: 'Intl Adjacent',name: 'intladjacentvaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
                 }},
-                {label: 'Towers',name: 'toweramount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
+                {label: 'Tower',name: 'towervaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
                 }},
-                {label: 'Infrastructure',name: 'infraamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }}
+                {label: 'Infrastructure',name: 'infravaluedisplay',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    return $.number(cellvalue, 2);
+                }},
+                {label: 'PPROCESSCONTROLID_FK',name: 'pprocesscontrolid_fk',width: 150, hidden: true,  align: "left",editable: false},
 
             ],
             height: '100%',
@@ -504,8 +292,8 @@ function showLOVBusinessUnit(id, code, name) {
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/crud"; ?>',
-            caption: "<?php echo $this->input->post('processcode'); ?>"
+            editurl: '<?php echo WS_JQGRID."transaksi.tblt_costdriverpl_controller/crud"; ?>',
+            caption: "Cost Driver PL"
 
         });
 
@@ -546,6 +334,10 @@ function showLOVBusinessUnit(id, code, name) {
 
                 },
                 afterShowForm: function(form) {
+
+                    form.closest('.ui-jqdialog').css('max-height','500px');
+                    form.closest('.ui-jqdialog').css('overflow','scroll');
+
                     form.closest('.ui-jqdialog').center();
                 },
                 afterSubmit:function(response,postdata) {
@@ -571,8 +363,12 @@ function showLOVBusinessUnit(id, code, name) {
                 beforeShowForm: function (e, form) {
                     var form = $(e[0]);
                     style_edit_form(form);
+
                 },
                 afterShowForm: function(form) {
+                    form.closest('.ui-jqdialog').css('max-height','500px');
+                    form.closest('.ui-jqdialog').css('overflow','scroll');
+
                     form.closest('.ui-jqdialog').center();
                 },
                 afterSubmit:function(response,postdata) {
@@ -584,7 +380,6 @@ function showLOVBusinessUnit(id, code, name) {
                     $(".tinfo").html('<div class="ui-state-success">' + response.message + '</div>');
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
-
 
                     return [true,"",response.responseText];
                 }
@@ -633,20 +428,6 @@ function showLOVBusinessUnit(id, code, name) {
                 }
             }
         );
-
-        jQuery("#grid-table").jqGrid('setGroupHeaders', {
-            useColSpanStyle: true, 
-            groupHeaders:[
-                // {startColumnName: 'plgroupname', numberOfColumns: 1, titleText: ''},
-                // {startColumnName: 'plitemname', numberOfColumns: 1, titleText: ''},
-                {startColumnName: 'domtrafficamount', numberOfColumns: 4, titleText: '<center>Carrier</center>', className: 'ui-th-column ui-th-ltr'},
-                {startColumnName: 'intladjacentamount', numberOfColumns: 1, titleText: 'Intl Adjacent', className: 'ui-th-column ui-th-ltr'},
-                {startColumnName: 'toweramount', numberOfColumns: 1, titleText: 'Towers', className: 'ui-th-column ui-th-ltr'},
-                {startColumnName: 'infraamount', numberOfColumns: 1, titleText: 'Infrastructure', className: 'ui-th-column ui-th-ltr'}
-            ]
-        });
-
-        // jQuery(".ui-th-column-header ui-th-ltr").addClass("active");
 
     });
 
