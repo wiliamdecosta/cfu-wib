@@ -62,31 +62,31 @@
         $('#form_plitemtype').val('');
     }
 
-    function showLOVCategroy(id, code) {
+    function showLOVCategory(id, code) {
         modal_lov_tblm_category_show(id, code);
     }
 
-    function clearInputDWSCategroy() {
+    function clearInputDWSCategory() {
         $('#form_dwscategoryid_fk').val('');
         $('#form_dwscategory_code').val('');
     }
 
-    function clearInputMitratelCategroy() {
+    function clearInputMitratelCategory() {
         $('#form_mitratelcategoryid_fk').val('');
         $('#form_mitratelcategory_code').val('');
     }
 
-    function clearInputInfratelCategroy() {
+    function clearInputInfratelCategory() {
         $('#form_infratelcategoryid_fk').val('');
         $('#form_infratelcategory_code').val('');
     }
 
-    function clearInputTelinCategroy() {
+    function clearInputTelinCategory() {
         $('#form_telincategoryid_fk').val('');
         $('#form_telincategory_code').val('');
     }
 
-    function clearInputTelinSGCategroy() {
+    function clearInputTelinSGCategory() {
         $('#form_telinsgcategoryid_fk').val('');
         $('#form_telinsgcategory_code').val('');
     }
@@ -225,8 +225,8 @@
                         }
                     }
                 },      
-                {label: 'DWS Categroy', name: 'dwscategory_display',width: 250, align: "left"},
-                {label: 'DWS Categroy',
+                {label: 'DWS Category', name: 'dwscategory_display',width: 250, align: "left"},
+                {label: 'DWS Category',
                     name: 'dwscategoryid_fk',
                     width: 200,
                     sortable: true,
@@ -241,8 +241,8 @@
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_dwscategoryid_fk" type="text"  style="display:none">'+
-                                        '<input id="form_dwscategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose DWS Categroy">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVCategroy(\'form_dwscategoryid_fk\',\'form_dwscategory_code\')">'+
+                                        '<input id="form_dwscategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose DWS Category">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVCategory(\'form_dwscategoryid_fk\',\'form_dwscategory_code\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');
                                 $("#form_dwscategoryid_fk").val(value);
@@ -270,8 +270,8 @@
                         }
                     }
                 },
-                {label: 'Mitratel Categroy', name: 'mitratelcategory_display',width: 250, align: "left"},
-                {label: 'Mitratel Categroy',
+                {label: 'Mitratel Category', name: 'mitratelcategory_display',width: 250, align: "left"},
+                {label: 'Mitratel Category',
                     name: 'mitratelcategoryid_fk',
                     width: 200,
                     sortable: true,
@@ -286,8 +286,8 @@
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_mitratelcategoryid_fk" type="text"  style="display:none">'+
-                                        '<input id="form_mitratelcategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Mitratel Categroy">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVCategroy(\'form_mitratelcategoryid_fk\',\'form_mitratelcategory_code\')">'+
+                                        '<input id="form_mitratelcategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Mitratel Category">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVCategory(\'form_mitratelcategoryid_fk\',\'form_mitratelcategory_code\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');
                                 $("#form_mitratelcategoryid_fk").val(value);
@@ -315,8 +315,8 @@
                         }
                     }
                 },
-                {label: 'Infratel Categroy', name: 'infratelcategory_display',width: 250, align: "left"},
-                {label: 'Infratel Categroy',
+                {label: 'Infratel Category', name: 'infratelcategory_display',width: 250, align: "left"},
+                {label: 'Infratel Category',
                     name: 'infratelcategoryid_fk',
                     width: 200,
                     sortable: true,
@@ -331,8 +331,8 @@
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_infratelcategoryid_fk" type="text"  style="display:none">'+
-                                        '<input id="form_infratelcategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Infratel Categroy">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVCategroy(\'form_infratelcategoryid_fk\',\'form_infratelcategory_code\')">'+
+                                        '<input id="form_infratelcategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Infratel Category">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVCategory(\'form_infratelcategoryid_fk\',\'form_infratelcategory_code\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');
                                 $("#form_infratelcategoryid_fk").val(value);
@@ -360,8 +360,8 @@
                         }
                     }
                 },
-                {label: 'Telin Categroy', name: 'telincategory_display',width: 250, align: "left"},
-                {label: 'Telin Categroy',
+                {label: 'Telin Category', name: 'telincategory_display',width: 250, align: "left"},
+                {label: 'Telin Category',
                     name: 'telincategoryid_fk',
                     width: 200,
                     sortable: true,
@@ -376,8 +376,8 @@
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_telincategoryid_fk" type="text"  style="display:none">'+
-                                        '<input id="form_telincategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Telin Categroy">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVCategroy(\'form_telincategoryid_fk\',\'form_telincategory_code\')">'+
+                                        '<input id="form_telincategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Telin Category">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVCategory(\'form_telincategoryid_fk\',\'form_telincategory_code\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');
                                 $("#form_telincategoryid_fk").val(value);
@@ -405,8 +405,8 @@
                         }
                     }
                 },
-                {label: 'Telin SG Categroy', name: 'telinsgcategory_display',width: 250, align: "left"},
-                {label: 'Telin SG Categroy',
+                {label: 'Telin SG Category', name: 'telinsgcategory_display',width: 250, align: "left"},
+                {label: 'Telin SG Category',
                     name: 'telinsgcategoryid_fk',
                     width: 200,
                     sortable: true,
@@ -421,8 +421,8 @@
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_telinsgcategoryid_fk" type="text"  style="display:none">'+
-                                        '<input id="form_telinsgcategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Telin SG Categroy">'+
-                                        '<button class="btn btn-success" type="button" onclick="showLOVCategroy(\'form_telinsgcategoryid_fk\',\'form_telinsgcategory_code\')">'+
+                                        '<input id="form_telinsgcategory_code" size="35" readonly type="text" class="FormElement form-control" placeholder="Choose Telin SG Category">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVCategory(\'form_telinsgcategoryid_fk\',\'form_telinsgcategory_code\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');
                                 $("#form_telinsgcategoryid_fk").val(value);
@@ -613,11 +613,11 @@
                     $('#gldesc').attr('readonly', true);
 
                     setTimeout(function() {
-                        clearInputDWSCategroy();
-                        clearInputMitratelCategroy();
-                        clearInputInfratelCategroy();
-                        clearInputTelinCategroy();
-                        clearInputTelinSGCategroy();
+                        clearInputDWSCategory();
+                        clearInputMitratelCategory();
+                        clearInputInfratelCategory();
+                        clearInputTelinCategory();
+                        clearInputTelinSGCategory();
                         clearInputPLItemType();
                         clearInputPLItem();
                     },100);
@@ -639,11 +639,11 @@
                     var tinfoel = $(".tinfo").show();
                     tinfoel.delay(3000).fadeOut();
 
-                    clearInputDWSCategroy();
-                    clearInputMitratelCategroy();
-                    clearInputInfratelCategroy();
-                    clearInputTelinCategroy();
-                    clearInputTelinSGCategroy();
+                    clearInputDWSCategory();
+                    clearInputMitratelCategory();
+                    clearInputInfratelCategory();
+                    clearInputTelinCategory();
+                    clearInputTelinSGCategory();
                     clearInputPLItemType();
                     clearInputPLItem();
                     return [true,"",response.responseText];

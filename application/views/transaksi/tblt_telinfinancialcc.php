@@ -77,6 +77,14 @@
                     </div>
                 </div>
             </div>
+
+            <div class="space-4"></div>
+            <div class="col-md-9">
+            </div>
+            <div class="col-md-3">
+                <b>SUM Amount : <span class="green"><label id="sum-amount">xxx</label></span></b> <br>
+            </div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <table id="grid-table"></table>
@@ -190,6 +198,8 @@ $("#tab-3").on("click", function(event) {
             });
             $("#grid-table").trigger("reloadGrid");
         });
+
+        loadSum("<?php echo $this->input->post('processcontrolid_pk'); ?>", i_search);
 
     }
 </script>
@@ -536,4 +546,32 @@ $("#tab-3").on("click", function(event) {
 
     }
 
+</script>
+<script>
+    function loadSum(i_process_control_id, i_search){
+        $.ajax({
+                url: '<?php echo WS_JQGRID."transaksi.tblt_telinfinancialcc_controller/sum_telinfinancialcc"; ?>',
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    search : i_search,
+                    processcontrolid_pk : i_process_control_id
+                },
+                success: function (data) {
+                    if (data.success){
+                        var sum_amount = $.number(data.rows.sum_amount, 2);
+
+                        $('#sum-amount').text(sum_amount);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            });
+    }
+
+     $(function() {
+        var processcontrolid_pk = "<?php echo $this->input->post('processcontrolid_pk'); ?>";
+        loadSum(processcontrolid_pk, '');
+    });
 </script>

@@ -298,6 +298,39 @@ class Tblt_telinfinancialgl_controller {
     }
 
 
+    function sum_telinfinancialgl() {
+
+            $processcontrolid_pk = getVarClean('processcontrolid_pk', 'int', 0);
+            $search = getVarClean('search','str','');
+
+            $data = array('rows' => array(), 'success' => false, 'message' => '');
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_telinfinancialgl');
+            $table = new Tblt_telinfinancialgl($processcontrolid_pk, $search);
+
+            $sql = "SELECT   sum(n01) sum_telinjkt,
+                                sum(n02) sum_telinsg,
+                                sum(n03) sum_telinhk,
+                                sum(n04) sum_ttl,
+                                sum(n05) sum_telinau,
+                                sum(n06) sum_telinus,
+                                sum(n07) sum_tsgn
+                      FROM   table (f_ShowFinancialGL (?, ?)) where ( upper(s01) like upper('%".$search."%') OR
+                                                upper(s02) like upper('%".$search."%')
+                                            )";
+
+            $result = $table->db->query($sql, array($processcontrolid_pk, ''));
+            $rows = $result->row_array();
+
+            $data['success'] = true;
+            $data['message'] = 'sukses';
+            $data['rows'] = $rows;
+          
+            echo json_encode($data);
+            exit;
+
+    }
 
 }
 

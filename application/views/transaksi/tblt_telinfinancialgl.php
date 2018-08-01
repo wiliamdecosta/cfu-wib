@@ -78,6 +78,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="space-4"></div>
+            <div class="col-md-9">
+            </div>
+            <div class="col-md-3">
+                <b>SUM Telin JKT : <span class="green"><label id="sum-telin-jkt">xxx</label></span></b> <br>
+                <b>SUM Telin SG : <span class="green"><label id="sum-telin-sg">xxx</label></span></b> <br>
+                <b>SUM Telin HK : <span class="green"><label id="sum-telin-hk">xxx</label></span></b> <br>
+                <b>SUM TTL : <span class="green"><label id="sum-ttl">xxx</label></span></b> <br>
+                <b>SUM Telin AU : <span class="green"><label id="sum-telin-au">xxx</label></span></b> <br>
+                <b>SUM Telin US : <span class="green"><label id="sum-telin-us">xxx</label></span></b> <br>
+                <b>SUM TSGN : <span class="green"><label id="sum-tsgn">xxx</label></span></b> <br>
+            </div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <table id="grid-table"></table>
@@ -192,6 +206,8 @@ $("#tab-3").on("click", function(event) {
             });
             $("#grid-table").trigger("reloadGrid");
         });
+
+        loadSum("<?php echo $this->input->post('processcontrolid_pk'); ?>", i_search);
 
     }
 </script>
@@ -556,4 +572,45 @@ $("#tab-3").on("click", function(event) {
 
     }
 
+</script>
+<script>
+    function loadSum(i_process_control_id, i_search){
+        $.ajax({
+                url: '<?php echo WS_JQGRID."transaksi.tblt_telinfinancialgl_controller/sum_telinfinancialgl"; ?>',
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    search : i_search,
+                    processcontrolid_pk : i_process_control_id
+                },
+                success: function (data) {
+                    if (data.success){
+                        var sum_telinjkt = $.number(data.rows.sum_telinjkt, 2);
+                        var sum_telinsg = $.number(data.rows.sum_telinsg, 2);
+                        var sum_telinhk = $.number(data.rows.sum_telinhk, 2);
+                        var sum_ttl = $.number(data.rows.sum_ttl, 2);
+                        var sum_telinau = $.number(data.rows.sum_telinau, 2);
+                        var sum_telinus = $.number(data.rows.sum_telinus, 2);
+                        var sum_tsgn = $.number(data.rows.sum_tsgn, 2);
+
+                        $('#sum-telin-jkt').text(sum_telinjkt);
+                        $('#sum-telin-sg').text(sum_telinsg);
+                        $('#sum-telin-hk').text(sum_telinhk);
+                        $('#sum-ttl').text(sum_ttl);                        
+                        $('#sum-telin-au').text(sum_telinau);
+                        $('#sum-telin-us').text(sum_telinus);
+                        $('#sum-tsgn').text(sum_tsgn);
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                }
+            });
+    }
+
+     $(function() {
+        var processcontrolid_pk = "<?php echo $this->input->post('processcontrolid_pk'); ?>";
+        loadSum(processcontrolid_pk, '');
+    });
 </script>

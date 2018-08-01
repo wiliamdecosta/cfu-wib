@@ -286,7 +286,35 @@ class Tblt_telinfinancialcc_controller {
         return $data;
     }
 
+    function sum_telinfinancialcc() {
 
+            $processcontrolid_pk = getVarClean('processcontrolid_pk', 'int', 0);
+            $search = getVarClean('search','str','');
+
+            $data = array('rows' => array(), 'success' => false, 'message' => '');
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_telinfinancialcc');
+            $table = new Tblt_telinfinancialcc($processcontrolid_pk, $search);
+
+            $sql = "SELECT   sum(n01) sum_amount
+                      FROM   table (f_ShowFinancialCC (?, ?)) where ( upper(s01) like upper('%".$search."%') OR
+                                                upper(s02) like upper('%".$search."%') OR
+                                                upper(s03) like upper('%".$search."%') OR
+                                                upper(s04) like upper('%".$search."%')
+                                            )";
+
+            $result = $table->db->query($sql, array($processcontrolid_pk, ''));
+            $rows = $result->row_array();
+
+            $data['success'] = true;
+            $data['message'] = 'sukses';
+            $data['rows'] = $rows;
+          
+            echo json_encode($data);
+            exit;
+
+    }
 
 }
 
