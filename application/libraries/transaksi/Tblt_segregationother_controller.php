@@ -180,6 +180,105 @@ class Tblt_segregationother_controller {
 
     }
 
+    function download_excel() {
+
+            $processcontrolid_pk = getVarClean('processcontrolid_pk', 'int', 0);
+            $periodid_fk = getVarClean('periodid_fk', 'int', 0);
+            $ubiscode = getVarClean('ubiscode','str','');
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_segregationother');
+            $table = new Tblt_segregationother($processcontrolid_pk, '');
+
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1, 'a.s01, a.s02', 'asc');
+
+            startExcel("other_segregation".$periodid_fk.".xls");
+
+            $output = '<table border="1">';
+            $output .= '<tr>
+                                <th rowspan="2">BU/Subsidiary</th>
+                                <th rowspan="2">Activity</th>
+                                <th rowspan="2">Category</th>
+                                <th rowspan="2">PL Item</th>
+                                <th rowspan="2">Amount</th>
+                                <th rowspan="2">Cost Driver</th>
+                                <th colspan="7">Cost Driver</th>
+                                <th colspan="7">Cost Driver Proportion</th>
+                                <th colspan="7">After Segregation</th>
+                            </tr>
+                            <tr>
+                                <th>Dom Traffic</th>
+                                <th>Dom Network</th>
+                                <th>Intl Traffic</th>
+                                <th>Intl Network</th>
+                                <th>Intl Adjacent</th>
+                                <th>Tower</th>
+                                <th>Infrastructure</th>
+
+                                <th>Dom Traffic</th>
+                                <th>Dom Network</th>
+                                <th>Intl Traffic</th>
+                                <th>Intl Network</th>
+                                <th>Intl Adjacent</th>
+                                <th>Tower</th>
+                                <th>Infrastructure</th>
+
+                                <th>Dom Traffic</th>
+                                <th>Dom Network</th>
+                                <th>Intl Traffic</th>
+                                <th>Intl Network</th>
+                                <th>Intl Adjacent</th>
+                                <th>Tower</th>
+                                <th>Infrastructure</th>
+                            </tr>';
+
+
+            foreach($items as $item) {
+
+                $output .= '<tr>
+                                    <td valign="top">'.$item['ubiscode'].'</td>
+                                    <td valign="top">'.$item['actlistname'].'</td>
+                                    <td valign="top">'.$item['categorycode'].'</td>
+                                    <td valign="top">'.$item['plitemname'].'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['amount'],2).'</td>
+                                    <td valign="top">'.$item['costdrivercode'].'</td>
+
+                                    <td valign="top" align="right">'.numberFormat($item['cd_domtraffic'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['cd_domnetwork'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['cd_intltraffic'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['cd_intlnetwork'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['cd_intladjacent'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['cd_tower'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['cd_infra'],2).'</td>
+
+                                    <td valign="top" align="right">'.numberFormat($item['pct_domtraffic'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['pct_domnetwork'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['pct_intltraffic'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['pct_intlnetwork'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['pct_intladjacent'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['pct_tower'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['pct_infra'],2).'</td>
+
+                                    <td valign="top" align="right">'.numberFormat($item['domtrafficamt'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['domnetworkamt'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['intltrafficamt'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['intlnetworkamt'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['intladjacentamt'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['toweramt'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['infraamt'],2).'</td>
+                                </tr>';
+
+            }
+
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
+
 }
 
 /* End of file Tblp_tblt_segregationact_controller.php */
