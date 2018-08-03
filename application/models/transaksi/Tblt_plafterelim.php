@@ -23,7 +23,9 @@ class Tblt_plafterelim extends Abstract_model {
                                 n05 intladjacentamount,
                                 n06 toweramount,
                                 n07 infraamount,
-                                n07 listingno
+                                n08 listingno,
+                                n09 carriertotalamount,
+                                s03 recordcolor
                                         ";
 
     public $fromClause      = "table (f_ShowPLAfterElim(%d, '%s'))";

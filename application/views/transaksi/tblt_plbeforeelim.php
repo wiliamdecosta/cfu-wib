@@ -1,3 +1,14 @@
+<style type="text/css">
+    .myCustome {
+        font-weight: bold;
+        /*color: #000000;*/
+        background-color: #E4EFC9 !important;
+    }
+
+    .ui-jqgrid-btable .jqgrow {
+        background-color: #ffffff;
+    }
+</style>
 <!-- breadcrumb -->
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -389,6 +400,13 @@ function showLOVBusinessUnit(id, code, name) {
                         return '';
                     }
                 }},
+                {label: 'Carrier Total',name: 'carriertotalamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    if(cellvalue != null){
+                        return $.number(cellvalue, 2);
+                    }else{
+                        return '';
+                    }
+                }},
                 {label: 'Intl Adjacent',name: 'intladjacentamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
                     if(cellvalue != null){
                         return $.number(cellvalue, 2);
@@ -409,7 +427,8 @@ function showLOVBusinessUnit(id, code, name) {
                     }else{
                         return '';
                     }
-                }}
+                }},
+                {label: 'Color?',name: 'recordcolor', hidden:true, width: 150, align: "right"},
 
             ],
             height: '100%',
@@ -419,9 +438,10 @@ function showLOVBusinessUnit(id, code, name) {
             rowList: [20,50,100],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
-            altRows: true,
+            altRows: false,
             shrinkToFit: false,
             multiboxonly: true,
+            hoverrows:false,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
 
@@ -436,7 +456,20 @@ function showLOVBusinessUnit(id, code, name) {
             loadComplete: function (response) {
                 if(response.success == false) {
                     swal({title: 'Attention', text: response.message, html: true, type: "warning"});
+                }     
+
+                var rowData = jQuery("#grid-table").getDataIDs();
+                // alert(rowData.length);
+                for (var i = 0; i < rowData.length; i++) 
+                {
+                    // jQuery("#grid-table").jqGrid('setCell', rowData[i], "plgroupname", "", {'background-color':'#E4EFC9'});
+                    var recordcolor = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'recordcolor');
+
+                    if(recordcolor == 'C'){                        
+                        jQuery("#grid-table").jqGrid('setRowData', rowData[i], false, 'myCustome');
+                    }
                 }
+
 
             },
             //memanggil controller jqgrid yang ada di controller crud
@@ -586,11 +619,15 @@ function showLOVBusinessUnit(id, code, name) {
 
     });
 
+    
+
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
         $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
+
+
 
     }
 

@@ -23,7 +23,9 @@ class Tblt_plbeforeelim extends Abstract_model {
                                 n04 intlnetworkamount,
                                 n05 intladjacentamount,
                                 n06 toweramount,
-                                n07 infraamount
+                                n07 infraamount,
+                                n08 carriertotalamount,
+                                s04 recordcolor
                                         ";
 
     public $fromClause      = "table (f_ShowPLBeforeElim(%d, '%s'))";

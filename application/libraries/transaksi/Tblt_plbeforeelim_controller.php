@@ -226,7 +226,7 @@ class Tblt_plbeforeelim_controller {
             $output.='<tr>';
             $output.='  <th></th>
                         <th></th>
-                        <th style="text-align: center;" colspan="4">Carrier</th>
+                        <th style="text-align: center;" colspan="5">Carrier</th>
                         <th>Intl Adjacent</th>
                         <th>Towers</th>
                         <th>Infrastructure</th>';
@@ -237,8 +237,9 @@ class Tblt_plbeforeelim_controller {
                         <th>PL Item</th>
                         <th>Domestic Traffic</th>
                         <th>Domestic Network</th>
-                        <th>Intl Traffic</th>
+                        <th>Intl Traffic</th>                        
                         <th>Intl Network</th>
+                        <th>Carrier Total</th>
                         <th>Intl Adjacent</th>
                         <th>Towers</th>
                         <th>Infrastructure</th>
@@ -260,17 +261,34 @@ class Tblt_plbeforeelim_controller {
             //                   'totinfraamt' => 0);
 
             foreach($items as $item) {
-                $output .= '<tr>';
-                    $output .= '<td>'.$item['plgroupname'].'</td>';
-                    $output .= '<td>'.$item['plitemname'].'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['domnetworkamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intltrafficamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intlnetworkamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intladjacentamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['toweramount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['infraamount'],2).'</td>';
-                $output .= '</tr>';
+                if($item['recordcolor'] == 'C'){
+                    $output .= '<tr bgcolor="#E4EFC9">';
+                        $output .= '<td><strong>'.$item['plgroupname'].'</strong></td>';
+                        $output .= '<td><strong>'.$item['plitemname'].'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['domtrafficamount'],2).'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['domnetworkamount'],2).'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['intltrafficamount'],2).'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['intlnetworkamount'],2).'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['carriertotalamount'],2).'</strong></td>';                    
+                        $output .= '<td align="right"><strong>'.numberFormat($item['intladjacentamount'],2).'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['toweramount'],2).'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['infraamount'],2).'</strong></td>';
+                    $output .= '</tr>';
+                }else{
+                    $output .= '<tr>';
+                        $output .= '<td>'.$item['plgroupname'].'</td>';
+                        $output .= '<td>'.$item['plitemname'].'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['domnetworkamount'],2).'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['intltrafficamount'],2).'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['intlnetworkamount'],2).'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['carriertotalamount'],2).'</td>';                    
+                        $output .= '<td align="right">'.numberFormat($item['intladjacentamount'],2).'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['toweramount'],2).'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['infraamount'],2).'</td>';
+                    $output .= '</tr>';
+                }
+                    
 
                 // $total['totdomtrafficamt'] += $item['domtrafficamt'];
                 // $total['totdomnetworkamt'] += $item['domnetworkamt'];
