@@ -373,7 +373,7 @@ function clearInputActivityGroup() {
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."parameter.tblm_segregationmap_controller/crud"; ?>',
-            caption: "Activity Group"
+            caption: "Segregation"
 
         });
 
