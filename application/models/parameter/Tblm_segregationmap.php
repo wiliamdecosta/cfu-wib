@@ -17,7 +17,7 @@ class Tblm_segregationmap extends Abstract_model {
                                 'activitylistid_fk'     => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Activity'),
                                 'activitygroupid_fk'     => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Activity Group'),
 
-                                'plitemcode'    => array('nullable' => true, 'type' => 'str', 'unique' => true, 'display' => 'PL Item'),
+                                'plitemcode'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'PL Item'),
 
                                 'description'     => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'DESCRIPTION'),
 
