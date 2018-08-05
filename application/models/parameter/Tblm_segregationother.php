@@ -13,12 +13,11 @@ class Tblm_segregationother extends Abstract_model {
 
     public $fields          = array(
                                 'segregationotherid_pk'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'SEGREGATIONOTHERID_PK'),
-
-                                'ubiscode'    => array('nullable' => true, 'type' => 'str', 'unique' => true, 'display' => 'Ubis Code'),
-                                'activitygroupcode'    => array('nullable' => true, 'type' => 'str', 'unique' => true, 'display' => 'Activity Group'),
-                                'activitycode'    => array('nullable' => true, 'type' => 'str', 'unique' => true, 'display' => 'Activity Code'),
-                                'plitemname'    => array('nullable' => true, 'type' => 'str', 'unique' => true, 'display' => 'PL Item'),
-                                'costdrivercode'    => array('nullable' => true, 'type' => 'str', 'unique' => true, 'display' => 'Cost Driver'),
+                                'ubiscode'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Ubis Code'),
+                                'activitygroupcode'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Activity Group'),
+                                'activitycode'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Activity Code'),
+                                'plitemname'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'PL Item Name'),
+                                'costdrivercode'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Cost Driver'),
 
                                 'description'     => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description'),
 
@@ -30,23 +29,36 @@ class Tblm_segregationother extends Abstract_model {
                             );
 
     public $selectClause    = "a.segregationotherid_pk,
-                                a.ubiscode,
-                                a.activitygroupcode,
-                                a.activitycode,
-                                a.plitemname,
-                                a.costdrivercode,
-                                a.description,
-                                a.creationdate,
-                                a.createdby,
-                                a.updateddate,
-                                a.updatedby ";
+                               a.ubiscode,
+                               a.activitygroupcode,
+                               a.activitycode,
+                               a.plitemname,
+                               a.costdrivercode,
+                               a.description,
+                               a.creationdate,
+                               a.createdby,
+                               a.updateddate,
+                               a.updatedby,
+                               a.actlistname ";
 
-    public $fromClause      = "tblm_segregationother a ";
+    public $fromClause      = "(SELECT c.segregationotherid_pk,
+                                       c.ubiscode,
+                                       c.activitygroupcode,
+                                       c.activitycode,
+                                       c.plitemname,
+                                       c.costdrivercode,
+                                       c.description,
+                                       c.creationdate,
+                                       c.createdby,
+                                       c.updateddate,
+                                       c.updatedby,
+                                       b.actlistname
+                                FROM   tblm_segregationother c, tblm_activitylist b
+                               WHERE   c.activitycode = b.code) a ";
 
     public $refs            = array();
 
-    public $multiUnique  = array('ubiscode',
-                                            'activitygroupcode');
+    public $multiUnique  = array('ubiscode', 'activitygroupcode');
 
 
 
@@ -79,9 +91,9 @@ class Tblm_segregationother extends Abstract_model {
         }else {
             //do something
             //example:
-            if($this->isMultipleUnique()) {
-                throw new Exception('Duplicate unique key');
-            }
+            // if($this->isMultipleUnique()) {
+            //     throw new Exception('Duplicate unique key');
+            // }
 
             unset($this->record['creationdate']);
             unset($this->record['createdby']);
