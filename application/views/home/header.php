@@ -31,7 +31,7 @@
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <img src="<?php echo base_url().'assets/image/telkom_small2.jpg'; ?>">
+                    <img src="<?php echo base_url().'assets/image/telkom_small2.jpg'; ?>" alt="logo" class="logo-default">
                 </div>
                 <!-- END LOGO -->
                 <!-- BEGIN RESPONSIVE MENU TOGGLER -->

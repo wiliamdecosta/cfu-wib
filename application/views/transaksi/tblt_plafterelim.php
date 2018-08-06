@@ -371,7 +371,7 @@ function showLOVBusinessUnit(id, code, name) {
             mtype: "POST",
             colModel: [
                 // {label: 'Group',name: 'plgroupname',width: 350, align: "left"},
-                {label: 'PL Item',name: 'plitemname',width: 250, align: "left"},
+                {label: 'PL Item',name: 'plitemname',width: 250, align: "left", frozen:false },
                 {label: 'Domestic Traffic',name: 'domtrafficamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
                     if(cellvalue != null){
                         return $.number(cellvalue, 2);
@@ -448,6 +448,7 @@ function showLOVBusinessUnit(id, code, name) {
             altRows: false,
             shrinkToFit: false,
             multiboxonly: true,
+            // height: 200,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
 
@@ -620,6 +621,7 @@ function showLOVBusinessUnit(id, code, name) {
             ]
         });
 
+        // jQuery("#grid-table").jqGrid('setFrozenColumns');
         // jQuery(".ui-th-column-header ui-th-ltr").addClass("active");
 
     });
