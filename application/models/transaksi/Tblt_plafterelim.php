@@ -25,6 +25,7 @@ class Tblt_plafterelim extends Abstract_model {
                                 n07 infraamount,
                                 n08 listingno,
                                 n09 carriertotalamount,
+                                n10 grandtotalamount,
                                 s03 recordcolor
                                         ";
 

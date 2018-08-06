@@ -74,7 +74,7 @@ class Tblt_plafterelim_controller {
 
             $data['rows'] = $table->getAll();
             $data['success'] = true;
-            logging('view data tblt_tohideout');
+            logging('view data tblt_plafterelim');
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
         }
@@ -229,19 +229,22 @@ class Tblt_plafterelim_controller {
                         <th style="text-align: center;" colspan="5">Carrier</th>
                         <th>Intl Adjacent</th>
                         <th>Towers</th>
-                        <th>Infrastructure</th>';
+                        <th>Infrastructure</th>
+                        <th>Total</th>';
             $output.='</tr>';
 
             $output.='<tr>';                         
-            $output.='  <th>PL Item</th>
+            $output.='  <th>Ubis/Subsidiary</th>
+                        <th>PL Item</th>
                         <th>Domestic Traffic</th>
                         <th>Domestic Network</th>
                         <th>Intl Traffic</th>
                         <th>Intl Network</th>
                         <th>Carrier Total</th>
-                        <th>Intl Adjacent</th>
-                        <th>Towers</th>
-                        <th>Infrastructure</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         ';
             $output.='</tr>';
 
@@ -251,17 +254,11 @@ class Tblt_plafterelim_controller {
                 exit;
             }
 
-            // $total = array('totdomtrafficamt' => 0,
-            //                   'totdomnetworkamt' => 0,
-            //                   'totintltrafficamt' => 0,
-            //                   'totintlnetworkamt' => 0,
-            //                   'totintladjacentamt' => 0,
-            //                   'tottoweramt' => 0,
-            //                   'totinfraamt' => 0);
-
+            
             foreach($items as $item) {
                 if($item['recordcolor'] == 'C'){
                     $output .= '<tr bgcolor="#E4EFC9">';
+                        $output .= '<td><strong>'.$item['ubiscode'].'</td>';
                         $output .= '<td><strong>'.$item['plitemname'].'</td>';
                         $output .= '<td align="right"><strong>'.numberFormat($item['domtrafficamount'],2).'</strong></td>';
                         $output .= '<td align="right"><strong>'.numberFormat($item['domnetworkamount'],2).'</strong></td>';
@@ -271,9 +268,11 @@ class Tblt_plafterelim_controller {
                         $output .= '<td align="right"><strong>'.numberFormat($item['intladjacentamount'],2).'</strong></td>';
                         $output .= '<td align="right"><strong>'.numberFormat($item['toweramount'],2).'</strong></td>';
                         $output .= '<td align="right"><strong>'.numberFormat($item['infraamount'],2).'</strong></td>';
+                        $output .= '<td align="right"><strong>'.numberFormat($item['grandtotalamount'],2).'</strong></td>';
                     $output .= '</tr>';
                 }else{
                     $output .= '<tr>';
+                        $output .= '<td>'.$item['ubiscode'].'</td>';
                         $output .= '<td>'.$item['plitemname'].'</td>';
                         $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';
                         $output .= '<td align="right">'.numberFormat($item['domnetworkamount'],2).'</td>';
@@ -283,6 +282,7 @@ class Tblt_plafterelim_controller {
                         $output .= '<td align="right">'.numberFormat($item['intladjacentamount'],2).'</td>';
                         $output .= '<td align="right">'.numberFormat($item['toweramount'],2).'</td>';
                         $output .= '<td align="right">'.numberFormat($item['infraamount'],2).'</td>';
+                        $output .= '<td align="right">'.numberFormat($item['grandtotalamount'],2).'</td>';
                     $output .= '</tr>';
                 }
 

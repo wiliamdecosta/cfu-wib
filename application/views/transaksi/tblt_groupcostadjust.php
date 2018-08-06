@@ -308,8 +308,7 @@ function showLOVPeriod(id, code, status) {
                     width: 200,
                     sortable: true,
                     editable: true,
-                    hidden: true,
-                    editrules: {edithidden: true, required:true},
+                    editrules: {required:true},
                     edittype: 'custom',
                     editoptions: {
                         "custom_element":function( value  , options) {

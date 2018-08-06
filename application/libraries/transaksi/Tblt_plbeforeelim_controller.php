@@ -226,6 +226,7 @@ class Tblt_plbeforeelim_controller {
             $output.='<tr>';
             $output.='  <th></th>
                         <th></th>
+                        <th></th>
                         <th style="text-align: center;" colspan="5">Carrier</th>
                         <th>Intl Adjacent</th>
                         <th>Towers</th>
@@ -233,7 +234,8 @@ class Tblt_plbeforeelim_controller {
             $output.='</tr>';
 
             $output.='<tr>';                         
-            $output.='  <th>Group</th>
+            $output.='  <th>Ubis/Subsidiary</th>
+                        <th>Group</th>
                         <th>PL Item</th>
                         <th>Domestic Traffic</th>
                         <th>Domestic Network</th>
@@ -263,6 +265,7 @@ class Tblt_plbeforeelim_controller {
             foreach($items as $item) {
                 if($item['recordcolor'] == 'C'){
                     $output .= '<tr bgcolor="#E4EFC9">';
+                        $output .= '<td><strong>'.$item['ubiscode'].'</strong></td>';
                         $output .= '<td><strong>'.$item['plgroupname'].'</strong></td>';
                         $output .= '<td><strong>'.$item['plitemname'].'</strong></td>';
                         $output .= '<td align="right"><strong>'.numberFormat($item['domtrafficamount'],2).'</strong></td>';
@@ -276,6 +279,7 @@ class Tblt_plbeforeelim_controller {
                     $output .= '</tr>';
                 }else{
                     $output .= '<tr>';
+                        $output .= '<td>'.$item['ubiscode'].'</td>';
                         $output .= '<td>'.$item['plgroupname'].'</td>';
                         $output .= '<td>'.$item['plitemname'].'</td>';
                         $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';

@@ -428,6 +428,13 @@ function showLOVBusinessUnit(id, code, name) {
                         return '';
                     }
                 }},
+                {label: 'Total',name: 'grandtotalamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                    if(cellvalue != null){
+                        return $.number(cellvalue, 2);
+                    }else{
+                        return '';
+                    }
+                }},
                 {label: 'Color?',name: 'recordcolor', hidden:true, width: 150, align: "right" }
 
             ],

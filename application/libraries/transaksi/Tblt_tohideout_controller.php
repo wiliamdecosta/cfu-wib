@@ -226,6 +226,7 @@ class Tblt_tohideout_controller {
             $output.='<tr>';
             $output.='  <th></th>
                         <th></th>
+                        <th></th>
                         <th style="text-align: center;" colspan="4">Carrier</th>
                         <th>Intl Adjacent</th>
                         <th>Towers</th>
@@ -233,7 +234,8 @@ class Tblt_tohideout_controller {
             $output.='</tr>';
 
             $output.='<tr>';                         
-            $output.='  <th>Group</th>
+            $output.='  <th>Ubis/Subsidiary</th>
+                        <th>Group</th>
                         <th>PL Item</th>
                         <th>Domestic Traffic</th>
                         <th>Domestic Network</th>
@@ -261,6 +263,7 @@ class Tblt_tohideout_controller {
 
             foreach($items as $item) {
                 $output .= '<tr>';
+                    $output .= '<td>'.$item['ubiscode'].'</td>';
                     $output .= '<td>'.$item['plgroupname'].'</td>';
                     $output .= '<td>'.$item['plitemname'].'</td>';
                     $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';
