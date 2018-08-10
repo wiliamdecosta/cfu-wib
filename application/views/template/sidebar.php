@@ -19,9 +19,9 @@
             <div class="input-group">
                 <input type="text" placeholder="Filter Menu..." class="form-control" id="search-menu">
                 <span class="input-group-btn">
-                    <a class="btn submit" href="javascript:;">
-                        <i class="icon-magnifier"></i>
-                    </a>
+                    <!-- <a class="btn submit" href="javascript:;"> -->
+                        <!-- <i class="icon-magnifier"></i> -->
+                    <!-- </a> -->
                 </span>
             </div>
         </div>
