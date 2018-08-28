@@ -10,8 +10,8 @@ class Tblt_segregationact_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',20);
-        $sidx = getVarClean('sidx','str','s01, s02');
-        $sord = getVarClean('sord','str','asc');
+        $sidx = getVarClean('sidx','str','');
+        $sord = getVarClean('sord','str','');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -131,7 +131,8 @@ class Tblt_segregationact_controller {
             }
 
             $count = $table->countAll();
-            $items = $table->getAll(0, -1, 's01, s02', 'asc');
+            // $items = $table->getAll(0, -1, 's01, s02', 'asc');
+            $items = $table->getAll(0, -1);
 
             $output = '';
 
@@ -296,7 +297,8 @@ class Tblt_segregationact_controller {
             //$table->setCriteria("upper(s01) = upper('".$ubiscode."')");
 
             $count = $table->countAll();
-            $items = $table->getAll(0, -1, 's01, s02', 'asc');
+            // $items = $table->getAll(0, -1, 's01, s02', 'asc');
+            $items = $table->getAll(0, -1);
 
             startExcel("segregation".$periodid_fk.".xls");
 
