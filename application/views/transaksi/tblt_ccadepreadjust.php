@@ -159,13 +159,13 @@ function showSegOther(groupcode, drivercode) {
         cekStatus(status, periodid_fk);
 
         jQuery(function($) {
-            jQuery("#grid-table").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaksi.tblt_ccadepreadjust_controller/read"; ?>',
-                postData: {
-                    i_search : i_search,
-                    periodid_fk: periodid_fk
-                }
-            });
+            // jQuery("#grid-table").jqGrid('setGridParam',{
+            //     url: '<?php echo WS_JQGRID."transaksi.tblt_ccadepreadjust_controller/read"; ?>',
+            //     postData: {
+            //         i_search : i_search,
+            //         periodid_fk: periodid_fk
+            //     }
+            // });
             $("#grid-table").trigger("reloadGrid");
         });
 

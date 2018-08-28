@@ -167,20 +167,20 @@ function showLOVPeriod(id, code, status) {
         $('#i_search').val(i_search);
         $('#search_periodid_pk').val(periodid_fk);
         $('#search_status').val(status);
-        $('#search_statuscode').val(statuscode);
-        cekStatus(status, periodid_fk);
+        $('#search_statuscode').val(statuscode);        
 
         jQuery(function($) {
-            jQuery("#grid-table").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaksi.tblt_groupcostadjust_controller/read"; ?>',
-                postData: {
-                    i_search : i_search,
-                    periodid_fk: periodid_fk
-                }
-            });
+            // jQuery("#grid-table").jqGrid('setGridParam',{
+            //     url: '<?php echo WS_JQGRID."transaksi.tblt_groupcostadjust_controller/read"; ?>',
+            //     postData: {
+            //         i_search : i_search,
+            //         periodid_fk: periodid_fk
+            //     }
+            // });
             $("#grid-table").trigger("reloadGrid");
         });
 
+        cekStatus(status, periodid_fk);
         // buttonMode(status, statuscode);
     }
 </script>
