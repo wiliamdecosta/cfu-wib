@@ -140,8 +140,10 @@ function showSegOther(groupcode, drivercode) {
             $('#btn-group-ccadepreadjust-action').show();
 
             if(statuscode > 0) {
+                $('#btn-cancel').show();
                 $('#btn-process').hide();
             }else {
+                $('#btn-process').show();
                 $('#btn-cancel').hide();
             }
         }else{
@@ -151,12 +153,10 @@ function showSegOther(groupcode, drivercode) {
     }
 
     function loadForm(i_search, periodid_fk, status, statuscode){
-        $('#i_search').val(i_search);
-        $('#search_periodid_pk').val(periodid_fk);
-        $('#search_status').val(status);
-        $('#search_statuscode').val(statuscode);
-
-        cekStatus(status, periodid_fk);
+        // $('#i_search').val(i_search);
+        // $('#search_periodid_pk').val(periodid_fk);
+        // $('#search_status').val(status);
+        // $('#search_statuscode').val(statuscode);
 
         jQuery(function($) {
             // jQuery("#grid-table").jqGrid('setGridParam',{
@@ -169,6 +169,7 @@ function showSegOther(groupcode, drivercode) {
             $("#grid-table").trigger("reloadGrid");
         });
 
+        cekStatus(status, periodid_fk);
         // buttonMode(status, statuscode);
     }
 </script>

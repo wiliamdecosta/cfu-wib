@@ -55,8 +55,13 @@
 <?php $this->load->view('lov/lov_bpc_neraca'); ?>
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
 <?php $this->load->view('lov/lov_tblm_costdriver_new'); ?>
+<?php $this->load->view('lov/lov_tblm_activity'); ?>
 
 <script>
+    function showLovActivity(id, code, name) {
+        modal_lov_tblm_activity_show(id, code, name);
+    }
+
     function showLOVBusinessUnit(id, code, name) {
         modal_lov_tblm_wibunitbusiness_show(id, code, name);
     }
@@ -67,8 +72,14 @@
 
     function showLOVCostDriver(id, code) {
 
-    modal_lov_tblm_costdriver_show(id, code);
-}
+        modal_lov_tblm_costdriver_show(id, code);
+    }
+
+    function clearInputActivity() {
+        $('#form_activityid_fk').val('');
+        $('#form_activitycode').val('');
+        $('#form_activityname').val('');
+    }
 
     function clearInputPLItem() {
         $('#form_plitemcode').val('');
@@ -124,16 +135,68 @@
                     },
                     editrules: {required: true}
                 },
-                {label: 'Activity Code',name: 'activitycode',width: 100, align: "left",editable: true, hidden:false,
+                // {label: 'Activity Code',name: 'activitycode',width: 100, align: "left",editable: true, hidden:false,
+                //     editoptions: {
+                //         size: 30,
+                //         maxlength:10
+                //     },
+                //     editrules: {required: true}
+                // },
+                {label: 'Activity',
+                    name: 'activitycode',
+                    width: 150,
+                    sortable: true,
+                    editable: true,
+                    editrules: {required:true},
+                    edittype: 'custom',
                     editoptions: {
-                        size: 30,
-                        maxlength:10
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_activityid_fk" type="text"  style="display:none;">'+
+                                        '<input id="form_activitycode" readonly style="background:#FFFFA2" type="text" class="FormElement form-control" placeholder="Choose Activity">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLovActivity(\'form_activityid_fk\',\'form_activitycode\',\'activityname\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>');
+                                $("#form_activitycode").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_activitycode").val();
+                            } else if( oper === 'set') {
+                                $("#form_activitycode").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'activitycode');
+                                        // var name_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'activityname');
+                                        $("#form_activitycode").val( code_display );
+                                        // $("#form_activityname").val( name_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
+                },
+                {label: 'Activity Name',name: 'activityname', width: 300, align: "left",editable: true, hidden:false,
+                    editoptions: {
+                        size: 45,
+                        maxlength:64
                     },
                     editrules: {required: true}
                 },
                 {label: 'PL Item Code',
                     name: 'plitemcode',
-                    width: 100,
+                    width: 150,
                     sortable: true,
                     editable: true,
                     editrules: {required:false},
@@ -174,10 +237,10 @@
                         }
                     }
                 },
-                {label: 'PL Item Name',name: 'plitemname',width: 200, align: "left"},
+                {label: 'PL Item Name',name: 'plitemname',width: 300, align: "left"},
                 {label: 'Cost Driver',
                     name: 'costdrivercode',
-                    width: 200,
+                    width: 300,
                     sortable: true,
                     editable: true,
                     editrules: {required:false},
@@ -269,7 +332,7 @@
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/

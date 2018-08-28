@@ -35,7 +35,8 @@ class Tblm_segregationact extends Abstract_model {
                                 x.creationdate,
                                 x.createdby,
                                 x.updateddate,
-                                x.updatedby ";
+                                x.updatedby,
+                                x.activityname ";
 
     public $fromClause      = "(select a.segregationactid_pk,
                                     a.ubiscode,
@@ -47,11 +48,14 @@ class Tblm_segregationact extends Abstract_model {
                                     a.creationdate,
                                     a.createdby,
                                     a.updateddate,
-                                    a.updatedby
+                                    a.updatedby,
+                                    b.activityname
                                 from tblm_segregationact a,
-                                    rra.bpc_neraca nr
+                                    rra.bpc_neraca nr,
+                                    tblm_activity b
                                 where a.plitemcode = nr.kode_neraca and
-                                    nr.kode_fs = 'CCA'        
+                                    nr.kode_fs = 'CCA' and
+                                    a.activitycode = b.code       
                                 order by a.activitycode
                                 ) x";
     public $refs            = array();

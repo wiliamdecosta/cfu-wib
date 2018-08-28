@@ -144,15 +144,17 @@ function showLOVPeriod(id, code, status) {
 <script>
     function buttonMode(status, statuscode) {
 
-        if(status == 'OPEN') {           
+        if(status == 'OPEN') {        
             $('#edit_grid-table').show();
             $('#add_grid-table').show();
             $('#del_grid-table').show();
             $('#btn-group-cpallpcadjust-action').show();
-
+            
             if(statuscode > 0) {
+                $('#btn-cancel').show();
                 $('#btn-process').hide();
             }else {
+                $('#btn-process').show();
                 $('#btn-cancel').hide();
             }
         }else{
@@ -164,10 +166,10 @@ function showLOVPeriod(id, code, status) {
     }
 
     function loadForm(i_search, periodid_fk, status, statuscode){
-        $('#i_search').val(i_search);
-        $('#search_periodid_pk').val(periodid_fk);
-        $('#search_status').val(status);
-        $('#search_statuscode').val(statuscode);        
+        // $('#i_search').val(i_search);
+        // $('#search_periodid_pk').val(periodid_fk);
+        // $('#search_status').val(status);
+        // $('#search_statuscode').val(statuscode);        
 
         jQuery(function($) {
             // jQuery("#grid-table").jqGrid('setGridParam',{
