@@ -245,7 +245,7 @@ function showLOVBusinessUnit(id, code, name) {
         if(isupdatable == 'Y') {
             $('#btn-group-tohideout-action').show();
 
-            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
+            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS' || statuscode == 'FAIL') {
                 $('#btn-process').hide();
             }else if(statuscode == 'INITIAL') {
                 $('#btn-cancel').hide();

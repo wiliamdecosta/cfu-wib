@@ -127,7 +127,7 @@ $("#tab-log").on("click", function(event) {
         if(isupdatable == 'Y') {
             $('#btn-group-costdrivercal-action').show();
 
-            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS') {
+            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS' || statuscode == 'FAIL') {
                 $('#btn-process').hide();
             }else if(statuscode == 'INITIAL') {
                 $('#btn-cancel').hide();
