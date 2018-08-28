@@ -89,7 +89,7 @@
                 <b>SUM TTL : <span class="green"><label id="sum-ttl">xxx</label></span></b> <br>
                 <b>SUM Telin AU : <span class="green"><label id="sum-telin-au">xxx</label></span></b> <br>
                 <b>SUM Telin US : <span class="green"><label id="sum-telin-us">xxx</label></span></b> <br>
-                <b>SUM TSGN : <span class="green"><label id="sum-tsgn">xxx</label></span></b> <br>
+                <b>SUM Telin MAS : <span class="green"><label id="sum-tsgn">xxx</label></span></b> <br>
             </div>
 
             <div class="row">
@@ -399,7 +399,7 @@ $("#tab-3").on("click", function(event) {
                 {label: 'Telin US',name: 'telinus',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
                     return $.number(cellvalue, 2);
                 }},
-                {label: 'TSGN',name: 'tsgn',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
+                {label: 'Telin MAS',name: 'tsgn',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
                     return $.number(cellvalue, 2);
                 }},
                 {label: 'PL Item',name: 'plitemgabung',width: 250, align: "left"},

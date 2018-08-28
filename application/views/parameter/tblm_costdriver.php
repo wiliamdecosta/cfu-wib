@@ -184,8 +184,8 @@ function clearInputBusinessUnit() {
                 },
                 {label: 'Cost Driver',name: 'code',width: 200, align: "left",editable: true,
                     editoptions: {
-                        size: 30,
-                        maxlength:10
+                        size: 45,
+                        maxlength:96
                     },
                     editrules: {required: true}
                 },

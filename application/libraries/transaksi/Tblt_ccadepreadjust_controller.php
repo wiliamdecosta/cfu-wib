@@ -298,6 +298,28 @@ class Tblt_ccadepreadjust_controller {
         return $data;
     }
 
+    function cekstatus(){
+
+        try {
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_ccadepreadjust');
+            $table = $ci->tblt_ccadepreadjust;
+
+            $periodid_fk = getVarClean('periodid_fk','int',0);
+            $data['total'] = $table->getData($periodid_fk); 
+            $data['message'] = 'OK';
+            
+
+        }catch (Exception $e) {
+            $data['total'] = 0;
+            $data['message'] = $e->getMessage();
+        }
+
+        echo json_encode($data);
+        exit;
+    }
+
 }
 
 /* End of file Tblt_tohideout_controller.php */

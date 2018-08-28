@@ -78,6 +78,15 @@ class Tblt_cpallocadjust extends Abstract_model {
         return true;
     }
 
+    function getData($periodid_fk){
+        $sql = "select * from tblt_cpallocadjust where periodid_fk = ?";
+
+        $query = $this->db->query($sql, array($periodid_fk));
+        $row = $query->num_rows();
+
+        return $row;
+    }
+
 }
 
 /* End of file Organization.php */

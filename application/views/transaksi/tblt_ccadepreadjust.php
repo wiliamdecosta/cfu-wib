@@ -94,13 +94,26 @@ function showSegOther(groupcode, drivercode) {
 }
 
 </script>
-
+<script>
+    function cekStatus(status, periodid_fk){
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: '<?php echo WS_JQGRID."transaksi.tblt_ccadepreadjust_controller/cekstatus"; ?>',
+            data: {periodid_fk : periodid_fk},
+            success: function(response) {
+                buttonMode(status, response.total);
+            }
+        });
+    }
+</script>
 <script>
     function showData(){
         var i_search = $('#i_search').val();
         var periodid_fk = $('#search_periodid_pk').val();
         var status = $('#search_status').val();
-        var statuscode = $('#search_statuscode').val();
+        cekStatus(status, periodid_fk);
+        
 
 
         jQuery(function($) {
@@ -113,8 +126,7 @@ function showSegOther(groupcode, drivercode) {
             });
             $("#grid-table").trigger("reloadGrid");
         });
-
-        buttonMode(status, statuscode);
+        
     }
 </script>
 
@@ -144,6 +156,8 @@ function showSegOther(groupcode, drivercode) {
         $('#search_status').val(status);
         $('#search_statuscode').val(statuscode);
 
+        cekStatus(status, periodid_fk);
+
         jQuery(function($) {
             jQuery("#grid-table").jqGrid('setGridParam',{
                 url: '<?php echo WS_JQGRID."transaksi.tblt_ccadepreadjust_controller/read"; ?>',
@@ -155,7 +169,7 @@ function showSegOther(groupcode, drivercode) {
             $("#grid-table").trigger("reloadGrid");
         });
 
-        buttonMode(status, statuscode);
+        // buttonMode(status, statuscode);
     }
 </script>
 

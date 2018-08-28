@@ -457,6 +457,28 @@ class Tblt_groupcostadjust_controller {
         $table->html_select_options_wibgroup();
     }
 
+    function cekstatus(){
+
+        try {
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_groupcostadjust');
+            $table = $ci->tblt_groupcostadjust;
+
+            $periodid_fk = getVarClean('periodid_fk','int',0);
+            $data['total'] = $table->getData($periodid_fk); 
+            $data['message'] = 'OK';
+            
+
+        }catch (Exception $e) {
+            $data['total'] = 0;
+            $data['message'] = $e->getMessage();
+        }
+
+        echo json_encode($data);
+        exit;
+    }
+
 }
 
 /* End of file Tblt_tohideout_controller.php */

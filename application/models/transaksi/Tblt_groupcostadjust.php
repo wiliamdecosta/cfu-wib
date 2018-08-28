@@ -108,6 +108,15 @@ class Tblt_groupcostadjust extends Abstract_model {
         }
     }
 
+    function getData($periodid_fk){
+        $sql = "select * from tblt_groupcostadjust where periodid_fk = ?";
+
+        $query = $this->db->query($sql, array($periodid_fk));
+        $row = $query->num_rows();
+
+        return $row;
+    }
+
 }
 
 /* End of file Organization.php */

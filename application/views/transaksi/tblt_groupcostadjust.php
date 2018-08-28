@@ -101,6 +101,19 @@ function showLOVPeriod(id, code, status) {
     modal_lov_tblt_cpallocadjust_show(id, code, status);
 }
 </script>
+<script>
+    function cekStatus(status, periodid_fk){
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: '<?php echo WS_JQGRID."transaksi.tblt_groupcostadjust_controller/cekstatus"; ?>',
+            data: {periodid_fk : periodid_fk},
+            success: function(response) {
+                buttonMode(status, response.total);
+            }
+        });
+    }
+</script>
 
 <script>
     function showData(){
@@ -108,7 +121,7 @@ function showLOVPeriod(id, code, status) {
         var periodid_fk = $('#search_periodid_pk').val();
         var status = $('#search_status').val();
         var statuscode = $('#search_statuscode').val();
-
+        cekStatus(status, periodid_fk);
 
         jQuery(function($) {
             jQuery("#grid-table").jqGrid('setGridParam',{
@@ -121,7 +134,7 @@ function showLOVPeriod(id, code, status) {
             $("#grid-table").trigger("reloadGrid");
         });
 
-        buttonMode(status, statuscode);
+        
         
     }
 </script>
@@ -155,6 +168,7 @@ function showLOVPeriod(id, code, status) {
         $('#search_periodid_pk').val(periodid_fk);
         $('#search_status').val(status);
         $('#search_statuscode').val(statuscode);
+        cekStatus(status, periodid_fk);
 
         jQuery(function($) {
             jQuery("#grid-table").jqGrid('setGridParam',{
@@ -167,7 +181,7 @@ function showLOVPeriod(id, code, status) {
             $("#grid-table").trigger("reloadGrid");
         });
 
-        buttonMode(status, statuscode);
+        // buttonMode(status, statuscode);
     }
 </script>
 
