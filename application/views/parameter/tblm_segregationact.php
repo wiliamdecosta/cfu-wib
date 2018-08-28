@@ -142,7 +142,7 @@
                 //     },
                 //     editrules: {required: true}
                 // },
-                {label: 'Activity',
+                {label: 'Activity Code',
                     name: 'activitycode',
                     width: 150,
                     sortable: true,
@@ -396,6 +396,7 @@
                     $('#createdby').attr('readonly', true);
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
+                    $('#activityname').attr('readonly', true);
 
                 },
                 afterShowForm: function(form) {
@@ -429,6 +430,7 @@
                     $('#createdby').attr('readonly', true);
                     $('#updateddate').attr('readonly', true);
                     $('#updatedby').attr('readonly', true);
+                    $('#activityname').attr('readonly', true);
 
                     $('#ubiscode').val( $('#search_wibunitbusinesscode').val() );
 
