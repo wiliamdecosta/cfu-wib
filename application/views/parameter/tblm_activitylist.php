@@ -10,6 +10,10 @@
             <i class="fa fa-circle"></i>
         </li>
         <li>
+            <span>Basic</span>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
             <span>Activity List</span>
         </li>
     </ul>
@@ -178,8 +182,8 @@ $("#tab-1").on("click", function(event) {
 
                 {label: 'Activity List Name',name: 'actlistname',width: 300, align: "left",editable: true,
                     editoptions: {
-                        size: 50,
-                        maxlength:32
+                        size: 64,
+                        maxlength:64
                     },
                     editrules: {required: true}
                 },

@@ -55,6 +55,8 @@
 <?php $this->load->view('lov/lov_tblm_activitylist_new'); ?>
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
 <?php $this->load->view('lov/lov_tblm_costdriver_new'); ?>
+<?php $this->load->view('lov/lov_tblm_activitygroup'); ?>
+<?php $this->load->view('lov/lov_tblm_plitemgroup'); ?>
 
 <script>
     function showLOVBusinessUnit(id, code, name) {
@@ -72,6 +74,19 @@
         modal_lov_tblm_costdriver_show(id, code);
     }
 
+    function showLOVActivityGroup(id, code) {
+        modal_lov_tblm_activitygroup_show(id, code);
+    }
+
+    function showLOVPLItemGroup(id, code) {
+        modal_lov_tblm_plitemgroup_show(id, code);
+    }
+
+    function clearPLItemGroup() {
+        $('#form_plitemgroupid_fk').val('');
+        $('#form_code').val('');
+    }
+
     function clearInputActivityList() {
         $('#form_activitylistid_fk').val('');
         $('#form_actcode').val('');
@@ -81,6 +96,11 @@
     function clearInputCostDriver() {
         $('#form_costdriverid_fk').val('');
         $('#form_costdrivercode').val('');
+    }
+
+    function clearInputActivityGroup() {
+        $('#form_activitygroupid_fk').val('');
+        $('#form_activitygroupcode').val('');
     }
 
 </script>
@@ -127,13 +147,56 @@
                     },
                     editrules: {required: true}
                 },
-                {label: 'Activity Group',name: 'activitygroupcode',width: 300, align: "left",editable: true, hidden:false,
+                // {label: 'Activity Group',name: 'activitygroupcode',width: 300, align: "left",editable: true, hidden:false,
+                //     editoptions: {
+                //         size: 40,
+                //         maxlength:96
+                //     },
+                //     editrules: {required: true}
+                // }, 
+                {label: 'Activity Group',
+                    name: 'activitygroupcode',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    editrules: {required:true},
+                    edittype: 'custom',
                     editoptions: {
-                        size: 40,
-                        maxlength:96
-                    },
-                    editrules: {required: true}
-                },                
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_activitygroupid_fk" type="text"  style="display:none">'+
+                                        '<input id="form_activitygroupcode" size="45" readonly type="text" style="background:#FFFFA2;" class="FormElement form-control" placeholder="Choose Activity Group">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVActivityGroup(\'form_activitygroupid_fk\',\'form_activitygroupcode\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>');
+                                $("#form_activitygroupcode").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_activitygroupcode").val();
+                            } else if( oper === 'set') {
+                                $("#form_activitygroupcode").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'activitygroupcode');
+                                        $("#form_activitygroupcode").val( code_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
+                },               
                 {label: 'Activity Code',
                     name: 'activitycode',
                     width: 100,
@@ -179,12 +242,55 @@
                     }
                 },
                 {label: 'Activity Name',name: 'actlistname',width: 300, align: "left",editable: false },
-                {label: 'PL Item Name',name: 'plitemname',width: 150, align: "left",editable: true, hidden:false,
+                // {label: 'PL Item Name',name: 'plitemname',width: 150, align: "left",editable: true, hidden:false,
+                //     editoptions: {
+                //         size: 30,
+                //         maxlength:10
+                //     },
+                //     editrules: {required: true}
+                // },
+                {label: 'PL Item Name',
+                    name: 'plitemname',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    editrules: {required:false},
+                    edittype: 'custom',
                     editoptions: {
-                        size: 30,
-                        maxlength:10
-                    },
-                    editrules: {required: true}
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_plitemgroupid_fk" type="text"  style="display:none">'+
+                                        '<input id="form_code" readonly type="text" size="30" class="FormElement form-control" placeholder="Choose PL Item Name">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLOVPLItemGroup(\'form_plitemgroupid_fk\',\'form_code\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>');
+                                $("#form_code").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_code").val();
+                            } else if( oper === 'set') {
+                                $("#form_code").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'plitemname');
+                                        $("#form_code").val( code_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
                 },
                 {label: 'Cost Driver',
                     name: 'costdrivercode',
@@ -200,7 +306,7 @@
                             // give the editor time to initialize
                             setTimeout( function() {
                                 elm.append('<input id="form_costdriverid_fk" readonly type="text"  style="display:none;">'+
-                                        '<input id="form_costdrivercode" style="background:#FFFFA2" size="30" readonly type="text" class="FormElement form-control" placeholder="Choose Cost Driver">'+
+                                        '<input id="form_costdrivercode" style="background:#FFFFA2" size="40" readonly type="text" class="FormElement form-control" placeholder="Choose Cost Driver">'+
                                         '<button class="btn btn-success" type="button" onclick="showLOVCostDriver(\'form_costdriverid_fk\',\'form_costdrivercode\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>'

@@ -61,7 +61,7 @@
 
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
 <?php $this->load->view('lov/lov_vwallactivity'); ?>
-<?php $this->load->view('lov/lov_tblm_costdriver'); ?>
+<?php $this->load->view('lov/lov_tblm_costdriver_new'); ?>
 
 <script>
 
@@ -69,7 +69,7 @@ function onChangeUbis() {
     clearInputActivity();
     clearInputOverheadAct1();
     clearInputOverheadAct2();
-    clearInputCostDriver();
+    // clearInputCostDriver();
 }
 
 function showLOVBusinessUnit(id, code, name) {
@@ -109,14 +109,14 @@ function clearInputOverheadAct2() {
 }
 
 function showLOVCostDriver(id, code) {
-    var ubiscode = $('#form_wibunitbusinesscode').val();
+    // var ubiscode = $('#form_wibunitbusinesscode').val();
 
-    if(ubiscode == '') {
-        swal('Info','Silahkan pilih BU/Subsidiary terlebih dahulu','info');
-        return;
-    }
+    // if(ubiscode == '') {
+    //     swal('Info','Silahkan pilih BU/Subsidiary terlebih dahulu','info');
+    //     return;
+    // }
 
-    modal_lov_tblm_costdriver_show(id, code, ubiscode);
+    modal_lov_tblm_costdriver_show(id, code);
 }
 
 function clearInputCostDriver() {
