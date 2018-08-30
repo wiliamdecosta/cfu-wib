@@ -331,7 +331,7 @@ function showLOVPeriod(id, code, status) {
                             $(element).number( true, 2);
                         }
                     },
-                    editrules: {required: true, edithidden:true}
+                    editrules: {required: false, edithidden:true}
                 },
                 {label: 'Adjustment Amount',name: 'adjustamount',width: 150, align: "right", editable: false, formatter:function(cellvalue, options, rowObject) {
                     if(cellvalue != null){
@@ -447,6 +447,7 @@ function showLOVPeriod(id, code, status) {
                     $('#activityname').attr('readonly', true);
                     $('#plitemcode').attr('readonly', true);
                     $('#plitemnme').attr('readonly', true);
+                    $('#origamount').attr('readonly', true);
 
 
                 },
