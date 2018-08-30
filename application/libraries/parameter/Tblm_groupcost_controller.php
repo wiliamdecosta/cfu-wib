@@ -47,7 +47,7 @@ class Tblm_groupcost_controller {
             }
 
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(x.consolactivity) like upper('%".$i_search."%') OR
+                $table->setCriteria("( upper(x.code) like upper('%".$i_search."%') OR
                                             upper(x.activitygroupcode) like upper('%".$i_search."%') OR
                                             upper(x.actlistname) like upper('%".$i_search."%') OR
                                             upper(x.plitemname) like upper('%".$i_search."%') OR

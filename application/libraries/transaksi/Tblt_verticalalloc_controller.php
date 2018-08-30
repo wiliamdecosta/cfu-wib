@@ -256,10 +256,10 @@ class Tblt_verticalalloc_controller {
                 $output .= '<tr>';
                 $output .= '<td valign="top">'.$no++.'</td>';
                 $output .= '<td valign="top">'.$item['ubiscode'].'</td>';
-                $output .= '<td valign="top">'.$item['activitygabung'].'</td>';
-                $output .= '<td valign="top">'.$item['overheadgabung1'].'</td>';
-                $output .= '<td valign="top">'.$item['overheadgabung2'].'</td>';
-                $output .= '<td valign="top">'.$item['plitemgabung'].'</td>';
+                $output .= '<td valign="top">'.$item['activityname'].'</td>';
+                $output .= '<td valign="top">'.$item['overheadname1'].'</td>';
+                $output .= '<td valign="top">'.$item['overheadname2'].'</td>';
+                $output .= '<td valign="top">'.$item['plitemname'].'</td>';
                 $output .= '<td valign="top" align="right">'.numberFormat($item['pcaamount'],2).'</td>';
                 $output .= '<td valign="top" align="right">'.numberFormat($item['pctohact1'],2).' %</td>';
                 $output .= '<td valign="top" align="right">'.numberFormat($item['amountohact1'],2).'</td>';
@@ -276,16 +276,16 @@ class Tblt_verticalalloc_controller {
                 $subtotal['sumvallocact2'] += $item['vallocact2'];
             }
 
-            $output .= '<tr>';
-                $output .= '<td colspan="6" align="center"><b>Total</b></td>';
-                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumpcaamount'],2).'</td>';
-                $output .= '<td valign="top" align="right"></td>';
-                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumamountohact1'],2).'</td>';
-                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumvallocact1'],2).'</td>';
-                $output .= '<td valign="top" align="right"></td>';
-                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['amountohact2'],2).'</td>';
-                $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumvallocact2'],2).'</td>';
-            $output .= '</tr>';
+            // $output .= '<tr>';
+            //     $output .= '<td colspan="6" align="center"><b>Total</b></td>';
+            //     $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumpcaamount'],2).'</td>';
+            //     $output .= '<td valign="top" align="right"></td>';
+            //     $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumamountohact1'],2).'</td>';
+            //     $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumvallocact1'],2).'</td>';
+            //     $output .= '<td valign="top" align="right"></td>';
+            //     $output .= '<td valign="top" align="right">'.numberFormat($subtotal['amountohact2'],2).'</td>';
+            //     $output .= '<td valign="top" align="right">'.numberFormat($subtotal['sumvallocact2'],2).'</td>';
+            // $output .= '</tr>';
 
             $output .= '</table>';
             echo $output;

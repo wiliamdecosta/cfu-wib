@@ -182,7 +182,7 @@
 
                             // give the editor time to initialize
                             setTimeout( function() {
-                                elm.append('<input id="form_activitygroup_code" type="text" size="30" style="background:#FFFFA2" readonly class="FormElement form-control" placeholder="Choose Activity Group">'+
+                                elm.append('<input id="form_activitygroup_code" type="text" size="40" style="background:#FFFFA2" readonly class="FormElement form-control" placeholder="Choose Activity Group">'+
                                         '<button class="btn btn-success" type="button" onclick="showLovSegActivity(\'segregationotherid_fk\',\'form_activitygroup_code\',\'actlistname\',\'plitemname\',\'costdrivercode\')">'+
                                         '   <span class="fa fa-search bigger-110"></span>'+
                                         '</button>');
@@ -213,7 +213,7 @@
                 },
                 {label: 'Activity',name: 'actlistname',width: 200, align: "left", editable: true,
                     editoptions: {
-                        size: 30
+                        size: 50
                     },
                     editrules: {edithidden: false, required:true}},
                 {label: 'PL Item',name: 'plitemname',width: 200, align: "left", editable: true,
@@ -223,7 +223,7 @@
                     editrules: {edithidden: false, required:true}},
                 {label: 'Cost Driver',name: 'costdrivercode',width: 200, align: "left", editable: true,
                     editoptions: {
-                        size: 30
+                        size: 50
                     },
                     editrules: {edithidden: false, required:true}},
                 {label: 'Description',name: 'description',width: 200, hidden:true, align: "left",editable: true,

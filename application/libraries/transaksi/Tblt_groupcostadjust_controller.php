@@ -479,6 +479,68 @@ class Tblt_groupcostadjust_controller {
         exit;
     }
 
+    function download_excel() {
+
+            $periodid_fk = getVarClean('periodid_fk','str','');
+
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_groupcostadjust');
+            $table = $ci->tblt_groupcostadjust;
+
+            // Filter Table
+            if(!empty($periodid_fk)) {
+                $table->setCriteria("a.periodid_fk = ".$periodid_fk);
+            }
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1, 'a.ubiscode, a.activityname', 'asc');
+
+            startExcel("group_cost_".$periodid_fk.".xls");
+
+            $output = '';
+            $output .='<table  border="1">';
+
+            $output.='<tr>';                         
+            $output.='  <th>CFU Code</th>
+                        <th>BU/Subs</th>
+                        <th>Activity Code</th>
+                        <th>Activity Name</th>
+                        <th>Activity Group</th>
+                        <th>Cost Driver</th>
+                        <th>Orig Amount</th>
+                        <th>Adjust Amount</th>
+                        ';
+            $output.='</tr>';
+
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
+
+  
+
+            foreach($items as $item) {
+                $output .= '<tr>';
+                    $output .= '<td>'.$item['cfucode'].'</td>';
+                    $output .= '<td>'.$item['ubiscode'].'</td>';
+                    $output .= '<td>'.$item['activitycode'].'</td>';
+                    $output .= '<td>'.$item['activityname'].'</td>';
+                    $output .= '<td>'.$item['activitygroupcode'].'</td>';
+                    $output .= '<td>'.$item['costdrivercode'].'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['origamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['adjustamount'],2).'</td>';
+                $output .= '</tr>';
+
+            }
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
+
 }
 
 /* End of file Tblt_tohideout_controller.php */

@@ -331,21 +331,21 @@ class Tblt_costmap_controller {
                 exit;
             }
 
-            $initubiscode = $items[0]['ubiscode'];
+            // $initubiscode = $items[0]['ubiscode'];
 
             foreach($items as $item) {
 
-                if($initubiscode != $item['ubiscode']) {
-                    $output .= '<tr>';
-                        $output .= '<td colspan="6" align="center"><b>Total</b></td>';
-                        $output .= '<td align="right"><b>'.numberFormat($subtotal['totalamount'],2).'</b></td>';
-                        $output .= '<td colspan="4" align="center"></td>';
-                    $output .= '</tr>';
+                // if($initubiscode != $item['ubiscode']) {
+                //     $output .= '<tr>';
+                //         $output .= '<td colspan="6" align="center"><b>Total</b></td>';
+                //         $output .= '<td align="right"><b>'.numberFormat($subtotal['totalamount'],2).'</b></td>';
+                //         $output .= '<td colspan="4" align="center"></td>';
+                //     $output .= '</tr>';
 
-                    $subtotal = array('totalamount' => 0);
+                //     $subtotal = array('totalamount' => 0);
 
-                    $initubiscode = $item['ubiscode'];
-                }
+                //     $initubiscode = $item['ubiscode'];
+                // }
 
                 $output .= '<tr>';
                 $output .= '<td valign="top">'.$no++.'</td>';
@@ -364,11 +364,11 @@ class Tblt_costmap_controller {
                 $subtotal['totalamount'] += $item['amount'];
             }
 
-             $output .= '<tr>';
-                $output .= '<td colspan="6" align="center"><b>Total</b></td>';
-                $output .= '<td align="right"><b>'.numberFormat($subtotal['totalamount'],2).'</b></td>';
-                $output .= '<td colspan="4" align="center"></td>';
-            $output .= '</tr>';
+            //  $output .= '<tr>';
+            //     $output .= '<td colspan="6" align="center"><b>Total</b></td>';
+            //     $output .= '<td align="right"><b>'.numberFormat($subtotal['totalamount'],2).'</b></td>';
+            //     $output .= '<td colspan="4" align="center"></td>';
+            // $output .= '</tr>';
 
             $output .= '</table>';
             echo $output;

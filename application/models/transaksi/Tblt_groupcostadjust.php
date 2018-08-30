@@ -91,7 +91,7 @@ class Tblt_groupcostadjust extends Abstract_model {
     function html_select_options_wibgroup() {
         try {
 
-            $sql = "SELECT code FROM tblm_wibgroup";
+            $sql = "SELECT code FROM tblm_wibgroup where code='CFU501' ";
             $query = $this->db->query($sql);
 
             $items = $query->result_array();
