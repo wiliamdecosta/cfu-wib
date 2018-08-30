@@ -10,8 +10,8 @@ class Tblt_segregationother_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','a.s01, a.s02');
-        $sord = getVarClean('sord','str','asc');
+        $sidx = getVarClean('sidx','str','');
+        $sord = getVarClean('sord','str','');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -129,7 +129,7 @@ class Tblt_segregationother_controller {
             }
 
             $count = $table->countAll();
-            $items = $table->getAll(0, -1, 'a.s01, a.s02', 'asc');
+            $items = $table->getAll(0, -1);
 
 
             $output = '';
@@ -192,7 +192,7 @@ class Tblt_segregationother_controller {
 
 
             $count = $table->countAll();
-            $items = $table->getAll(0, -1, 'a.s01, a.s02', 'asc');
+            $items = $table->getAll(0, -1);
 
             startExcel("other_segregation".$periodid_fk.".xls");
 

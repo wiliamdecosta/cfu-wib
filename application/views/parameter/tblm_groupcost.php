@@ -213,7 +213,7 @@
                 },
                 {label: 'Activity',name: 'actlistname',width: 200, align: "left", editable: true,
                     editoptions: {
-                        size: 50
+                        size: 55
                     },
                     editrules: {edithidden: false, required:true}},
                 {label: 'PL Item',name: 'plitemname',width: 200, align: "left", editable: true,
@@ -223,7 +223,7 @@
                     editrules: {edithidden: false, required:true}},
                 {label: 'Cost Driver',name: 'costdrivercode',width: 200, align: "left", editable: true,
                     editoptions: {
-                        size: 50
+                        size: 70
                     },
                     editrules: {edithidden: false, required:true}},
                 {label: 'Description',name: 'description',width: 200, hidden:true, align: "left",editable: true,
