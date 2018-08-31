@@ -344,7 +344,7 @@ class Tblt_segregationact_controller {
 
                 $output .= '<tr>
                                     <td valign="top">'.$item['ubiscode'].'</td>
-                                    <td valign="top">'.$item['activitygabung'].'</td>
+                                    <td valign="top">'.$item['activityname'].'</td>
                                     <td valign="top">'.$item['plitemname'].'</td>
                                     <td valign="top" align="right">'.numberFormat($item['amount'],2).'</td>
                                     <td valign="top">'.$item['costdrivercode'].'</td>
@@ -537,7 +537,7 @@ class Tblt_segregationact_controller {
 
                 $output .= '<tr>
                                     <td valign="top">'.$item['ubiscode'].'</td>
-                                    <td valign="top">'.$item['activitygabung'].'</td>
+                                    <td valign="top">'.$item['activityname'].'</td>
                                     <td valign="top">'.$item['plitemname'].'</td>
                                     <td valign="top" align="right">'.numberFormat($item['amount'],2).'</td>
                                     <td valign="top">'.$item['costdrivercode'].'</td>
