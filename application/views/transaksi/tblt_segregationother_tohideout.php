@@ -102,6 +102,12 @@
                 </div>
             </div>
             <div class="space-4"></div>
+            <div class="row" id="btn-group-segregation-action">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" id="btn-download" onclick="downloadSegregationOther();">Download</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -499,4 +505,40 @@ function showLOVBusinessUnit(id, code, name) {
 
     }
 
+</script>
+<script>
+    function downloadSegregationOther() {
+
+            var processcontrolid_pk = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
+            var ubiscode = $('#search_wibunitbusinesscode').val();
+
+            var url = "<?php echo WS_JQGRID . "transaksi.tblt_segregationother_controller/download_excel_hideout/?"; ?>";
+            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+            url += "&processcontrolid_pk="+processcontrolid_pk;
+            url += "&periodid_fk="+periodid_fk;
+            url += "&ubiscode="+ubiscode;
+
+            swal({
+                title: "Konfirmasi",
+                text: 'Anda yakin ingin melakukan download data?',
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Ya, Yakin",
+                confirmButtonColor: "#538cf6",
+                cancelButtonText: "Tidak",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                html: true
+            },
+            function(isConfirm){
+                if(isConfirm) {
+                    window.location = url;
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+    }
 </script>

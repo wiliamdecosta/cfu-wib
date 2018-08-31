@@ -90,7 +90,13 @@
                     <div id="grid-pager"></div>
                 </div>
             </div>
-            <div class="space-4"></div>            
+            <div class="space-4"></div>
+            <div class="row" id="btn-cost-driver-pl">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" id="btn-download" onclick="downloadCostDriverPL();">Download</button>
+                </div>
+            </div>           
     </div>
 </div>
 
@@ -439,4 +445,38 @@ $("#tab-3").on("click", function(event) {
 
     }
 
+</script>
+<script>
+    function downloadCostDriverPL() {
+
+            var processcontrolid_pk = <?php echo $this->input->post('processcontrolid_pk'); ?>;
+            var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
+
+            var url = "<?php echo WS_JQGRID . "transaksi.tblt_costdriverpl_controller/download_excel/?"; ?>";
+            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+            url += "&processcontrolid_pk="+processcontrolid_pk;
+            url += "&periodid_fk="+periodid_fk;
+
+            swal({
+                title: "Konfirmasi",
+                text: 'Anda yakin ingin melakukan download data?',
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Ya, Yakin",
+                confirmButtonColor: "#538cf6",
+                cancelButtonText: "Tidak",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                html: true
+            },
+            function(isConfirm){
+                if(isConfirm) {
+                    window.location = url;
+                    return true;
+                }else {
+                    return false;
+                }
+            });
+    }
 </script>

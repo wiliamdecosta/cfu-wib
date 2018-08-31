@@ -101,6 +101,60 @@ class Tblt_costdriverpl_controller {
         return $data;
     }
 
+    function download_excel() {
+
+            $processcontrolid_pk = getVarClean('processcontrolid_pk', 'int', 0);
+            $periodid_fk = getVarClean('periodid_fk', 'int', 0);
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_costdriverpl');
+            $table = new Tblt_costdriverpl($processcontrolid_pk, '');
+
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1);
+
+            startExcel("cost_driver_pl".$periodid_fk.".xls");
+
+            $output = '<table border="1">';
+            $output .= '<tr>
+                            <th>Ubis/Subsidiary</th>
+                            <th>Cost Driver</th>
+                            <th>Unit</th>
+                            <th>Dom Traffic</th>
+                            <th>Dom Network</th>
+                            <th>Intl Traffic</th>
+                            <th>Intl Network</th>
+                            <th>Intl Adjacent</th>
+                            <th>Tower</th>
+                            <th>Infrastructure</th>
+                        </tr>';
+
+
+            foreach($items as $item) {
+
+                $output .= '<tr>
+                                    <td valign="top">'.$item['ubiscodedisplay'].'</td>
+                                    <td valign="top">'.$item['costdriver'].'</td>
+                                    <td valign="top">'.$item['unitcodedisplay'].'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['domtrafficvaluedisplay'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['domnetworkvaluedisplay'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['intltrafficvaluedisplay'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['intlnetworkvaluedisplay'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['intladjacentvaluedisplay'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['towervaluedisplay'],2).'</td>
+                                    <td valign="top" align="right">'.numberFormat($item['infravaluedisplay'],2).'</td>
+                                </tr>';
+
+            }
+
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
+
 }
 
 /* End of file Tblt_costdrivercalc_controller.php */
