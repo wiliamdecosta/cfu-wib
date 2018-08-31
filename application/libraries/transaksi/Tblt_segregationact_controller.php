@@ -491,7 +491,8 @@ class Tblt_segregationact_controller {
             //$table->setCriteria("upper(s01) = upper('".$ubiscode."')");
 
             $count = $table->countAll();
-            $items = $table->getAll(0, -1, 's01, s02', 'asc');
+            // $items = $table->getAll(0, -1, 's01, s02', 'asc');
+            $items = $table->getAll(0, -1);
 
             startExcel("segregation_calc".$periodid_fk.".xls");
 
