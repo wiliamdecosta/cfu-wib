@@ -335,6 +335,7 @@ function showLOVProfitLos(code) {
         url += "&ubiscode="+ubiscode;
         url += "&pl_item_name="+pl_item_name;
         url += "&column_name="+column_name;
+        url += "&i_search="+i_search;
 
         swal({
             title: "Konfirmasi",

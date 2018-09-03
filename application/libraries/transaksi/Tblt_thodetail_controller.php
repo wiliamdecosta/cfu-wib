@@ -49,14 +49,14 @@ class Tblt_thodetail_controller {
 
             $req_param['where'] = array();
             // Filter Table
-            if(!empty($i_search)) {
-                $table->setCriteria("upper(s01) = upper('".$i_search."') OR
-                                     upper(s02) = upper('".$i_search."') OR
-                                     upper(s03) = upper('".$i_search."') OR
-                                     upper(s04) = upper('".$i_search."') OR 
-                                     upper(s05) = upper('".$i_search."') 
-                                    ");
-            }
+            // if(!empty($i_search)) {
+            //     $table->setCriteria("upper(s01) = upper('".$i_search."') OR
+            //                          upper(s02) = upper('".$i_search."') OR
+            //                          upper(s03) = upper('".$i_search."') OR
+            //                          upper(s04) = upper('".$i_search."') OR 
+            //                          upper(s05) = upper('".$i_search."') 
+            //                         ");
+            // }
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();
@@ -179,6 +179,7 @@ class Tblt_thodetail_controller {
             }
 
                 $output .= '<tr>';
+                    $output .= '<td></td>';
                     $output .= '<td></td>';
                     $output .= '<td></td>';
                     $output .= '<td></td>';
