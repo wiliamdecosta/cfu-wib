@@ -20,7 +20,7 @@
     <div class="col-xs-12">
         <div class="tabbable">
             <ul class="nav nav-tabs">
-                <li class="active">
+                <li class="">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-1">
                         <i class="blue"></i>
                         <strong> <?php echo $this->input->post('processcode'); ?> </strong>
@@ -56,7 +56,7 @@
                         <strong> Process Log </strong>
                     </a>
                 </li>
-                <li class="">
+                <li class="active">
                     <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-4">
                         <i class="blue"></i>
                         <strong> Detail Data </strong>
@@ -77,50 +77,76 @@
             <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
 
             <div class="row">
-            <label class="control-label col-md-2">Pencarian :</label>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
-                    <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
-                    <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control" placeholder="Business Unit" onchange="showData();">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
-                            <span class="fa fa-search bigger-110"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="input-group">
+                <label class="control-label col-md-2">BU/Subs :</label>
+                <div class="col-md-3">
                     <div class="input-group">
-                    <input id="i_search" type="text" class="FormElement form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
-                    </span>
+                        <input id="search_wibunitbusinessid_pk" type="text"  style="display:none;">
+                        <input id="search_wibunitbusinessname" type="text" style="display:none;" class="FormElement form-control" placeholder="Business Unit Name">
+                        <input id="search_wibunitbusinesscode" type="text" class="FormElement form-control required" placeholder="BU/Subs">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" onclick="showLOVBusinessUnit('search_wibunitbusinessid_pk','search_wibunitbusinesscode','search_wibunitbusinessname')">
+                                <span class="fa fa-search bigger-110"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div> 
+
+                <label class="control-label col-md-1">PL Item :</label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input id="search_plitem" type="text" class="FormElement form-control required" placeholder="PL Item">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" onclick="showLOVProfitLos('search_plitem')">
+                                <span class="fa fa-search bigger-110"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div> 
+                          
+            </div>
+            <div class="row">
+                <label class="control-label col-md-2">Business Line :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <select class="FormElement form-control required" id="search_business_line">                        
+                            <option value="Domestic_Traffic"> Domestic_Traffic </option>
+                            <option value="Domestic_Network"> Domestic_Network </option>
+                            <option value="International_Traffic"> International_Traffic </option>
+                            <option value="International_Network"> International_Network </option>
+                            <option value="International_Adjacent"> International_Adjacent </option>
+                            <option value="Towers"> Towers </option>
+                            <option value="Infrastructure"> Infrastructure </option>
+                        </select>
                     </div>
                 </div>
+
+                <label class="control-label col-md-1">Filter :</label>
+                <div class="col-md-4">
+                    <input id="i_search" type="text" class="FormElement form-control">
+                </div>
             </div>
+            <div class="space-4"></div>
+            <div class="row" id="btn-group-tohideout-action">
+                <!-- <div class="col-xs-4"></div> -->
+                <div class="col-xs-6">
+                    <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
+                    <button class="btn btn-primary" type="button" id="btn-download" onclick="downloadExcel();">Download</button>
+                </div>
             </div>
+            <div class="space-4"></div>
             <div class="row">
                 <div class="col-xs-12">
                     <table id="grid-table"></table>
                     <div id="grid-pager"></div>
                 </div>
             </div>
-            <div class="space-4"></div>
-            <div class="row" id="btn-group-tohideout-action" style="display:none;">
-                <div class="col-xs-4"></div>
-                <div class="col-xs-6">
-                    <button class="btn btn-success" id="btn-process" onclick="doProcess();">Process</button>
-                    <button class="btn btn-warning" id="btn-cancel" onclick="cancelProcess();">Cancel Process</button>
-                    <button class="btn btn-primary" id="btn-download" onclick="downloadPCA();">Download</button>
-                </div>
-            </div>
+       
         </div>
     </div>
 </div>
 
 <?php $this->load->view('lov/lov_tblm_wibunitbusiness'); ?>
+<?php $this->load->view('lov/lov_tblm_profitloss_new'); ?>
 
 <script>
 $("#tab-cost-driver").on("click", function(event) {
@@ -199,18 +225,19 @@ $("#tab-3").on("click", function(event) {
     });
 });
 
-$("#tab-4").on("click", function(event) {
+$("#tab-1").on("click", function(event) {
     event.stopPropagation();
-
-    loadContentWithParams("transaksi.tblt_thodetail", {
+    var tab_1 = "<?php echo $this->input->post('tab_1'); ?>";
+    loadContentWithParams( tab_1, {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
         statuscode : '<?php echo $this->input->post('statuscode'); ?>',
         processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
         processcode : '<?php echo $this->input->post('processcode'); ?>',
-        tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+        tab_1 : tab_1
     });
+
 });
 
 </script>
@@ -225,6 +252,11 @@ $("#tab-4").on("click", function(event) {
 function showLOVBusinessUnit(id, code, name) {
     modal_lov_tblm_wibunitbusiness_show(id, code, name);
 }
+
+function showLOVProfitLos(code) {
+    modal_lov_tblm_profitloss_show(code);
+}
+
 </script>
 
 <script>
@@ -240,196 +272,93 @@ function showLOVBusinessUnit(id, code, name) {
     function showData(){
         var i_search = $('#i_search').val();
         var ubiscode = $('#search_wibunitbusinesscode').val();
+        var pl_item_name = $('#search_plitem').val();
+        var column_name = $('#search_business_line').val();
 
+        if (ubiscode == '' ){
+            swal('Informasi','BU/Subs is required','info');
+            return false;
+        }
+
+        if (pl_item_name == ''){
+            swal('Informasi','PL Item is required','info');
+            return false;
+        }
+
+        if (column_name == ''){
+            swal('Informasi','Business Line is required','info');
+            return false;
+        }
 
         jQuery(function($) {
             jQuery("#grid-table").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/read"; ?>',
+                url: '<?php echo WS_JQGRID."transaksi.tblt_thodetail_controller/read"; ?>',
                 postData: {
                     i_search : i_search,
-                    processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-                    ubiscode: ubiscode
+                    periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+                    ubiscode: ubiscode,
+                    pl_item_name: pl_item_name,
+                    column_name: column_name,
                 }
             });
             $("#grid-table").trigger("reloadGrid");
         });
     }
 </script>
-
-
-
 <script>
-    function buttonMode(statuscode) {
-        var isupdatable = "<?php echo $this->input->post('isupdatable'); ?>";
+    function downloadExcel(){
+        var i_search = $('#i_search').val();
+        var ubiscode = $('#search_wibunitbusinesscode').val();
+        var pl_item_name = $('#search_plitem').val();
+        var column_name = $('#search_business_line').val();
 
-        if(isupdatable == 'Y') {
-            $('#btn-group-tohideout-action').show();
-
-            if(statuscode == 'FINISH' || statuscode == 'IN PROGRESS' || statuscode == 'FAIL') {
-                $('#btn-process').hide();
-            }else if(statuscode == 'INITIAL') {
-                $('#btn-cancel').hide();
-                $('#btn-download').hide();
-            }
+        if (ubiscode == '' ){
+            swal('Informasi','BU/Subs is required','info');
+            return false;
         }
-    }
 
-    function loadForm(statuscode) {
-        loadContentWithParams("transaksi.tblt_tohideout", {
-            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
-            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
-            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
-            statuscode : statuscode,
-            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
-            processcode : '<?php echo $this->input->post('processcode'); ?>',
-            tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+        if (pl_item_name == ''){
+            swal('Informasi','PL Item is required','info');
+            return false;
+        }
+
+        if (column_name == ''){
+            swal('Informasi','Business Line is required','info');
+            return false;
+        }
+
+        var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
+
+        var url = "<?php echo WS_JQGRID . "transaksi.tblt_thodetail_controller/download_excel/?"; ?>";
+        url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+        url += "&periodid_fk="+periodid_fk;
+        url += "&ubiscode="+ubiscode;
+        url += "&pl_item_name="+pl_item_name;
+        url += "&column_name="+column_name;
+
+        swal({
+            title: "Konfirmasi",
+            text: 'Anda yakin ingin melakukan download data?',
+            type: "info",
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            confirmButtonText: "Ya, Yakin",
+            confirmButtonColor: "#538cf6",
+            cancelButtonText: "Tidak",
+            closeOnConfirm: true,
+            closeOnCancel: true,
+            html: true
+        },
+        function(isConfirm){
+            if(isConfirm) {
+                window.location = url;
+                return true;
+            }else {
+                return false;
+            }
         });
+
     }
-
-    $(function() {
-        var statuscode = "<?php echo $this->input->post('statuscode'); ?>";
-        buttonMode(statuscode);
-    });
-</script>
-
-<script>
-
-    function doProcess() {
-            var processcode = "<?php echo $this->input->post('processcode'); ?>";
-            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
-            var i_batch_control_id =  <?php echo $this->input->post('i_batch_control_id'); ?>;
-
-            var ajaxOptions = {
-                url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/do_process"; ?>',
-                type: "POST",
-                dataType: "json",
-                data: { i_process_control_id:i_process_control_id,
-                        processcode : processcode,
-                         i_batch_control_id : i_batch_control_id},
-                success: function (data) {
-                    if(data.success == true) {
-                        swal('Success',data.message,'success');
-                        loadForm(data.statuscode);
-                    }else {
-                        swal('Attention',data.message,'warning');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                }
-            };
-
-            $.ajax({
-                beforeSend: function( xhr ) {
-                    swal({
-                        title: "Konfirmasi",
-                        text: 'Anda yakin ingin men-submit proses '+ processcode +'?',
-                        type: "info",
-                        showCancelButton: true,
-                        showLoaderOnConfirm: true,
-                        confirmButtonText: "Ya, Yakin",
-                        confirmButtonColor: "#e80c1c",
-                        cancelButtonText: "Tidak",
-                        closeOnConfirm: false,
-                        closeOnCancel: true,
-                        html: true
-                    },
-                    function(isConfirm){
-                        if(isConfirm) {
-                            $.ajax(ajaxOptions);
-                            return true;
-                        }else {
-                            return false;
-                        }
-                    });
-                }
-            });
-    }
-
-    function cancelProcess() {
-            var processcode = "<?php echo $this->input->post('processcode'); ?>";
-            var i_process_control_id = <?php echo $this->input->post('processcontrolid_pk'); ?>;
-            var i_batch_control_id =  <?php echo $this->input->post('i_batch_control_id'); ?>;
-
-            var ajaxOptions = {
-                url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/cancel_process"; ?>',
-                type: "POST",
-                dataType: "json",
-                data: { i_process_control_id:i_process_control_id,
-                        i_batch_control_id : i_batch_control_id },
-                success: function (data) {
-                    if(data.success == true) {
-                        swal('Success',data.message,'success');
-                        loadForm(data.statuscode);
-                    }else {
-                        swal('Attention',data.message,'warning');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                }
-            };
-
-            $.ajax({
-                beforeSend: function( xhr ) {
-                    swal({
-                        title: "Konfirmasi",
-                        text: 'Anda yakin ingin membatalkan proses?',
-                        type: "info",
-                        showCancelButton: true,
-                        showLoaderOnConfirm: true,
-                        confirmButtonText: "Ya, Yakin",
-                        confirmButtonColor: "#e80c1c",
-                        cancelButtonText: "Tidak",
-                        closeOnConfirm: false,
-                        closeOnCancel: true,
-                        html: true
-                    },
-                    function(isConfirm){
-                        if(isConfirm) {
-                            $.ajax(ajaxOptions);
-                            return true;
-                        }else {
-                            return false;
-                        }
-                    });
-                }
-            });
-    }
-
-    function downloadPCA() {
-
-            var processcontrolid_pk = <?php echo $this->input->post('processcontrolid_pk'); ?>;
-            var periodid_fk = <?php echo $this->input->post('periodid_fk'); ?>;
-
-            var url = "<?php echo WS_JQGRID . "transaksi.tblt_tohideout_controller/download_excel/?"; ?>";
-            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
-            url += "&processcontrolid_pk="+processcontrolid_pk;
-            url += "&periodid_fk="+periodid_fk;
-
-            swal({
-                title: "Konfirmasi",
-                text: 'Anda yakin ingin melakukan download data?',
-                type: "info",
-                showCancelButton: true,
-                showLoaderOnConfirm: true,
-                confirmButtonText: "Ya, Yakin",
-                confirmButtonColor: "#538cf6",
-                cancelButtonText: "Tidak",
-                closeOnConfirm: true,
-                closeOnCancel: true,
-                html: true
-            },
-            function(isConfirm){
-                if(isConfirm) {
-                    window.location = url;
-                    return true;
-                }else {
-                    return false;
-                }
-            });
-    }
-
 </script>
 
 <script>
@@ -438,74 +367,30 @@ function showLOVBusinessUnit(id, code, name) {
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/crud"; ?>',
-            postData: { processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>},
+            url: '<?php echo WS_JQGRID."transaksi.tblt_thodetail_controller/crud"; ?>',
+            postData: { periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>},
             datatype: "json",
             mtype: "POST",
             colModel: [
-                {label: 'Group',name: 'plgroupname',width: 350, align: "left"},
-                {label: 'PL Item',name: 'plitemname',width: 250, align: "left"},
-                {label: 'Domestic Traffic',name: 'domtrafficamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
-                {label: 'Domestic Network',name: 'domnetworkamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
-                {label: 'Intl Traffic',name: 'intltrafficamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
-                {label: 'Intl Network',name: 'intlnetworkamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
-                {label: 'Intl Adjacent',name: 'intladjacentamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
-                {label: 'Towers',name: 'toweramount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
-                {label: 'Infrastructure',name: 'infraamount',width: 150, align: "right", formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }}
+                {label: 'BU/Subs',name: 'ubiscode',width: 100, align: "left"},
+                {label: 'Category',name: 'categorycode',width: 200, align: "left"},
+                {label: 'GL Account',name: 'glaccount',width: 200, align: "left"},
+                {label: 'GL Name',name: 'gldesc',width: 350, align: "left"},
+                {label: 'Amount',name: 'amount',width: 150, align: "right", editable: false, formatter:'currency', formatoptions: {prefix:"", thousandsSeparator:','}},
+                {label: 'Description',name: 'description',width: 200, align: "left"},
 
             ],
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 20,
-            rowList: [20,50,100],
+            rowNum: 10000000000000,
+            rowList: [],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
             shrinkToFit: false,
             multiboxonly: true,
+            footerrow: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
 
@@ -522,9 +407,22 @@ function showLOVBusinessUnit(id, code, name) {
                     swal({title: 'Attention', text: response.message, html: true, type: "warning"});
                 }
 
+                var rowData = jQuery("#grid-table").getDataIDs();
+                totalamount = 0;
+
+                for (var i = 0; i < rowData.length; i++) 
+                {
+                    var amount = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'amount');
+
+                    totalamount = totalamount + parseFloat(amount);
+                }
+
+                $("#grid-table").jqGrid('footerData', 'set', { "gldesc":"Total :"}, true);
+                $("#grid-table").jqGrid('footerData', 'set', { "amount": totalamount}, true);
+
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."transaksi.tblt_tohideout_controller/crud"; ?>',
+            editurl: '<?php echo WS_JQGRID."transaksi.tblt_thodetail_controller/crud"; ?>',
             caption: "<?php echo $this->input->post('processcode'); ?>"
 
         });
@@ -653,18 +551,6 @@ function showLOVBusinessUnit(id, code, name) {
                 }
             }
         );
-
-        jQuery("#grid-table").jqGrid('setGroupHeaders', {
-            useColSpanStyle: true, 
-            groupHeaders:[
-                // {startColumnName: 'plgroupname', numberOfColumns: 1, titleText: ''},
-                // {startColumnName: 'plitemname', numberOfColumns: 1, titleText: ''},
-                {startColumnName: 'domtrafficamount', numberOfColumns: 4, titleText: '<center>Carrier</center>', className: 'ui-th-column ui-th-ltr'},
-                {startColumnName: 'intladjacentamount', numberOfColumns: 1, titleText: 'Intl Adjacent', className: 'ui-th-column ui-th-ltr'},
-                {startColumnName: 'toweramount', numberOfColumns: 1, titleText: 'Towers', className: 'ui-th-column ui-th-ltr'},
-                {startColumnName: 'infraamount', numberOfColumns: 1, titleText: 'Infrastructure', className: 'ui-th-column ui-th-ltr'}
-            ]
-        });
 
         // jQuery(".ui-th-column-header ui-th-ltr").addClass("active");
 
