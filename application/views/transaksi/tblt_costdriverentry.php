@@ -142,6 +142,16 @@ function clearInputUnit() {
                 $('#btn-cancel').show();
                 $('#btn-download').show();
             }
+        }else if(isupdatable == 'N'){
+            
+            if(table_kosong != 'Y'){
+                $('#btn-group-costdriverentry-action').show();
+                $('#btn-copy-default').hide();
+                $('#btn-copy-prevperiod').hide();
+
+                $('#btn-cancel').hide();
+                $('#btn-download').show();
+            }
         }
     }
 

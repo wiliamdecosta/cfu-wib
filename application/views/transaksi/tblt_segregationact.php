@@ -166,6 +166,14 @@ $("#tab-3").on("click", function(event) {
                 $('#btn-cancel').hide();
                 $('#btn-download').hide();
             }
+        }else if(isupdatable == 'N'){
+
+            if(statuscode == 'FINISH'){
+                $('#btn-group-segregation-action').show();
+                $('#btn-download').show();
+                $('#btn-process').hide();
+                $('#btn-cancel').hide();
+            }
         }
     }
 

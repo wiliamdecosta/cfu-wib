@@ -161,10 +161,19 @@ function showLOVPeriod(id, code, status) {
                 $('#btn-download').hide();
             }
         }else{
-            $('#btn-group-cpallpcadjust-action').hide();
+            $('#btn-group-cpallpcadjust-action').show();
             $('#edit_grid-table').hide();
             $('#add_grid-table').hide();
             $('#del_grid-table').hide();
+            $('#btn-cancel').hide();
+            $('#btn-process').hide();
+
+            if(statuscode > 0) {                
+                $('#btn-download').show();
+            }else{
+                $('#btn-download').hide();
+            }
+
         }
     }
 

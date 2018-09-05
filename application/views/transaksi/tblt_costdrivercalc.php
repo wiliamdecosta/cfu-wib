@@ -133,6 +133,14 @@ $("#tab-log").on("click", function(event) {
                 $('#btn-cancel').hide();
                 $('#btn-download').hide();
             }
+        }else if(isupdatable == 'N'){
+
+            if(statuscode == 'FINISH'){
+                $('#btn-group-costdrivercal-action').show();
+                $('#btn-download').show();
+                $('#btn-process').hide();
+                $('#btn-cancel').hide();
+            }
         }
     }
 

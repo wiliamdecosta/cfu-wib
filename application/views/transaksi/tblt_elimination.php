@@ -150,6 +150,17 @@ $("#tab-log").on("click", function(event) {
                 $('#filename').hide();
                 $('#label-upload').hide();
             }
+        }else if(isupdatable == 'N') {
+
+            if(table_kosong != 'Y') {
+                $('#btn-group-elimination').show();
+                
+                $('#btn-cancel').hide();
+                $('#btn-uploaddata').hide();
+                $('#filename').hide();
+                $('#label-upload').hide();
+                $('#btn-download').show();
+            }
         }
     }
 

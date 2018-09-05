@@ -200,6 +200,14 @@ function showLOVBusinessUnit(id, code, name) {
                 $('#btn-cancel').hide();
                 $('#btn-download').hide();
             }
+        }else if(isupdatable == 'N'){
+
+            if(statuscode == 'FINISH'){
+                $('#btn-group-verticalalloc-action').show();
+                $('#btn-download').show();
+                $('#btn-process').hide();
+                $('#btn-cancel').hide();
+            }
         }
     }
 
