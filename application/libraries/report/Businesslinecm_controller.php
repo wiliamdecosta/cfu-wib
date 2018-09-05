@@ -56,16 +56,16 @@ class Businesslinecm_controller {
                     $output .= '</tr>';
                 }else{
                     $output .= '<tr style="'.$stylecolor.'">';
-                        $output .= '<td nowrap style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
+                        $output .= '<td nowrap style="'.$stylefont.' border: 0px;">&nbsp;&nbsp;</td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
                     $output .= '</tr>';
                 }
 
@@ -162,17 +162,17 @@ class Businesslinecm_controller {
                         $output .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['totalamt']).'</td>';
                     $output .= '</tr>';
                 }else{
-                    $output .= '<tr style="'.$stylecolor.' border:0;">';
-                        $output .= '<td nowrap style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
-                        $output .= '<td align="right" style="'.$stylefont.'"></td>';
+                     $output .= '<tr style="'.$stylecolor.'">';
+                        $output .= '<td nowrap style="'.$stylefont.' border: 0px;">&nbsp;&nbsp;</td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
+                        $output .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
                     $output .= '</tr>';
                 }
 
