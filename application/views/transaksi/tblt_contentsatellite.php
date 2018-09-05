@@ -44,6 +44,12 @@
                         <strong> Process Log </strong>
                     </a>
                 </li>
+                <li class="">
+                    <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-4">
+                        <i class="blue"></i>
+                        <strong> Detail Data </strong>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -59,17 +65,17 @@
             <h3> <?php echo $this->input->post('processcode').' ('.$this->input->post('periodid_fk').')'; ?></h3>
 
             <div class="row">
-            <label class="control-label col-md-2">Pencarian :</label>
-            <div class="col-md-3">
-                <div class="input-group">
+                <label class="control-label col-md-2">Pencarian :</label>
+                <div class="col-md-3">
                     <div class="input-group">
-                    <input id="i_search" type="text" class="FormElement form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
-                    </span>
+                        <div class="input-group">
+                        <input id="i_search" type="text" class="FormElement form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
+                        </span>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
@@ -150,6 +156,20 @@ $("#tab-3").on("click", function(event) {
     event.stopPropagation();
 
     loadContentWithParams("transaksi.tblp_logprocesscontrol_contentsat", {
+        i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+        periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+        isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+        statuscode : '<?php echo $this->input->post('statuscode'); ?>',
+        processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+        processcode : '<?php echo $this->input->post('processcode'); ?>',
+        tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+    });
+});
+
+$("#tab-4").on("click", function(event) {
+    event.stopPropagation();
+
+    loadContentWithParams("transaksi.tblt_satellitedetail", {
         i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
         periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
         isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',

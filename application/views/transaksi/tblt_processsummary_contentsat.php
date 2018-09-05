@@ -44,6 +44,12 @@
                         <strong> Process Log </strong>
                     </a>
                 </li>
+                <li class="">
+                    <a href="javascript:;" data-toggle="tab" aria-expanded="true" id="tab-4">
+                        <i class="blue"></i>
+                        <strong> Detail Data </strong>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -125,6 +131,19 @@ $("#tab-3").on("click", function(event) {
     });
 });
 
+ $("#tab-4").on("click", function(event) {
+        event.stopPropagation();
+
+        loadContentWithParams("transaksi.tblt_satellitedetail", {
+            i_batch_control_id : <?php echo $this->input->post('i_batch_control_id'); ?>,
+            periodid_fk : <?php echo $this->input->post('periodid_fk'); ?>,
+            isupdatable : '<?php echo $this->input->post('isupdatable'); ?>',
+            statuscode : '<?php echo $this->input->post('statuscode'); ?>',
+            processcontrolid_pk : <?php echo $this->input->post('processcontrolid_pk'); ?>,
+            processcode : '<?php echo $this->input->post('processcode'); ?>',
+            tab_1 : '<?php echo $this->input->post('tab_1'); ?>'
+        });
+    });
 </script>
 
 
