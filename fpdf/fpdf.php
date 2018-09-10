@@ -1106,6 +1106,36 @@ public function SetWidths($w)
         //Go to the next line
         $this->Ln($h);
     }
+
+    function RowMultiBorderWithHeightFill($data, $border = array(),$height,$color)
+    {
+        //Calculate the height of the row
+        $nb=0;
+        for($i=0;$i<count($data);$i++)
+            $nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
+        $h=$height*$nb;
+        //Issue a page break first if needed
+        $this->CheckPageBreak($h);
+        //Draw the cells of the row
+        for($i=0;$i<count($data);$i++)
+        {
+            $w=$this->widths[$i];
+            $a=isset($this->aligns[$i]) ? $this->aligns[$i] : 'L';
+            //Save the current position
+            $x=$this->GetX();
+            $y=$this->GetY();
+            //Draw the border
+            //$this->Rect($x,$y,$w,$h);
+            $this->Cell($w, $h, '', isset($border[$i]) ? $border[$i] : 1, 0, $color);
+            $this->SetXY($x,$y);
+            //Print the text
+            $this->MultiCell($w,$height,$data[$i], isset($border[$i]) ? $border[$i] : 1,$a, $color);
+            //Put the position to the right of the cell
+            $this->SetXY($x+$w,$y);
+        }
+        //Go to the next line
+        $this->Ln($h);
+    }
     
     function NbLines($w, $txt)
     {
