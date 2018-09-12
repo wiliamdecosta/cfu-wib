@@ -1129,7 +1129,8 @@ public function SetWidths($w)
             $this->Cell($w, $h, '', isset($border[$i]) ? $border[$i] : 1, 0, $color);
             $this->SetXY($x,$y);
             //Print the text
-            $this->MultiCell($w,$height,$data[$i], isset($border[$i]) ? $border[$i] : 1,$a, $color);
+            // $this->MultiCell($w,$height,$data[$i], isset($border[$i]) ? $border[$i] : 1,$a, $color);
+            $this->MultiCell($w,$height,$data[$i],0,$a, $color);
             //Put the position to the right of the cell
             $this->SetXY($x+$w,$y);
         }

@@ -83,39 +83,39 @@ class Businesslinecm_pdf extends CI_Controller{
     $pdf->SetFillColor(214,70,53);
 
     $pdf->SetFont('Arial', 'B', 8);
-    $pdf->MultiCell($kolom1, 15, "", 1, "L", true); //P&L Line Item
+    $pdf->MultiCell($kolom1, 15, "", 1, "L"); //P&L Line Item
     $pdf->Ln(-15);
     $pdf->Cell($kolom1, $this->height, "", 0, 0, 'L');
-    $pdf->Cell($kolom2+$kolom3+$kolom4+$kolom5+$kolom6, $this->height, "", 1, 0, 'C', true); //Carrier
-    $pdf->MultiCell($kolom7, 15, "", 1, "C", true); //International Adjacent
+    $pdf->Cell($kolom2+$kolom3+$kolom4+$kolom5+$kolom6, $this->height, "", 1, 0, 'C'); //Carrier
+    $pdf->MultiCell($kolom7, 15, "", 1, "C"); //International Adjacent
     $pdf->Ln(-15);
     $pdf->Cell($kolom1+$kolom2+$kolom3+$kolom4+$kolom5+$kolom6+$kolom7, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom8, 15, "", 1, "C", true); //Towers
+    $pdf->MultiCell($kolom8, 15, "", 1, "C"); //Towers
     $pdf->Ln(-15);
     $pdf->Cell($kolom1+$kolom2+$kolom3+$kolom4+$kolom5+$kolom6+$kolom7+$kolom8, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom9, 15, "", 1, "C", true); //Infrastructure
+    $pdf->MultiCell($kolom9, 15, "", 1, "C"); //Infrastructure
     $pdf->Ln(-15);
     $pdf->Cell($kolom1+$kolom2+$kolom3+$kolom4+$kolom5+$kolom6+$kolom7+$kolom8+$kolom9, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom10, 15, "", 1, "C", true); //Simple Total
+    $pdf->MultiCell($kolom10, 15, "", 1, "C"); //Simple Total
     $pdf->Ln(-10);
     $pdf->Cell($kolom1, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom2, 10, "", 1, "C", true); //Domestic Traffic
+    $pdf->MultiCell($kolom2, 10, "", 1, "C"); //Domestic Traffic
     $pdf->Ln(-10);
     $pdf->Cell($kolom1+$kolom2, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom3, 10, "", 1, "C", true); //Domestic Network
+    $pdf->MultiCell($kolom3, 10, "", 1, "C"); //Domestic Network
     $pdf->Ln(-10);
     $pdf->Cell($kolom1+$kolom2+$kolom3, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom4, 10, "", 1, "C", true); //International Traffic
+    $pdf->MultiCell($kolom4, 10, "", 1, "C"); //International Traffic
     $pdf->Ln(-10);
     $pdf->Cell($kolom1+$kolom2+$kolom3+$kolom4, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom5, 10, "", 1, "C", true); //International Network
+    $pdf->MultiCell($kolom5, 10, "", 1, "C"); //International Network
     $pdf->Ln(-10);
     $pdf->Cell($kolom1+$kolom2+$kolom3+$kolom4+$kolom5, $this->height, "", 0, 0, 'L');
-    $pdf->MultiCell($kolom6, 10, "", 1, "C", true); //Carrier Total
+    $pdf->MultiCell($kolom6, 10, "", 1, "C"); //Carrier Total
     $pdf->Ln(-15);
     
     
-    $pdf->SetTextColor(255,255,255);
+    // $pdf->SetTextColor(255,255,255);
 
     $pdf->Cell($kolom1, $this->height, "", 0, 0, 'L');
     $pdf->Cell($kolom2+$kolom3+$kolom4+$kolom5+$kolom6, $this->height, "Carrier", 0, 0, 'C');
@@ -169,7 +169,7 @@ class Businesslinecm_pdf extends CI_Controller{
             }else{
                 $color = false;
             }
-            $pdf->RowMultiBorderWithHeightFill(array($item['plitemname'],
+            $pdf->RowMultiBorderWithHeight(array($item['plitemname'],
                                                  number_format($item['domtrafficamt']),
                                                  number_format($item['domnetworkamt']),
                                                  number_format($item['intltrafficamt']),
@@ -190,8 +190,7 @@ class Businesslinecm_pdf extends CI_Controller{
                                   'TBLR',
                                   'TBLR',
                                   )
-                                ,$this->height,
-                                $color);
+                                ,$this->height);
         }else{
             $pdf->Ln();
         }
