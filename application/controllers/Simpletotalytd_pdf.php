@@ -85,21 +85,23 @@ class Simpletotalytd_pdf extends CI_Controller{
 
             if($item['plitemname'] != ''){
                 $html .= '<tr style="'.$stylecolor.'">';
-                    $html .= '<td nowrap style="'.$stylefont.'">'.$item['plitemname'].'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['janamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['febamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['maramt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['apramt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['mayamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['junamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['julamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['augamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['sepamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['octamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['novamt']).'</td>';
-                    $html .= '<td nowrap align="right" style="'.$stylefont.'">'.number_format($item['decamt']).'</td>';
+                    $html .= '<td width="15%" nowrap style="'.$stylefont.'">'.$item['plitemname'].'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['janamt']).'</td>';
+                    $html .= '<td width="7.5%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['febamt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['maramt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['apramt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['mayamt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['junamt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['julamt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['augamt']).'</td>';
+                    $html .= '<td width="7.5%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['sepamt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['octamt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['novamt']).'</td>';
+                    $html .= '<td width="7%" nowrap align="right" style="'.$stylefont.'">'.number_format($item['decamt']).'</td>';
                 $html .= '</tr>';
             }else{
+                $html .= '</table>';
+                $html .= '<table>';
                 $html .= '<tr style="'.$stylecolor.' border: 0px;">';
                     $html .= '<td nowrap style="'.$stylefont.' border: 0px;">&nbsp;&nbsp;</td>';
                     $html .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
@@ -115,6 +117,8 @@ class Simpletotalytd_pdf extends CI_Controller{
                     $html .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
                     $html .= '<td align="right" style="'.$stylefont.' border: 0px;"></td>';
                 $html .= '</tr>';
+                $html .= '</table>';
+                $html .= '<table border="1" cellspacing="0" cellpadding="3" width="100%">';
             }
         }
 
