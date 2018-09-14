@@ -34,6 +34,8 @@ function showLovStatusList(id, code) {
 function clearInputStatusList() {
     $('#form_periodstatus').val('');
     $('#form_periodstatuscode').val('');
+    $('#form_periodstatuscons').val('');
+    $('#form_periodstatuscodecons').val('');
 }
 
 </script>
@@ -88,7 +90,7 @@ function clearInputStatusList() {
                     }
                 }},
                 {label: 'Month', name: 'month_name', width: 120, align: "left", editable: false},
-                {label: 'Status Period',
+                {label: 'WIB Status',
                     name: 'statuslistid_fk',
                     width: 200,
                     sortable: true,
@@ -132,7 +134,52 @@ function clearInputStatusList() {
                         }
                     }
                 },
-                {label: 'Status Period', name: 'periodstatuscode', width: 120, align: "left", editable: false},
+                {label: 'WIB Status', name: 'periodstatuscode', width: 120, align: "left", editable: false},
+                {label: 'Consumer Status',
+                    name: 'consstatuslistid_fk',
+                    width: 200,
+                    sortable: true,
+                    editable: true,
+                    hidden: true,
+                    editrules: {edithidden: true, required:false},
+                    edittype: 'custom',
+                    editoptions: {
+                        "custom_element":function( value  , options) {
+                            var elm = $('<span></span>');
+
+                            // give the editor time to initialize
+                            setTimeout( function() {
+                                elm.append('<input id="form_periodstatuscons" type="text"  style="display:none;">'+
+                                        '<input id="form_periodstatuscodecons" readonly type="text" class="FormElement form-control" placeholder="Pilih Status">'+
+                                        '<button class="btn btn-success" type="button" onclick="showLovStatusList(\'form_periodstatuscons\',\'form_periodstatuscodecons\')">'+
+                                        '   <span class="fa fa-search bigger-110"></span>'+
+                                        '</button>');
+                                $("#form_periodstatuscons").val(value);
+                                elm.parent().removeClass('jqgrid-required');
+                            }, 100);
+
+                            return elm;
+                        },
+                        "custom_value":function( element, oper, gridval) {
+
+                            if(oper === 'get') {
+                                return $("#form_periodstatuscons").val();
+                            } else if( oper === 'set') {
+                                $("#form_periodstatuscons").val(gridval);
+                                var gridId = this.id;
+                                // give the editor time to set display
+                                setTimeout(function(){
+                                    var selectedRowId = $("#"+gridId).jqGrid ('getGridParam', 'selrow');
+                                    if(selectedRowId != null) {
+                                        var code_display = $("#"+gridId).jqGrid('getCell', selectedRowId, 'periodstatuscodecons');
+                                        $("#form_periodstatuscodecons").val( code_display );
+                                    }
+                                },100);
+                            }
+                        }
+                    }
+                },
+                {label: 'Consumer Status', name: 'periodstatuscodecons', width: 120, align: "left", editable: false},
                 {label: 'Description',name: 'description',width: 200, align: "left",editable: true,
                     edittype:'textarea',
                     editoptions: {

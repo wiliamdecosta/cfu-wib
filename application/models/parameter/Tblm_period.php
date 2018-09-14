@@ -15,7 +15,8 @@ class Tblm_period extends Abstract_model {
                                 'code'                  => array('nullable' => false, 'type' => 'str', 'unique' => true, 'display' => 'CODE'),
                                 'year'                  => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'YEAR'),
                                 'month'                => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'MONTH'),
-                                'statuslistid_fk'         => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'PERIODSTATUS'),
+                                'statuslistid_fk'         => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'WIB Status'),
+                                'consstatuslistid_fk'         => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Consumer Status'),
                                 'description'         => array('nullable' => true, 'type' => 'str', 'unique' => true, 'display' => 'DESCRIPTION'),
 
 
@@ -27,9 +28,10 @@ class Tblm_period extends Abstract_model {
                             );
 
     public $selectClause    = "period.*, initcap(to_char(to_date(period.month, 'mm'), 'month')) as month_name,
-                                        period.periodid_pk as periodid_pk_display, statuslist.code as periodstatus_display, statuslist.code as periodstatuscode";
+                                        period.periodid_pk as periodid_pk_display, statuslist.code as periodstatus_display, statuslist.code as periodstatuscode, statuslistcons.code as periodstatuscodecons";
     public $fromClause      = "tblm_period period
-                                        left join tblm_statuslist statuslist on period.statuslistid_fk = statuslist.statuslistid_pk";
+                                        left join tblm_statuslist statuslist on period.statuslistid_fk = statuslist.statuslistid_pk
+                                        left join tblm_statuslist statuslistcons on period.consstatuslistid_fk = statuslistcons.statuslistid_pk";
 
     public $refs            = array();
 
