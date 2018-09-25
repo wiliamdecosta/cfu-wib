@@ -61,6 +61,7 @@
             <div class="col-xs-6">
                 <button class="btn btn-success" id="btn-process" onclick="doProcess();">Get Data</button>
                 <button class="btn btn-warning" id="btn-cancel" onclick="cancelProcess();">Clear Data</button>
+                <button class="btn btn-primary" id="btn-download" onclick="downloadExcel();">Download</button>
             </div>
         </div>
     </div>
@@ -142,13 +143,23 @@ function showSegOther(groupcode, drivercode) {
             if(statuscode > 0) {
                 $('#btn-cancel').show();
                 $('#btn-process').hide();
+                $('#btn-download').show();
             }else {
                 $('#btn-process').show();
                 $('#btn-cancel').hide();
+                $('#btn-download').hide();
             }
         }else{
-            $('#btn-group-ccadepreadjust-action').hide();
+            $('#btn-group-ccadepreadjust-action').show();
             $('#edit_grid-table').hide();
+            $('#btn-cancel').hide();
+            $('#btn-process').hide();
+
+            if(statuscode > 0) {                
+                $('#btn-download').show();
+            }else{
+                $('#btn-download').hide();
+            }
         }
     }
 
@@ -620,5 +631,37 @@ function showSegOther(groupcode, drivercode) {
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
+
+    function downloadExcel() {
+
+        var periodid_fk = $('#search_periodid_pk').val();
+
+        var url = "<?php echo WS_JQGRID . "transaksi.tblt_ccadepreadjust_controller/download_excel/?"; ?>";
+        url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+        url += "&periodid_fk="+periodid_fk;
+
+        swal({
+            title: "Konfirmasi",
+            text: 'Anda yakin ingin melakukan download data?',
+            type: "info",
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            confirmButtonText: "Ya, Yakin",
+            confirmButtonColor: "#538cf6",
+            cancelButtonText: "Tidak",
+            closeOnConfirm: true,
+            closeOnCancel: true,
+            html: true
+        },
+        function(isConfirm){
+            if(isConfirm) {
+                window.location = url;
+                return true;
+            }else {
+                return false;
+            }
+        });
+    }
+    
 
 </script>

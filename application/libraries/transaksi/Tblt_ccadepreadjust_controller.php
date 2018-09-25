@@ -320,6 +320,68 @@ class Tblt_ccadepreadjust_controller {
         exit;
     }
 
+    function download_excel() {
+
+            $periodid_fk = getVarClean('periodid_fk','str','');
+
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_ccadepreadjust');
+            $table = $ci->tblt_ccadepreadjust;
+
+            // Filter Table
+            if(!empty($periodid_fk)) {
+                $table->setCriteria("a.periodid_fk = ".$periodid_fk);
+            }
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1, 'a.ubiscode, a.ccacode', 'asc');
+
+            startExcel("depreciation_".$periodid_fk.".xls");
+
+            $output = '';
+            $output .='<table  border="1">';
+
+            $output.='<tr>';                         
+            $output.='  <th>Subs/Ubis</th>
+                        <th>CCA Code</th>
+                        <th>Activity Group</th>
+                        <th>Driver Code</th>
+                        <th>CCA Amount</th>
+                        <th>Orig Amount</th>
+                        <th>Adjust Amount</th>
+                        <th>Description</th>
+                        ';
+            $output.='</tr>';
+
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
+
+  
+
+            foreach($items as $item) {
+                $output .= '<tr>';
+                    $output .= '<td>'.$item['ubiscode'].'</td>';
+                    $output .= '<td>'.$item['ccacode'].'</td>';
+                    $output .= '<td>'.$item['activitygroupcode'].'</td>';                    
+                    $output .= '<td>'.$item['costdrivercode'].'</td>';                    
+                    $output .= '<td align="right">'.numberFormat($item['ccaamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['origamount'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['adjustamount'],2).'</td>';
+                    $output .= '<td>'.$item['description'].'</td>';
+                $output .= '</tr>';
+
+            }
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
+
 }
 
 /* End of file Tblt_tohideout_controller.php */
