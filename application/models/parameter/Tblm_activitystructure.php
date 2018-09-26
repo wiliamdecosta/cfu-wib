@@ -63,7 +63,8 @@ class Tblm_activitystructure extends Abstract_model {
                                     c.code costdrivercode,
                                     d.activityname, (a.activityid || ' - ' || d.activityname) activitygabung,
                                     e.activityname ohactivityname1, (a.ohactivityid1 || ' - ' || e.activityname) ohactivitygabung1,
-                                    f.activityname ohactivityname2, (a.ohactivityid2 || ' - ' || f.activityname) ohactivitygabung2
+                                    f.activityname ohactivityname2, (a.ohactivityid2 || ' - ' || f.activityname) ohactivitygabung2,
+                                    (g.code || ' - ' || g.acttypename) activittypeygabung
                                     ";
     public $vw_allactivity = "(
                                         select
@@ -86,6 +87,7 @@ class Tblm_activitystructure extends Abstract_model {
     public $fromClause      = "tblm_activitystructure a
                                         inner join tblm_wibunitbusiness b on a.ubiscode = b.code
                                         inner join tblm_costdriver c on a.costdriverid_fk = c.costdriverid_pk
+                                        left join tblm_activitytype g on a.activitytypeid_fk = g.activitytypeid_pk
                                         ";
 
     public $refs            = array();

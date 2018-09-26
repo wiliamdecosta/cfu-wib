@@ -40,12 +40,13 @@
             </select>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-5">
         <div class="input-group">
             <div class="input-group">
             <input id="i_search" type="text" class="FormElement form-control">
             <span class="input-group-btn">
                 <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
+                <button class="btn btn-primary" type="button" id="btn-download" onclick="downloadExcel()">Download</button>
             </span>
             </div>
         </div>
@@ -742,4 +743,34 @@ function clearInputCostDriver() {
 
     }
 
+</script>
+<script>
+    function downloadExcel(){
+
+        var url = "<?php echo WS_JQGRID . "parameter.tblm_activitystructure_controller/download_excel/?"; ?>";
+        url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+
+        swal({
+            title: "Konfirmasi",
+            text: 'Anda yakin ingin melakukan download data?',
+            type: "info",
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            confirmButtonText: "Ya, Yakin",
+            confirmButtonColor: "#538cf6",
+            cancelButtonText: "Tidak",
+            closeOnConfirm: true,
+            closeOnCancel: true,
+            html: true
+        },
+        function(isConfirm){
+            if(isConfirm) {
+                window.location = url;
+                return true;
+            }else {
+                return false;
+            }
+        });
+
+    }
 </script>

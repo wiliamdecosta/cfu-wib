@@ -313,6 +313,75 @@ class Tblm_activitystructure_controller {
         }
         return $data;
     }
+
+    function download_excel() {
+
+            $ci = & get_instance();
+            $ci->load->model('parameter/tblm_activitystructure');
+            $table = $ci->tblm_activitystructure;
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1,'g.code, a.listingno', 'asc');
+
+            startExcel("Activity_Structure.xls");
+
+            $output = '';
+            $output .='<table  border="1">';
+
+            $output.='<tr>';
+            $output.='  <th>No.</th>
+                        <th>Activity Type</th>
+                        <th>BU/Subsidiary</th>
+                        <th>Activity</th>
+                        <th>Overhead Act 1</th>
+                        <th>Overhead Act 2</th>
+                        <th>Cost Driver</th>
+                        <th style="text-align: center;">Dom Traffic?</th>
+                        <th style="text-align: center;">Dom Network?</th>
+                        <th style="text-align: center;">Intl Traffic?</th>
+                        <th style="text-align: center;">Intl Network?</th>
+                        <th style="text-align: center;">Intl Adjacent?</th>
+                        <th style="text-align: center;">Tower?</th>
+                        <th style="text-align: center;">Infra?</th>';
+            $output.='</tr>';
+
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
+
+            $no = 1;
+
+            foreach($items as $item) {
+
+
+                $output .= '<tr>';
+                    $output .= '<td>'.$no.'</td>';
+                    $output .= '<td>'.$item['activittypeygabung'].'</td>';
+                    $output .= '<td>'.$item['ubisname'].'</td>';
+                    $output .= '<td>'.$item['activitygabung'].'</td>';
+                    $output .= '<td>'.$item['ohactivitygabung1'].'</td>';
+                    $output .= '<td>'.$item['ohactivitygabung2'].'</td>';
+                    $output .= '<td>'.$item['costdrivercode'].'</td>';
+                    $output .= '<td align="center">'.$item['isdomtrafficdisplay'].'</td>';
+                    $output .= '<td align="center">'.$item['isdomnetworkdisplay'].'</td>';
+                    $output .= '<td align="center">'.$item['isintltrafficdisplay'].'</td>';
+                    $output .= '<td align="center">'.$item['isintlnetworkdisplay'].'</td>';
+                    $output .= '<td align="center">'.$item['isintladjacentdisplay'].'</td>';
+                    $output .= '<td align="center">'.$item['istowerdisplay'].'</td>';
+                    $output .= '<td align="center">'.$item['isinfrastructuredisplay'].'</td>';
+                $output .= '</tr>';
+
+                $no++;
+            }
+
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
 }
 
 /* End of file Activity_controller.php */

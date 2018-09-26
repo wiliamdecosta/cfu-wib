@@ -452,6 +452,80 @@ class Tblm_costdriver_controller {
         }
         return $data;
     }
+
+    function download_excel() {
+
+            $ci = & get_instance();
+            $ci->load->model('parameter/tblm_costdriver');
+            $table = $ci->tblm_costdriver;
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1,'a.costdrivertype, a.listingno', 'asc');
+
+            startExcel("Cost_Driver.xls");
+
+            $output = '';
+            $output .='<table  border="1">';
+
+            $output.='<tr>';
+            $output.='  <th>No.</th>
+                        <th>Cost Driver Type</th>
+                        <th>BU/Subsidiary</th>
+                        <th>Cost Driver</th>
+                        <th>Unit Code</th>
+                        <th style="text-align: right;">Dom Traffic</th>
+                        <th style="text-align: right;">Dom Network</th>
+                        <th style="text-align: right;">Intl Traffic</th>
+                        <th style="text-align: right;">Intl Network</th>
+                        <th style="text-align: right;">Intl Adjacent</th>
+                        <th style="text-align: right;">Tower</th>
+                        <th style="text-align: right;">Infrastructure</th>';
+            $output.='</tr>';
+
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
+
+            $no = 1;
+
+            foreach($items as $item) {
+
+                if ($item['costdrivertype'] == 1){
+                    $costdrivertype = 'Entry';
+                }else if($item['costdrivertype'] == 2){
+                    $costdrivertype = 'Calculation';
+                }else if($item['costdrivertype'] == 3){
+                    $costdrivertype = 'PL';
+                }else{
+                    $costdrivertype = '';
+                }
+
+                $output .= '<tr>';
+                    $output .= '<td>'.$no.'</td>';
+                    $output .= '<td>'.$costdrivertype.'</td>';
+                    $output .= '<td>'.$item['ubisname'].'</td>';
+                    $output .= '<td>'.$item['code'].'</td>';
+                    $output .= '<td>'.$item['unitcode'].'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['domtrafficvaluedisplay'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['domnetworkvaluedisplay'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['intltrafficvaluedisplay'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['intlnetworkvaluedisplay'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['intladjacentvaluedisplay'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['towervaluedisplay'],2).'</td>';
+                    $output .= '<td align="right">'.numberFormat($item['infravaluedisplay'],2).'</td>';
+                $output .= '</tr>';
+
+                $no++;
+            }
+
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
 }
 
 /* End of file Activity_controller.php */

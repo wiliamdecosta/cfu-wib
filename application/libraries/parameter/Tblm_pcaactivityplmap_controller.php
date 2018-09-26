@@ -301,6 +301,58 @@ class Tblm_pcaactivityplmap_controller {
         return $data;
     }
 
+    function download_excel() {
+
+            $ci = & get_instance();
+            $ci->load->model('parameter/tblm_pcaactivityplmap');
+            $table = $ci->tblm_pcaactivityplmap;
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1,'a.ubiscode', 'asc');
+
+            startExcel("PCA_Activity_Map.xls");
+
+            $output = '';
+            $output .='<table border="1">';
+
+            $output.='<tr>';
+            $output.='  <th>No.</th>
+                        <th>BU/Subsidiary</th>
+                        <th>Activity</th>
+                        <th>PL Item</th>
+                        <th>Indirect Cost?</th>
+                        <th>Network Related OM?</th>';
+            $output.='</tr>';
+
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
+
+            $no = 1;
+
+            foreach($items as $item) {
+
+                $output .= '<tr>';
+                    $output .= '<td>'.$no.'</td>';
+                    $output .= '<td>'.$item['ubisname'].'</td>';
+                    $output .= '<td>'.$item['activity_display'].'</td>';
+                    $output .= '<td>'.$item['plitem_display'].'</td>';
+                    $output .= '<td>'.$item['isiccriteria_display'].'</td>';
+                    $output .= '<td>'.$item['isnetworkcriteria_display'].'</td>';
+                $output .= '</tr>';
+
+                $no++;
+            }
+
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
+
 }
 
 /* End of file Tblm_pcaactivityplmap_controller.php */
