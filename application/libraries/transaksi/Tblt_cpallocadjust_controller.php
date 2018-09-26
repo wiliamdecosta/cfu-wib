@@ -401,6 +401,8 @@ class Tblt_cpallocadjust_controller {
             }
 
   
+            $totalorigamount = 0;
+            $totaladjustamount = 0;
 
             foreach($items as $item) {
                 $output .= '<tr>';
@@ -414,7 +416,17 @@ class Tblt_cpallocadjust_controller {
                     $output .= '<td>'.$item['description'].'</td>';
                 $output .= '</tr>';
 
+
+                $totalorigamount = $totalorigamount + $item['origamount'];
+                $totaladjustamount = $totaladjustamount + $item['adjustamount'];
             }
+
+            // $output .= '<tr style="font-weight:bold;">';
+            //     $output .= '<td colspan="5" style="text-align:center;">Total</td>';                    
+            //     $output .= '<td align="right">'.numberFormat($totalorigamount,2).'</td>';
+            //     $output .= '<td align="right">'.numberFormat($totaladjustamount,2).'</td>';
+            //     $output .= '<td></td>';
+            // $output .= '</tr>';
 
             $output .= '</table>';
             echo $output;

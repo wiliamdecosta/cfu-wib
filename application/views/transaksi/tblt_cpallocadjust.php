@@ -321,13 +321,7 @@ function showLOVPeriod(id, code, status) {
                         size: 30
                     },
                     editrules: {edithidden: false}},                
-                {label: 'Origin Amount',name: 'origamount',width: 150, align: "right", editable: false, formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
+                {label: 'Origin Amount',name: 'origamount',width: 150, align: "right", editable: false, formatter:'currency', formatoptions: {prefix:"", thousandsSeparator:','}},
                 {label: 'Origin Amount',name: 'origamount',width: 150, align: "right", hidden: true, editable: true, number:true,
                     editoptions: {
                         size: 30,
@@ -344,13 +338,7 @@ function showLOVPeriod(id, code, status) {
                     },
                     editrules: {required: false, edithidden:true}
                 },
-                {label: 'Adjustment Amount',name: 'adjustamount',width: 150, align: "right", editable: false, formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
+                {label: 'Adjustment Amount',name: 'adjustamount',width: 150, align: "right", editable: false, formatter:'currency', formatoptions: {prefix:"", thousandsSeparator:','}},
                 {label: 'Adjustment Amount',name: 'adjustamount',width: 150, align: "right", hidden: true, editable: true, number:true,
                     editoptions: {
                         size: 30,
@@ -380,13 +368,14 @@ function showLOVPeriod(id, code, status) {
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 20,
-            rowList: [20,50,100],
+            rowNum: 10000000000,
+            rowList: [],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
             shrinkToFit: false,
             multiboxonly: true,
+            footerrow: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
 
@@ -402,6 +391,25 @@ function showLOVPeriod(id, code, status) {
                 if(response.success == false) {
                     swal({title: 'Attention', text: response.message, html: true, type: "warning"});
                 }
+
+                var rowData = jQuery("#grid-table").getDataIDs();
+                // alert(rowData.length);
+                totorigamount = 0;
+                totadjustamount = 0;
+                for (var i = 0; i < rowData.length; i++) 
+                {
+                    var origamount = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'origamount');
+                    var adjustamount = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'adjustamount');
+
+                    totorigamount = totorigamount + parseFloat(origamount);
+                    totadjustamount = totadjustamount + parseFloat(adjustamount);
+
+                    // alert(totorigamount);
+                }
+
+                $("#grid-table").jqGrid('footerData', 'set', { "plitemnme":"Total:"}, true);
+                $("#grid-table").jqGrid('footerData', 'set', { "origamount": totorigamount}, true);
+                $("#grid-table").jqGrid('footerData', 'set', { "adjustamount": totadjustamount}, true);
 
             },
             //memanggil controller jqgrid yang ada di controller crud

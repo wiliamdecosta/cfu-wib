@@ -367,13 +367,7 @@ function showSegOther(groupcode, drivercode) {
                         size: 40
                     },
                     editrules: {edithidden: false}},         
-                {label: 'CCA Amount',name: 'ccaamount',width: 150, align: "right", editable: false, formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
+                {label: 'CCA Amount',name: 'ccaamount',width: 150, align: "right", editable: false, formatter:'currency', formatoptions: {prefix:"", thousandsSeparator:','}},
                 {label: 'CCA Amount',name: 'ccaamount',width: 150, align: "right", hidden: true, editable: true, number:true,
                     editoptions: {
                         size: 30,
@@ -390,13 +384,7 @@ function showSegOther(groupcode, drivercode) {
                     },
                     editrules: {required: false, edithidden:true}
                 },
-                {label: 'Orig Amount',name: 'origamount',width: 150, align: "right", editable: false, formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
+                {label: 'Orig Amount',name: 'origamount',width: 150, align: "right", editable: false, formatter:'currency', formatoptions: {prefix:"", thousandsSeparator:','}},
                 {label: 'Orig Amount',name: 'origamount',width: 150, align: "right", hidden: true, editable: true, number:true,
                     editoptions: {
                         size: 30,
@@ -413,13 +401,7 @@ function showSegOther(groupcode, drivercode) {
                     },
                     editrules: {required: false, edithidden:true}
                 },
-                {label: 'Adjust Amount',name: 'adjustamount',width: 150, align: "right", editable: false, formatter:function(cellvalue, options, rowObject) {
-                    if(cellvalue != null){
-                        return $.number(cellvalue, 2);
-                    }else{
-                        return '';
-                    }
-                }},
+                {label: 'Adjust Amount',name: 'adjustamount',width: 150, align: "right", editable: false, formatter:'currency', formatoptions: {prefix:"", thousandsSeparator:','}},
                 {label: 'Adjust Amount',name: 'adjustamount',width: 150, align: "right", hidden: true, editable: true, number:true,
                     editoptions: {
                         size: 30,
@@ -449,13 +431,14 @@ function showSegOther(groupcode, drivercode) {
             height: '100%',
             autowidth: true,
             viewrecords: true,
-            rowNum: 15,
-            rowList: [15,50,100],
+            rowNum: 10000000000,
+            rowList: [],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
             shrinkToFit: false,
             multiboxonly: true,
+            footerrow: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
 
@@ -471,6 +454,29 @@ function showSegOther(groupcode, drivercode) {
                 if(response.success == false) {
                     swal({title: 'Attention', text: response.message, html: true, type: "warning"});
                 }
+
+                var rowData = jQuery("#grid-table").getDataIDs();
+                // alert(rowData.length);
+                totorccaamount = 0;
+                totorigamount = 0;
+                totadjustamount = 0;
+                for (var i = 0; i < rowData.length; i++) 
+                {
+                    var ccaamount = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'ccaamount');
+                    var origamount = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'origamount');
+                    var adjustamount = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'adjustamount');
+
+                    totorccaamount = totorccaamount + parseFloat(ccaamount);
+                    totorigamount = totorigamount + parseFloat(origamount);
+                    totadjustamount = totadjustamount + parseFloat(adjustamount);
+
+                    // alert(totorigamount);
+                }
+
+                $("#grid-table").jqGrid('footerData', 'set', { "costdrivercode":"Total:"}, true);
+                $("#grid-table").jqGrid('footerData', 'set', { "ccaamount": totorccaamount}, true);
+                $("#grid-table").jqGrid('footerData', 'set', { "origamount": totorigamount}, true);
+                $("#grid-table").jqGrid('footerData', 'set', { "adjustamount": totadjustamount}, true);
 
             },
             //memanggil controller jqgrid yang ada di controller crud

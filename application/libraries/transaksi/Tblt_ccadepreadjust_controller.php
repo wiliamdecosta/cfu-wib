@@ -361,6 +361,9 @@ class Tblt_ccadepreadjust_controller {
             }
 
   
+            $totalccaamount = 0;
+            $totalorigamount = 0;
+            $totaladjustamount = 0;
 
             foreach($items as $item) {
                 $output .= '<tr>';
@@ -374,7 +377,19 @@ class Tblt_ccadepreadjust_controller {
                     $output .= '<td>'.$item['description'].'</td>';
                 $output .= '</tr>';
 
+                $totalccaamount = $totalccaamount + $item['ccaamount'];
+                $totalorigamount = $totalorigamount + $item['origamount'];
+                $totaladjustamount = $totaladjustamount + $item['adjustamount'];
+
             }
+
+            // $output .= '<tr style="font-weight:bold;">';
+            //     $output .= '<td colspan="4" style="text-align:center;">Total</td>';                    
+            //     $output .= '<td align="right">'.numberFormat($totalccaamount,2).'</td>';
+            //     $output .= '<td align="right">'.numberFormat($totalorigamount,2).'</td>';
+            //     $output .= '<td align="right">'.numberFormat($totaladjustamount,2).'</td>';
+            //     $output .= '<td></td>';
+            // $output .= '</tr>';
 
             $output .= '</table>';
             echo $output;
