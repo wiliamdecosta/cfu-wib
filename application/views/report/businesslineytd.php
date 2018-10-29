@@ -72,7 +72,7 @@
         if (periodid_fk == ''){
             $('#label1').hide();
             $('#label2').hide();
-            $('#table-data').hide();
+            // $('#table-data').hide();
             $('#btn-cetak-ytd').hide();
             $('#btn-download-ytd').hide();
             $('#btn-cetak-cm').hide();        
@@ -82,7 +82,7 @@
         }else{
             $('#label1').show();
             $('#label2').show();
-            $('#table-data').show();
+            // $('#table-data').show();
         }
 
 
