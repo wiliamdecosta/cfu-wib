@@ -194,6 +194,79 @@ class Tblt_thodetail_controller {
 
     }
 
+    function download_excel2() {
+
+            $periodid_fk = getVarClean('periodid_fk','int',0);
+            $ubiscode = getVarClean('ubiscode','str','');
+            $i_search = getVarClean('i_search','str','');
+            
+
+            $ci = & get_instance();
+            $ci->load->model('transaksi/tblt_thodetail_download');
+            $table = new Tblt_thodetail_download($periodid_fk, $ubiscode, $i_search);
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1);
+
+            startExcel("thodetail_subs_".$periodid_fk.".xls");
+
+            $output = '';
+            $output .='<table  border="1">';
+
+            $output.='<tr>';                         
+            $output.='  <th>No.</th>
+                        <th>BU/Subs</th>
+                        <th>PL Item</th>
+                        <th>Business Line</th>
+                        <th>Category</th>
+                        <th>GL Account</th>
+                        <th>GL Name</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        ';
+            $output.='</tr>';
+
+            if($count < 1)  {
+                $output .= '</table>';
+                echo $output;
+                exit;
+            }
+
+            $total = 0;
+            $no = 1;
+            foreach($items as $item) {
+                $output .= '<tr>';
+                    $output .= '<td>'.$no.'</td>';
+                    $output .= '<td>'.$item['ubiscode'].'</td>';
+                    $output .= '<td>'.$item['plitemname'].'</td>';
+                    $output .= '<td>'.$item['columnname'].'</td>';
+                    $output .= '<td>'.$item['categorycode'].'</td>';
+                    $output .= '<td>'.$item['glaccount'].'</td>';
+                    $output .= '<td>'.$item['gldesc'].'</td>';                    
+                    $output .= '<td align="right">'.numberFormat($item['amount'],2).'</td>';
+                    $output .= '<td>'.$item['description'].'</td>';
+                $output .= '</tr>';
+
+                $total = $total + $item['amount'];
+                $no++;
+            }
+
+                $output .= '<tr>';
+                    $output .= '<td></td>';
+                    $output .= '<td></td>';
+                    $output .= '<td></td>';
+                    $output .= '<td></td>';
+                    $output .= '<td><strong>Total</strong></td>';                    
+                    $output .= '<td align="right"><strong>'.numberFormat($total,2).'</strong></td>';
+                    $output .= '<td></td>';
+                $output .= '</tr>';
+
+            $output .= '</table>';
+            echo $output;
+            exit;
+
+    }
+
 }
 
 /* End of file Tblt_tohideout_controller.php */

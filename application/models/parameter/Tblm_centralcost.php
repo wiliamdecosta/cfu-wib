@@ -19,7 +19,8 @@ class Tblm_centralcost extends Abstract_model {
                                 'isindirectcost'                => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Indirect Cost'),
                                 'activityid_fk'                 => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Activity Code'),
                                 'isneedpca'                 => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Need PCA'),
-
+                                'validfrom'          => array('nullable' => false, 'type' => 'date', 'unique' => false, 'display' => 'Valid From'),
+                                'validto'          => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Valid To'),
                                 'description'               => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description'),
 
                                 'creationdate'         => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Creation Date'),
@@ -63,7 +64,9 @@ class Tblm_centralcost extends Abstract_model {
                                     plitem,
                                     decode(isindirectcost, 'Y','YES','N','NO') isindirectcost_display,
                                     activityname activity_display,
-                                    decode(isneedpca, 'Y','YES','N','NO') isneedpca_display
+                                    decode(isneedpca, 'Y','YES','N','NO') isneedpca_display,
+                                    validfrom,
+                                    validto
                                     ";
 
 
@@ -80,7 +83,9 @@ class Tblm_centralcost extends Abstract_model {
                                     d.ActivityName ActivityName,
                                     a.ISNEEDPCA,
                                     ub.Code UbisCode,
-                                    a.description, a.creationdate, a.createdby, a.updateddate, a.updatedby
+                                    a.description, a.creationdate, a.createdby, a.updateddate, a.updatedby,
+                                    to_char(a.validfrom, 'DD-MON-YYYY') as validfrom,
+                                    to_char(a.validto, 'DD-MON-YYYY') as validto
                                     from tblM_CentralCost a,
                                         tblm_WIBUnitBusiness ub,
                                         rra.exs_cc b,
@@ -113,7 +118,9 @@ class Tblm_centralcost extends Abstract_model {
                                     d.ActivityName ActivityName,
                                     a.ISNEEDPCA,
                                     ub.Code UbisCode,
-                                    a.description, a.creationdate, a.createdby, a.updateddate, a.updatedby
+                                    a.description, a.creationdate, a.createdby, a.updateddate, a.updatedby,
+                                    to_char(a.validfrom, 'DD-MON-YYYY') as validfrom,
+                                    to_char(a.validto, 'DD-MON-YYYY') as validto
                                     from tblM_CentralCost a,
                                         tblM_CostCenter cc,
                                         tblm_WIBUnitBusiness ub,
@@ -159,6 +166,17 @@ class Tblm_centralcost extends Abstract_model {
             $this->db->set('updateddate',"sysdate",false);
             $this->record['updatedby'] = $userdata['user_name'];
 
+            if(empty($this->record['validto'])) {
+                $this->db->set('validto', NULL);
+            }else {
+                $this->db->set('validto',"to_date('".$this->record['validto']."','YYYY-MON-DD')",false);
+            }
+
+            $this->db->set('validfrom',"to_date('".$this->record['validfrom']."','YYYY-MON-DD')",false);
+
+            unset($this->record['validto']);
+            unset($this->record['validfrom']);
+
             $this->record[$this->pkey] = $this->generate_id($this->table, $this->pkey);
 
         }else {
@@ -174,6 +192,18 @@ class Tblm_centralcost extends Abstract_model {
 
             $this->db->set('updateddate',"sysdate",false);
             $this->record['updatedby'] = $userdata['user_name'];
+
+            
+            if(empty($this->record['validto'])) {
+                $this->db->set('validto', NULL);
+            }else {
+                $this->db->set('validto',"to_date('".$this->record['validto']."','YYYY-MON-DD')",false);
+            }
+
+            $this->db->set('validfrom',"to_date('".$this->record['validfrom']."','YYYY-MON-DD')",false);
+
+            unset($this->record['validto']);
+            unset($this->record['validfrom']);
 
         }
         return true;

@@ -140,7 +140,7 @@ function clearInputAkun() {
             mtype: "POST",
             colModel: [
                 {label: 'ID', name: 'centralcostid_pk', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Cost Center',name: 'ccgabung',width: 250, align: "left"},
+                {label: 'Cost Center',name: 'ccgabung',width: 350, align: "left"},
                 {label: 'Cost Center Code',
                     name: 'cccode',
                     width: 200,
@@ -232,15 +232,7 @@ function clearInputAkun() {
                             }
                         }
                     }
-                },
-                {label: 'PL Item',name: 'plitem',width: 150, align: "left"},
-                {label: 'BU/Subsidiary',name: 'wibunitbusinessid_fk',width: 150, align: "left",editable: true, hidden:true,
-                    editoptions: {
-                        size: 30,
-                        maxlength:10
-                    },
-                    editrules: {required: true}
-                },
+                },          
                 {label: 'Indirect Cost?',name: 'isindirectcost',width: 120, align: "left",editable: true, edittype: 'select', hidden:true,
                     editrules: {edithidden: true, required: false},
                     editoptions: {
@@ -249,7 +241,45 @@ function clearInputAkun() {
                         $(elem).width(150);  // set the width which you need
                     }
                 }},
-
+                {label: 'Valid from', name: 'validfrom', width: 120, editable: true,
+                    edittype:"text",
+                    editrules: {required: true},
+                    editoptions: {
+                        // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
+                        // use it to place a third party control to customize the toolbar
+                        dataInit: function (element) {
+                           $(element).datepicker({
+                                autoclose: true,
+                                format: 'dd-M-yyyy',
+                                orientation : 'bottom',
+                                todayHighlight : true
+                            });
+                        }
+                    }
+                },
+                {label: 'Valid to', name: 'validto', width: 120, editable: true,
+                    edittype:"text",
+                    editoptions: {
+                        // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
+                        // use it to place a third party control to customize the toolbar
+                        dataInit: function (element) {
+                           $(element).datepicker({
+                                autoclose: true,
+                                format: 'dd-M-yyyy',
+                                orientation : 'bottom',
+                                todayHighlight : true
+                            });
+                        }
+                    }
+                },
+                {label: 'PL Item',name: 'plitem',width: 250, align: "left"},
+                {label: 'BU/Subsidiary',name: 'wibunitbusinessid_fk',width: 150, align: "left",editable: true, hidden:true,
+                    editoptions: {
+                        size: 30,
+                        maxlength:10
+                    },
+                    editrules: {required: true}
+                },
                 {label: 'Activity',
                     name: 'activityid_fk',
                     width: 200,
@@ -364,7 +394,7 @@ function clearInputAkun() {
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/

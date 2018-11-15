@@ -342,36 +342,68 @@ class Tblt_segregationact_controller {
 
             foreach($items as $item) {
 
+                // $output .= '<tr>
+                //                     <td valign="top">'.$item['ubiscode'].'</td>
+                //                     <td valign="top">'.$item['activityname'].'</td>
+                //                     <td valign="top">'.$item['plitemname'].'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['amount'],2).'</td>
+                //                     <td valign="top">'.$item['costdrivercode'].'</td>
+
+                //                     <td valign="top" align="right">'.numberFormat($item['cd_domtraffic'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['cd_domnetwork'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['cd_intltraffic'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['cd_intlnetwork'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['cd_intladjacent'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['cd_tower'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['cd_infra'],2).'</td>
+
+                //                     <td valign="top" align="right">'.numberFormat($item['pct_domtraffic'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['pct_domnetwork'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['pct_intltraffic'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['pct_intlnetwork'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['pct_intladjacent'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['pct_tower'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['pct_infra'],2).'</td>
+
+                //                     <td valign="top" align="right">'.numberFormat($item['domtrafficamt'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['domnetworkamt'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['intltrafficamt'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['intlnetworkamt'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['intladjacentamt'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['toweramt'],2).'</td>
+                //                     <td valign="top" align="right">'.numberFormat($item['infraamt'],2).'</td>
+                //                 </tr>';
+
                 $output .= '<tr>
                                     <td valign="top">'.$item['ubiscode'].'</td>
                                     <td valign="top">'.$item['activityname'].'</td>
                                     <td valign="top">'.$item['plitemname'].'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['amount'],2).'</td>
+                                    <td valign="top" align="right">'.$item['amount'].'</td>
                                     <td valign="top">'.$item['costdrivercode'].'</td>
 
-                                    <td valign="top" align="right">'.numberFormat($item['cd_domtraffic'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['cd_domnetwork'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['cd_intltraffic'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['cd_intlnetwork'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['cd_intladjacent'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['cd_tower'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['cd_infra'],2).'</td>
+                                    <td valign="top" align="right">'.$item['cd_domtraffic'].'</td>
+                                    <td valign="top" align="right">'.$item['cd_domnetwork'].'</td>
+                                    <td valign="top" align="right">'.$item['cd_intltraffic'].'</td>
+                                    <td valign="top" align="right">'.$item['cd_intlnetwork'].'</td>
+                                    <td valign="top" align="right">'.$item['cd_intladjacent'].'</td>
+                                    <td valign="top" align="right">'.$item['cd_tower'].'</td>
+                                    <td valign="top" align="right">'.$item['cd_infra'].'</td>
 
-                                    <td valign="top" align="right">'.numberFormat($item['pct_domtraffic'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['pct_domnetwork'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['pct_intltraffic'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['pct_intlnetwork'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['pct_intladjacent'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['pct_tower'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['pct_infra'],2).'</td>
+                                    <td valign="top" align="right">'.$item['pct_domtraffic'].'</td>
+                                    <td valign="top" align="right">'.$item['pct_domnetwork'].'</td>
+                                    <td valign="top" align="right">'.$item['pct_intltraffic'].'</td>
+                                    <td valign="top" align="right">'.$item['pct_intlnetwork'].'</td>
+                                    <td valign="top" align="right">'.$item['pct_intladjacent'].'</td>
+                                    <td valign="top" align="right">'.$item['pct_tower'].'</td>
+                                    <td valign="top" align="right">'.$item['pct_infra'].'</td>
 
-                                    <td valign="top" align="right">'.numberFormat($item['domtrafficamt'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['domnetworkamt'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['intltrafficamt'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['intlnetworkamt'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['intladjacentamt'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['toweramt'],2).'</td>
-                                    <td valign="top" align="right">'.numberFormat($item['infraamt'],2).'</td>
+                                    <td valign="top" align="right">'.$item['domtrafficamt'].'</td>
+                                    <td valign="top" align="right">'.$item['domnetworkamt'].'</td>
+                                    <td valign="top" align="right">'.$item['intltrafficamt'].'</td>
+                                    <td valign="top" align="right">'.$item['intlnetworkamt'].'</td>
+                                    <td valign="top" align="right">'.$item['intladjacentamt'].'</td>
+                                    <td valign="top" align="right">'.$item['toweramt'].'</td>
+                                    <td valign="top" align="right">'.$item['infraamt'].'</td>
                                 </tr>';
 
             }

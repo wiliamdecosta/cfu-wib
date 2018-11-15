@@ -91,6 +91,7 @@
                 <div class="col-xs-6">
                     <button class="btn btn-success" type="button" id="btn-search" onclick="showData()">Cari</button>
                     <button class="btn btn-primary" type="button" id="btn-download" onclick="downloadExcel();">Download</button>
+                    <button class="btn btn-default" type="button" id="btn-download2" onclick="downloadExcel2();">Download Subs</button>
                 </div>
             </div>
             <div class="space-4"></div>
@@ -197,6 +198,56 @@
         }
 
         var url = "<?php echo WS_JQGRID . "transaksi.tblt_thodetail_controller/download_excel/?"; ?>";
+        url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+        url += "&periodid_fk="+periodid_fk;
+        url += "&ubiscode="+ubiscode;
+        url += "&pl_item_name="+pl_item_name;
+        url += "&column_name="+column_name;
+        url += "&i_search="+i_search;
+
+        swal({
+            title: "Konfirmasi",
+            text: 'Anda yakin ingin melakukan download data?',
+            type: "info",
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            confirmButtonText: "Ya, Yakin",
+            confirmButtonColor: "#538cf6",
+            cancelButtonText: "Tidak",
+            closeOnConfirm: true,
+            closeOnCancel: true,
+            html: true
+        },
+        function(isConfirm){
+            if(isConfirm) {
+                window.location = url;
+                return true;
+            }else {
+                return false;
+            }
+        });
+
+    }
+
+    function downloadExcel2(){
+        var i_search = $('#i_search').val();
+        var ubiscode = $('#search_wibunitbusinesscode').val();
+        var pl_item_name = $('#search_plitem').val();
+        var column_name = $('#search_business_line').val();
+        var periodid_fk = $('#periodid_fk').val();
+
+        if (periodid_fk == '' ){
+            swal('Informasi','Period is required','info');
+            return false;
+        }
+
+        if (ubiscode == '' ){
+            swal('Informasi','BU/Subs is required','info');
+            return false;
+        }
+
+
+        var url = "<?php echo WS_JQGRID . "transaksi.tblt_thodetail_controller/download_excel2/?"; ?>";
         url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
         url += "&periodid_fk="+periodid_fk;
         url += "&ubiscode="+ubiscode;

@@ -262,17 +262,30 @@ class Tblt_tohideout_controller {
             //                   'totinfraamt' => 0);
 
             foreach($items as $item) {
+                // $output .= '<tr>';
+                //     $output .= '<td>'.$item['ubiscode'].'</td>';
+                //     $output .= '<td>'.$item['plgroupname'].'</td>';
+                //     $output .= '<td>'.$item['plitemname'].'</td>';
+                //     $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';
+                //     $output .= '<td align="right">'.numberFormat($item['domnetworkamount'],2).'</td>';
+                //     $output .= '<td align="right">'.numberFormat($item['intltrafficamount'],2).'</td>';
+                //     $output .= '<td align="right">'.numberFormat($item['intlnetworkamount'],2).'</td>';
+                //     $output .= '<td align="right">'.numberFormat($item['intladjacentamount'],2).'</td>';
+                //     $output .= '<td align="right">'.numberFormat($item['toweramount'],2).'</td>';
+                //     $output .= '<td align="right">'.numberFormat($item['infraamount'],2).'</td>';
+                // $output .= '</tr>';
+
                 $output .= '<tr>';
                     $output .= '<td>'.$item['ubiscode'].'</td>';
                     $output .= '<td>'.$item['plgroupname'].'</td>';
                     $output .= '<td>'.$item['plitemname'].'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['domtrafficamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['domnetworkamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intltrafficamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intlnetworkamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['intladjacentamount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['toweramount'],2).'</td>';
-                    $output .= '<td align="right">'.numberFormat($item['infraamount'],2).'</td>';
+                    $output .= '<td align="right">'.$item['domtrafficamount'].'</td>';
+                    $output .= '<td align="right">'.$item['domnetworkamount'].'</td>';
+                    $output .= '<td align="right">'.$item['intltrafficamount'].'</td>';
+                    $output .= '<td align="right">'.$item['intlnetworkamount'].'</td>';
+                    $output .= '<td align="right">'.$item['intladjacentamount'].'</td>';
+                    $output .= '<td align="right">'.$item['toweramount'].'</td>';
+                    $output .= '<td align="right">'.$item['infraamount'].'</td>';
                 $output .= '</tr>';
 
                 // $total['totdomtrafficamt'] += $item['domtrafficamt'];
